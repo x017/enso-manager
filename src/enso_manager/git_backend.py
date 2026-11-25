@@ -22,15 +22,17 @@ _RS = "\x1e"
 _FS = "\x1f"
 
 # Short-TTL cache so the immediate-mode UI can redraw at 60fps without shelling
-# out to git on every frame. Refreshed at most once per _CACHE_TTL seconds.
-_CACHE_TTL = 1.0
+# out to git on every frame. Refreshed at most once per its TTL. gh calls are
+# expensive (~630-1100ms each) so they get _GH_TTL instead of the cheap-git TTL.
+_CACHE_TTL = 2.0
+_GH_TTL = 20.0
 _cache: dict = {}
 
 
-def _cached(key: str, fn):
+def _cached(key: str, fn, ttl: float = _CACHE_TTL):
     now = time.monotonic()
     hit = _cache.get(key)
-    if hit and now - hit[0] < _CACHE_TTL:
+    if hit and now - hit[0] < ttl:
         return hit[1]
     value = fn()
     _cache[key] = (now, value)
@@ -63,11 +65,13 @@ def _git(repo: str, *args: str, check: bool = False) -> str:
 
 
 def is_git_repo(path: str) -> bool:
-    """True if path is inside a git working tree."""
-    if not path or not os.path.isdir(path):
-        return False
-    res = _run(["git", "rev-parse", "--is-inside-work-tree"], path)
-    return res.returncode == 0 and res.stdout.strip() == "true"
+    """True if path is inside a git working tree (cached 30s)."""
+    def _compute() -> bool:
+        if not path or not os.path.isdir(path):
+            return False
+        res = _run(["git", "rev-parse", "--is-inside-work-tree"], path)
+        return res.returncode == 0 and res.stdout.strip() == "true"
+    return _cached(("isgitrepo", path), _compute, ttl=30.0)
 
 
 def _short(hash_full: str) -> str:
@@ -290,13 +294,15 @@ def _blob(repo: str, rev: str, path: str) -> str:
 
 def diff_file(repo: str, path: str, old_ref: str = "HEAD") -> tuple:
     """Return (old_text, new_text) for a working-tree file against old_ref."""
-    old = _blob(repo, old_ref, path)
-    try:
-        with open(os.path.join(repo, path), "r", encoding="utf-8", errors="replace") as fh:
-            new = fh.read()
-    except OSError:
-        new = ""
-    return old, new
+    def _compute() -> tuple:
+        old = _blob(repo, old_ref, path)
+        try:
+            with open(os.path.join(repo, path), "r", encoding="utf-8", errors="replace") as fh:
+                new = fh.read()
+        except OSError:
+            new = ""
+        return old, new
+    return _cached(("diff", repo, path, old_ref), _compute, ttl=_CACHE_TTL)
 
 
 # --------------------------------------------------------------------------- #
@@ -338,8 +344,10 @@ def _stash_list_uncached(repo: str) -> List[dict]:
 
 def stash_diff(repo: str, ref: str) -> tuple:
     """(old, new) text for a stash's combined diff."""
-    old = _git(repo, "stash", "show", "-p", ref)
-    return old, old
+    def _compute() -> tuple:
+        old = _git(repo, "stash", "show", "-p", ref)
+        return old, old
+    return _cached(("stashdiff", repo, ref), _compute, ttl=_CACHE_TTL)
 
 
 # --------------------------------------------------------------------------- #
@@ -452,7 +460,7 @@ def pr_list(repo: str, limit: int = 20) -> List[dict]:
     """List PRs for the repo's origin remote via gh (empty if unavailable)."""
     def _compute() -> List[dict]:
         return _pr_list_uncached(repo, limit)
-    return _cached(("prlist", repo), _compute)
+    return _cached(("prlist", repo), _compute, ttl=_GH_TTL)
 
 
 def _pr_list_uncached(repo: str, limit: int) -> List[dict]:
@@ -484,35 +492,39 @@ def _pr_list_uncached(repo: str, limit: int) -> List[dict]:
 
 def pr_detail(repo: str, number: int) -> dict:
     """Full PR detail via gh (gracefully empty on failure)."""
-    owner_repo = _gh(repo, "repo", "view", "--json", "nameWithOwner", "-q", ".nameWithOwner").strip()
-    if not owner_repo:
-        return {}
-    raw = _gh(repo, "pr", "view", str(number), "--repo", owner_repo,
-              "--json", "title,body,state,author,headRefName,baseRefName,commits,additions,deletions,files,mergeable,createdAt")
-    if not raw.strip():
-        return {}
-    try:
-        import json
-        return json.loads(raw)
-    except json.JSONDecodeError:
-        return {}
+    def _compute() -> dict:
+        owner_repo = _gh(repo, "repo", "view", "--json", "nameWithOwner", "-q", ".nameWithOwner").strip()
+        if not owner_repo:
+            return {}
+        raw = _gh(repo, "pr", "view", str(number), "--repo", owner_repo,
+                  "--json", "title,body,state,author,headRefName,baseRefName,commits,additions,deletions,files,mergeable,createdAt")
+        if not raw.strip():
+            return {}
+        try:
+            import json
+            return json.loads(raw)
+        except json.JSONDecodeError:
+            return {}
+    return _cached(("prdetail", repo, number), _compute, ttl=_GH_TTL)
 
 
 def pr_files(repo: str, number: int) -> List[dict]:
-    owner_repo = _gh(repo, "repo", "view", "--json", "nameWithOwner", "-q", ".nameWithOwner").strip()
-    if not owner_repo:
-        return []
-    raw = _gh(repo, "pr", "view", str(number), "--repo", owner_repo,
-              "--json", "files")
-    if not raw.strip():
-        return []
-    try:
-        import json
-        files = json.loads(raw)
-    except json.JSONDecodeError:
-        return []
-    return [{"path": f.get("path", ""), "add": f.get("additions", 0), "del": f.get("deletions", 0),
-             "state": "viewed"} for f in files]
+    def _compute() -> List[dict]:
+        owner_repo = _gh(repo, "repo", "view", "--json", "nameWithOwner", "-q", ".nameWithOwner").strip()
+        if not owner_repo:
+            return []
+        raw = _gh(repo, "pr", "view", str(number), "--repo", owner_repo,
+                  "--json", "files")
+        if not raw.strip():
+            return []
+        try:
+            import json
+            files = json.loads(raw)
+        except json.JSONDecodeError:
+            return []
+        return [{"path": f.get("path", ""), "add": f.get("additions", 0), "del": f.get("deletions", 0),
+                 "state": "viewed"} for f in files]
+    return _cached(("prfiles", repo, number), _compute, ttl=_GH_TTL)
 
 
 def pr_merge(repo: str, number: int, method: str = "squash") -> tuple:

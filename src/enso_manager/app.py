@@ -52,9 +52,8 @@ def draw(ctx: ui.UI) -> None:
         draw._state = _seed_state()
     state = draw._state
 
-    # Refresh the registered-repo list each frame (cheap; reads a small file).
-    state["repos"] = repos.list_repos()
-
+    # The repo list only changes on explicit add/remove (which update state
+    # directly); don't re-read the registry file on every frame.
     apply_theme(ctx)
 
     from . import shell
