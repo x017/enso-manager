@@ -2,7 +2,7 @@
 
 Lists the repo's actual stashes with Apply / Pop / Branch / Drop actions, a
 live repository-activity chart, and an inspector that shows a stash's diff via
-nexa's diff_view.
+nexa's diff_view. The list supports live search and sort.
 """
 
 from __future__ import annotations
@@ -19,18 +19,55 @@ def draw(ctx: ui.UI, state: dict) -> None:
         _no_repo(ctx)
         return
     stashes = git_backend.stash_list(repo)
+
+    # Live filter + sort.
+    search = (state.get("stash_search", "") or "").strip().lower()
+    flt = [s for s in stashes
+           if not search
+           or search in s["title"].lower() or search in s["ref"].lower()
+           or search in s["branch"].lower() or search in s["by"].lower()]
+    newest_first = state.get("stash_sort", 0) == 0
+    if not newest_first:
+        flt = list(reversed(flt))
+
     with ctx.column(width=ui.FILL, gap=12, pad_x=24, pad_bottom=28):
         _header(ctx, repo, stashes)
-        _filter_bar(ctx, state, stashes)
+        _filter_bar(ctx, state, flt, len(stashes))
+        if not stashes:
+            _empty_state(ctx)
+            return
+        if not flt:
+            _no_matches(ctx, search)
+            return
         with ctx.row(width=ui.FILL, gap=12):
-            _left(ctx, state, repo, stashes)
-            _right(ctx, state, repo, stashes)
+            _left(ctx, state, repo, flt)
+            _right(ctx, state, repo, flt)
 
 
 def _no_repo(ctx: ui.UI) -> None:
     with ctx.card(width=ui.FILL, pad=24, align=ui.Align.CENTER):
         ctx.text("Select a repository from the dashboard to manage its stashes.",
                  font=ui.FontRole.BODY, size=13, color=ui.Color.TEXT_MUTED)
+
+
+def _empty_state(ctx: ui.UI) -> None:
+    with ctx.card(width=ui.FILL, pad=32, align=ui.Align.CENTER, gap=10):
+        with ctx.column(gap=10, align=ui.Align.CENTER):
+            with ctx.box(bg=ui.Color.SURFACE_MUTED, radius=12, width=56, height=56,
+                         align=ui.Align.CENTER):
+                ctx.icon(ic("archive"), 28, ui.Color.TEXT_MUTED)
+            ctx.text("No stashes yet", font=ui.FontRole.MEDIUM, size=15, color=ui.Color.FOREGROUND)
+            ctx.text("Your working tree is clean and nothing has been shelved.",
+                     font=ui.FontRole.BODY, size=12, color=ui.Color.TEXT_MUTED)
+            ctx.text("Use “+ New Stash” to shelve current changes for later.",
+                     font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
+
+
+def _no_matches(ctx: ui.UI, search: str) -> None:
+    with ctx.card(width=ui.FILL, pad=24, align=ui.Align.CENTER, gap=6):
+        ctx.icon(ic("search"), 24, ui.Color.TEXT_MUTED)
+        ctx.text(f"No stashes match “{search}”.", font=ui.FontRole.BODY, size=13,
+                 color=ui.Color.TEXT_MUTED)
 
 
 def _header(ctx: ui.UI, repo: str, stashes: list) -> None:
@@ -46,28 +83,32 @@ def _header(ctx: ui.UI, repo: str, stashes: list) -> None:
                     ctx.text("Isolate, inspect, restore, or branch from deferred local changes.",
                              font=ui.FontRole.BODY, size=12, color=ui.Color.TEXT_MUTED)
             with ctx.column(gap=6, align=ui.Align.END):
-                if ui.button("+ New Stash", icon=ui.Icon.PLUS, variant=ui.ButtonVariant.PRIMARY, size=ui.ControlSize.SM):
+                if ui.button("+ New Stash", icon=ui.Icon.PLUS, variant=ui.ButtonVariant.PRIMARY,
+                             size=ui.ControlSize.SM):
                     git_backend.stash_push(repo)
                     git_backend.clear_cache()
-                ui.button("Pop Latest", icon=ui.Icon.ARROW_DOWN, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
-                ui.button("Apply Latest", icon=ui.Icon.CHECK, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
-                ui.button("Clear All", icon=ui.Icon.TRASH_2, variant=ui.ButtonVariant.DANGER, size=ui.ControlSize.SM)
 
 
-def _filter_bar(ctx: ui.UI, state: dict, stashes: list) -> None:
+def _filter_bar(ctx: ui.UI, state: dict, flt: list, total: int) -> None:
     with ctx.box(bg=ui.Color.hex("#0e0e0e"), border_color=ui.Color.BORDER_SUBTLE, radius=8, pad=8, gap=8):
         with ctx.row(align=ui.Align.CENTER, gap=8, wrap=True):
             state["stash_search"] = ui.search("stash_search", state.get("stash_search", ""),
                                               width=ui.PX(240), max_bytes=128)
-            ui.button("Sort: Newest First", icon=ui.Icon.CHEVRON_DOWN, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
+            newest_first = state.get("stash_sort", 0) == 0
+            if ui.button(f"Sort: {'Newest' if newest_first else 'Oldest'} First",
+                         icon=ui.Icon.CHEVRON_DOWN, variant=ui.ButtonVariant.SECONDARY,
+                         size=ui.ControlSize.SM):
+                state["stash_sort"] = 0 if not newest_first else 1
         with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
-            ctx.text(f"{len(stashes)} saved diff set(s)", font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
-            total_add = sum(s["add"] for s in stashes)
-            total_del = sum(s["del"] for s in stashes)
-            ctx.text(f"total delta: +{total_add}, -{total_del}", font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
+            ctx.text(f"{len(flt)} of {total} saved diff set(s)", font=ui.FontRole.MONO, size=11,
+                     color=ui.Color.TEXT_MUTED)
+            total_add = sum(s["add"] for s in flt)
+            total_del = sum(s["del"] for s in flt)
+            ctx.text(f"total delta: +{total_add}, -{total_del}", font=ui.FontRole.MONO, size=11,
+                     color=ui.Color.TEXT_MUTED)
 
 
-def _stash_card(ctx: ui.UI, s: dict, selected: bool) -> None:
+def _stash_card(ctx: ui.UI, state: dict, repo: str, s: dict, selected: bool, idx: int) -> None:
     with ctx.card(selected=selected, pad=14, gap=8):
         with ctx.row(align=ui.Align.CENTER, gap=6, wrap=True):
             ui.badge(s["ref"], tone=ui.Tone.ACCENT, size=ui.ControlSize.SM)
@@ -80,21 +121,31 @@ def _stash_card(ctx: ui.UI, s: dict, selected: bool) -> None:
             ctx.text(f"+{s['add']}", font=ui.FontRole.MONO, size=11, color=ui.Color.SUCCESS)
             ctx.text(f"-{s['del']}", font=ui.FontRole.MONO, size=11, color=ui.Color.DANGER)
         with ctx.row(align=ui.Align.CENTER, gap=4):
-            ui.button("Apply", icon=ui.Icon.CHECK, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
-            ui.button("Pop", icon=ui.Icon.ARROW_DOWN, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
-            ui.button("Branch", icon=ui.Icon.GIT_BRANCH, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
-            ui.button("", icon=ui.Icon.TRASH_2, variant=ui.ButtonVariant.DANGER, size=ui.ControlSize.SM, tooltip="Drop stash")
+            if ui.button(f"Apply {idx}", icon=ui.Icon.CHECK, variant=ui.ButtonVariant.SECONDARY,
+                         size=ui.ControlSize.SM):
+                git_backend.stash_apply(repo, s["ref"])
+                git_backend.clear_cache()
+            if ui.button(f"Pop {idx}", icon=ui.Icon.ARROW_DOWN, variant=ui.ButtonVariant.SECONDARY,
+                         size=ui.ControlSize.SM):
+                git_backend.stash_pop(repo, s["ref"])
+                git_backend.clear_cache()
+            if ui.button(f"Branch {idx}", icon=ui.Icon.GIT_BRANCH, variant=ui.ButtonVariant.SECONDARY,
+                         size=ui.ControlSize.SM):
+                git_backend.stash_apply(repo, s["ref"])
+                git_backend.new_branch(repo, f"stash/{s['ref'].replace('stash@{', '').replace('}', '')}")
+                git_backend.clear_cache()
+            if ui.button(f"Drop {idx}", icon=ui.Icon.TRASH_2, variant=ui.ButtonVariant.DANGER,
+                         size=ui.ControlSize.SM, tooltip="Drop stash"):
+                git_backend.stash_drop(repo, s["ref"])
+                git_backend.clear_cache()
 
 
 def _left(ctx: ui.UI, state: dict, repo: str, stashes: list) -> None:
     with ctx.column(width=ui.GROW(1), min_width=340, gap=12):
         with ctx.scroll("stash_list", width=ui.FILL, height=300):
             with ctx.column(gap=12):
-                if not stashes:
-                    ctx.text("No stashes — use “+ New Stash” to shelve current changes.",
-                             font=ui.FontRole.BODY, size=12, color=ui.Color.TEXT_MUTED)
                 for i, s in enumerate(stashes):
-                    _stash_card(ctx, s, state.get("stash_sel") == i)
+                    _stash_card(ctx, state, repo, s, state.get("stash_sel") == i, i)
 
         # repository activity chart (real commit history)
         with ctx.card(width=ui.FILL, pad=12, gap=8):

@@ -90,11 +90,13 @@ def _file_row(ctx: ui.UI, state: dict, repo: str, entry: dict, group: str, tone)
                     ctx.text(f"+{entry['add']}", font=ui.FontRole.MONO, size=11, color=ui.Color.SUCCESS)
                     ctx.text(f"-{entry['del']}", font=ui.FontRole.MONO, size=11, color=ui.Color.DANGER)
         if group == "staged":
-            if ui.button("Unstage", icon=ui.Icon.MINUS, variant=ui.ButtonVariant.GHOST, size=ui.ControlSize.SM):
+            if ui.button(f"Unstage {entry['path']}", icon=ui.Icon.MINUS,
+                         variant=ui.ButtonVariant.GHOST, size=ui.ControlSize.SM):
                 git_backend.unstage(repo, [entry["path"]])
                 git_backend.clear_cache()
         else:
-            if ui.button("Stage", icon=ui.Icon.PLUS, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM):
+            if ui.button(f"Stage {entry['path']}", icon=ui.Icon.PLUS,
+                         variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM):
                 git_backend.stage(repo, [entry["path"]])
                 git_backend.clear_cache()
 

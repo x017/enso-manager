@@ -75,7 +75,9 @@ def _left(ctx: ui.UI, state: dict, repo: str, prs: list) -> None:
                         with ctx.row(align=ui.Align.CENTER, gap=6):
                             ctx.text(f"@{p['author']}", font=ui.FontRole.MONO, size=10, color=ui.Color.TEXT_MUTED)
                             ctx.text(f"{p['commits']} commits · {p['files']} files", font=ui.FontRole.MONO, size=10, color=ui.Color.TEXT_MUTED)
-                            if ui.button("Open", icon=ui.Icon.ARROW_RIGHT, variant=ui.ButtonVariant.GHOST, size=ui.ControlSize.SM):
+                            # Unique label per row so hover only glows the hovered button.
+                            if ui.button(f"Open #{p['number']}", icon=ui.Icon.ARROW_RIGHT,
+                                         variant=ui.ButtonVariant.GHOST, size=ui.ControlSize.SM):
                                 state["pr_sel"] = i
 
 
@@ -90,14 +92,14 @@ def _right(ctx: ui.UI, state: dict, repo: str, prs: list) -> None:
     detail = git_backend.pr_detail(repo, p["number"])
     files = git_backend.pr_files(repo, p["number"])
     with ctx.column(width=ui.GROW(2), min_width=420, gap=12):
-        _detail_header(ctx, p, detail)
+        _detail_header(ctx, state, repo, p, detail)
         if detail.get("body"):
             ctx.markdown("pr_desc", detail["body"], width=ui.FILL)
         _files_list(ctx, files)
         _diff(ctx, state, repo, p, files)
 
 
-def _detail_header(ctx: ui.UI, p: dict, detail: dict) -> None:
+def _detail_header(ctx: ui.UI, state: dict, repo: str, p: dict, detail: dict) -> None:
     with ctx.card(width=ui.FILL, pad=14, gap=8):
         author = detail.get("author", {}).get("login", p["author"]) if isinstance(detail.get("author"), dict) else p["author"]
         with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER, wrap=True, gap=8):
@@ -109,14 +111,15 @@ def _detail_header(ctx: ui.UI, p: dict, detail: dict) -> None:
                 ctx.text(f"@{author} · {p['commits']} commits · +{p['add']}/-{p['del']} · {p['files']} files",
                          font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
             with ctx.column(gap=6, align=ui.Align.END):
-                with ui.menu("merge_menu", icon=ui.Icon.GIT_BRANCH, variant=ui.ButtonVariant.PRIMARY) as ms:
-                    if ms:
-                        ui.menu_item("Squash & Merge", icon="git_branch")
-                        ui.menu_item("Rebase & Merge", icon="git_branch")
-                        ui.menu_item("Create a Merge Commit", icon="git_branch")
-                        ui.menu_separator()
-                        ui.menu_item("Auto-delete branch", icon="trash_2", checked=True)
-                ui.button("Checkout", icon=ui.Icon.TERMINAL, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
+                if ui.button(f"Merge #{p['number']}", icon=ui.Icon.GIT_BRANCH,
+                             variant=ui.ButtonVariant.PRIMARY, size=ui.ControlSize.SM):
+                    ok, out = git_backend.pr_merge(repo, p["number"], "squash")
+                    git_backend.clear_cache()
+                    state["merge_msg"] = out if not ok else f"PR #{p['number']} merged"
+                if state.get("merge_msg"):
+                    ctx.text(state["merge_msg"][:50], font=ui.FontRole.MONO, size=10, color=ui.Color.TEXT_MUTED)
+                ui.button(f"Checkout #{p['number']}", icon=ui.Icon.TERMINAL,
+                          variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
 
 
 def _files_list(ctx: ui.UI, files: list) -> None:

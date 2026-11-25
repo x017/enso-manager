@@ -519,8 +519,9 @@ def pr_files(repo: str, number: int) -> List[dict]:
             return []
         try:
             import json
-            files = json.loads(raw)
-        except json.JSONDecodeError:
+            data = json.loads(raw)
+            files = data["files"] if isinstance(data, dict) else data
+        except (json.JSONDecodeError, KeyError):
             return []
         return [{"path": f.get("path", ""), "add": f.get("additions", 0), "del": f.get("deletions", 0),
                  "state": "viewed"} for f in files]

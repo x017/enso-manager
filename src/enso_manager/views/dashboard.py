@@ -169,8 +169,8 @@ def _analytics_row(ctx: ui.UI, activity, diurnal) -> None:
                     for i, label in enumerate(["Less", "More"]):
                         ctx.text(label, font=ui.FontRole.MONO, size=10, color=ui.Color.TEXT_MUTED)
                         _heat_swatch(ctx, i)
-            padded = (activity + [0, 0])[:26 * 7]
-            ctx.heatmap("commit_heat", padded, 26, 7, min_value=0, max_value=max(padded + [1]),
+            vals, hr, hc = _heatmap_grid(activity)
+            ctx.heatmap("commit_heat", vals, hr, hc, min_value=0, max_value=max(vals + [1]),
                         color=ui.Color.SUCCESS, cell=11, width=ui.FILL)
         # Diurnal activity
         with ctx.card(width=ui.GROW(1), min_width=340, pad=14, gap=8):
@@ -191,6 +191,30 @@ def _heat_swatch(ctx: ui.UI, i: int) -> None:
     alpha = 0.15 + i * 0.35
     with ctx.box(width=12, height=12, radius=3, bg=ui.Color.SUCCESS.with_alpha(alpha)):
         pass
+
+
+def _heatmap_grid(activity: list):
+    """Build a 7-row (days) x 26-col (weeks) grid, newest at bottom-right.
+
+    ``activity`` is oldest-first (one count per day). The grid is aligned so
+    the most recent day sits at the bottom-right cell and each column is a
+    7-day week, matching the design's Commit Frequency Matrix.
+    """
+    import datetime
+    rows, cols = 7, 26
+    today = datetime.date.today()
+    n = len(activity)
+    cmap = {}
+    for i, v in enumerate(activity):
+        d = today - datetime.timedelta(days=n - 1 - i)
+        cmap[d] = v
+    vals = []
+    for r in range(rows):
+        for c in range(cols):
+            days_ago = (rows - 1 - r) + 7 * (cols - 1 - c)
+            d = today - datetime.timedelta(days=days_ago)
+            vals.append(cmap.get(d, 0))
+    return vals, rows, cols
 
 
 def _bottom_row(ctx: ui.UI, state: dict, feed, contrib) -> None:

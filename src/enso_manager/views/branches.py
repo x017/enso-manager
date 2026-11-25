@@ -102,14 +102,20 @@ def _branch_row(ctx: ui.UI, state: dict, repo: str, b: dict, local: bool) -> Non
                     ctx.text(f"{b['ahead']}↑ {b['behind']}↓", font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
                 if local:
                     if b.get("is_current"):
-                        ui.button("Checkout", variant=ui.ButtonVariant.GHOST, size=ui.ControlSize.SM)
-                    else:
-                        if ui.button("Checkout", icon=ui.Icon.ARROW_RIGHT, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM):
-                            git_backend.checkout(repo, b["name"])
-                            git_backend.clear_cache()
-                    ui.button("Push", icon=ui.Icon.ARROW_UP, variant=ui.ButtonVariant.GHOST, size=ui.ControlSize.SM)
+                        # Already checked out — show a disabled "Current" state, not "Checkout".
+                        ui.button("Current", icon=ui.Icon.CHECK, variant=ui.ButtonVariant.GHOST,
+                                  size=ui.ControlSize.SM, disabled=True)
+                    elif ui.button(f"Checkout {b['name']}", icon=ui.Icon.ARROW_RIGHT,
+                                   variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM):
+                        git_backend.checkout(repo, b["name"])
+                        git_backend.clear_cache()
+                    if ui.button(f"Push {b['name']}", icon=ui.Icon.ARROW_UP,
+                                 variant=ui.ButtonVariant.GHOST, size=ui.ControlSize.SM):
+                        git_backend.push(repo, b["name"])
+                        git_backend.clear_cache()
                 else:
-                    if ui.button("Track", icon=ui.Icon.DOWNLOAD, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM):
+                    if ui.button(f"Track {b['name']}", icon=ui.Icon.DOWNLOAD,
+                                 variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM):
                         git_backend.new_branch(repo, b["name"].split("/", 1)[1] if "/" in b["name"] else b["name"], b["name"])
                         git_backend.clear_cache()
 

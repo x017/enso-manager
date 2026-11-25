@@ -80,14 +80,28 @@ def draw_header(ctx: ui.UI, state: dict) -> None:
                                             width=ui.PX(248), max_bytes=128)
                 ui.kbd("⌘K")
 
-            # action buttons
+            # action buttons (functional — drive the real git backend)
             with ctx.row(align=ui.Align.CENTER, gap=6):
-                ui.button("Fetch", icon=ui.Icon.REFRESH_CW, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
-                ui.button("Pull", icon=ui.Icon.ARROW_DOWN, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
-                ui.button("Push", icon=ui.Icon.ARROW_UP, variant=ui.ButtonVariant.PRIMARY, size=ui.ControlSize.SM)
-                ui.button("Stash", icon=ui.Icon.ARCHIVE, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
-                ui.icon_button(ui.Icon.TERMINAL, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM,
-                               tooltip="Open terminal")
+                if ui.button("Fetch", icon=ui.Icon.REFRESH_CW, variant=ui.ButtonVariant.SECONDARY,
+                             size=ui.ControlSize.SM):
+                    ok, out = git_backend.fetch(state.get("repo", ""))
+                    git_backend.clear_cache()
+                    state["action_msg"] = out if not ok else f"fetched from {info.upstream}" if info and info.upstream else "fetch complete"
+                if ui.button("Pull", icon=ui.Icon.ARROW_DOWN, variant=ui.ButtonVariant.SECONDARY,
+                             size=ui.ControlSize.SM):
+                    ok, out = git_backend.pull(state.get("repo", ""))
+                    git_backend.clear_cache()
+                    state["action_msg"] = out if not ok else "pull complete"
+                if ui.button("Push", icon=ui.Icon.ARROW_UP, variant=ui.ButtonVariant.PRIMARY,
+                             size=ui.ControlSize.SM):
+                    ok, out = git_backend.push(state.get("repo", ""))
+                    git_backend.clear_cache()
+                    state["action_msg"] = out if not ok else "push complete"
+                if ui.button("Stash", icon=ui.Icon.ARCHIVE, variant=ui.ButtonVariant.SECONDARY,
+                             size=ui.ControlSize.SM):
+                    git_backend.stash_push(state.get("repo", ""))
+                    git_backend.clear_cache()
+                    state["action_msg"] = "stashed current changes"
 
             # user avatar (pfp)
             avatars.avatar(ctx, "x017", size=32)
@@ -100,16 +114,18 @@ def draw_sidebar(ctx: ui.UI, state: dict) -> None:
         with ctx.column(gap=2, pad_x=2):
             for vid, label, icon, badge in NAV:
                 sel = state.get("view") == vid
-                if ui.nav_item(label, icon=icon, badge=badge, selected=sel):
+                if ui.nav_item(label, icon=icon, badge=badge, selected=sel, group="nav"):
                     state["view"] = vid
 
-        # Registered repos (click to switch)
+        # Registered repos (click to switch). Kept in a separate nav group so
+        # the page-nav selection animation never jumps onto a repo row.
         ctx.text("REPOS", font=ui.FontRole.BODY, size=11, color=ui.Color.TEXT_MUTED)
         with ctx.column(gap=2, pad_x=2):
             current_repo = state.get("repo", "")
             for r in state.get("repos", []):
                 sel = os.path.abspath(r["path"]) == os.path.abspath(current_repo)
-                if ui.nav_item(r["name"], icon=ic("folder"), selected=sel, badge=r["path"].split("/")[-2] if "/" in r["path"] else ""):
+                if ui.nav_item(r["name"], icon=ic("folder"), selected=sel, group="repos",
+                               badge=r["path"].split("/")[-2] if "/" in r["path"] else ""):
                     state["repo"] = r["path"]
                     git_backend.clear_cache()
             if not state.get("repos"):
@@ -171,6 +187,8 @@ def draw_statusbar(ctx: ui.UI, state: dict) -> None:
         else:
             ui.status_bar_text("no repo", tone=ui.Tone.NEUTRAL)
         ui.status_bar_spacer()
+        if state.get("action_msg"):
+            ui.status_bar_text(state["action_msg"][:60], tone=ui.Tone.ACCENT)
         ui.status_bar_text("LF", tone=ui.Tone.NEUTRAL)
         ui.status_bar_text("UTF-8", tone=ui.Tone.NEUTRAL)
         ui.status_bar_item("synced", icon=ui.Icon.CLOUD, tone=ui.Tone.SUCCESS)

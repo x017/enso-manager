@@ -128,7 +128,8 @@ def _cherry_picker(ctx: ui.UI, state: dict, repo: str, current: str, targets: li
                         with ctx.row(align=ui.Align.CENTER, gap=8):
                             ctx.text(c["short"], font=ui.FontRole.MONO, size=12, color=ui.Color.FOREGROUND)
                             ctx.text(c["message"], font=ui.FontRole.BODY, size=12, color=ui.Color.TEXT_SECONDARY)
-                        ui.button("Cherry-Pick", icon=ui.Icon.PLUS, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
+                        ui.button(f"Cherry-Pick {c['short']}", icon=ui.Icon.PLUS,
+                                   variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
 
 
 def _right(ctx: ui.UI, state: dict, repo: str, current: str) -> None:

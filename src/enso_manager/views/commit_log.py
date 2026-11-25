@@ -18,13 +18,38 @@ def draw(ctx: ui.UI, state: dict) -> None:
     if not repo:
         _no_repo(ctx)
         return
-    commits = git_backend.log(repo, limit=60)
+    branches_data = git_backend.branches(repo)
+    contrib = git_backend.contributor_stats(repo)
+    branch_opts = ["All Branches"] + [b["name"] for b in branches_data["local"]]
+    author_opts = ["All Authors"] + [c["name"] for c in contrib]
+
+    lb = state.get("log_branch", 0)
+    la = state.get("log_author", 0)
+    if lb >= len(branch_opts):
+        lb = 0
+        state["log_branch"] = 0
+    if la >= len(author_opts):
+        la = 0
+        state["log_author"] = 0
+    branch = None if lb == 0 else branch_opts[lb]
+    author = None if la == 0 else author_opts[la]
+
+    commits = git_backend.log(repo, limit=60, branch=branch, author=author)
+
+    # live search filter
+    search = (state.get("log_search", "") or "").strip().lower()
+    if search:
+        commits = [c for c in commits
+                   if search in c["message"].lower() or search in c["author"].lower()
+                   or search in c["short"].lower()]
+    # sort (graph stays newest-first; list order follows the toggle)
+    display = list(reversed(commits)) if state.get("log_sort", 0) == 1 else commits
     graph_commits = _to_graph(commits)
     with ctx.column(width=ui.FILL, gap=12, pad_x=24, pad_bottom=28):
-        _toolbar(ctx, state, repo)
+        _toolbar(ctx, state, branch_opts, author_opts)
         with ctx.row(width=ui.FILL, gap=12):
             _left(ctx, state, graph_commits)
-            _right(ctx, state, repo, commits)
+            _right(ctx, state, repo, display)
 
 
 def _no_repo(ctx: ui.UI) -> None:
@@ -47,20 +72,19 @@ def _to_graph(commits: list) -> list:
     return out
 
 
-def _toolbar(ctx: ui.UI, state: dict, repo: str) -> None:
+def _toolbar(ctx: ui.UI, state: dict, branch_opts: list, author_opts: list) -> None:
     with ctx.card(width=ui.FILL, pad=12, gap=8):
         with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER, wrap=True, gap=12):
             with ctx.row(align=ui.Align.CENTER, gap=6):
                 ctx.icon(ic("list"), 16, ui.Color.ACCENT)
                 ctx.text("Commit History", font=ui.FontRole.MEDIUM, size=15, color=ui.Color.FOREGROUND)
             with ctx.row(align=ui.Align.CENTER, gap=6, wrap=True):
-                state["log_branch"] = ui.select("log_branch", ["All Branches", "main", "HEAD"],
-                                                state.get("log_branch", 0))
-                state["log_author"] = ui.select("log_author", ["All Authors", "x017", "Parsa"],
-                                                state.get("log_author", 0))
+                state["log_branch"] = ui.select("log_branch", branch_opts, state.get("log_branch", 0))
+                state["log_author"] = ui.select("log_author", author_opts, state.get("log_author", 0))
                 state["log_sort"] = ui.segmented("log_sort", ["Newest", "Oldest"], state.get("log_sort", 0),
                                                  size=ui.ControlSize.SM)
-                ui.search("log_search", state.get("log_search", ""), width=ui.PX(180), max_bytes=128)
+                state["log_search"] = ui.search("log_search", state.get("log_search", ""),
+                                                width=ui.PX(180), max_bytes=128)
 
 
 def _left(ctx: ui.UI, state: dict, commits: list) -> None:
@@ -93,7 +117,8 @@ def _right(ctx: ui.UI, state: dict, repo: str, commits: list) -> None:
                                 with ctx.row(align=ui.Align.CENTER, gap=4):
                                     for r in c["refs"][:2]:
                                         ui.badge(r, tone=ui.Tone.ACCENT, size=ui.ControlSize.SM)
-                            if ui.button("Select", icon=ui.Icon.CHECK, variant=ui.ButtonVariant.GHOST, size=ui.ControlSize.SM):
+                            if ui.button(f"Select {c['short']}", icon=ui.Icon.CHECK,
+                                         variant=ui.ButtonVariant.GHOST, size=ui.ControlSize.SM):
                                 state["sel"] = i
         # Detail panel
         sel = state.get("sel")
