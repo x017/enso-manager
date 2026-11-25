@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "background": "#131313", "primary-container": "#6ba3ff", "on-surface": "#e5e2e1", "outline": "#8c919d", "on-tertiary-fixed": "#410004", "inverse-surface": "#e5e2e1", "series-branch-4": "#a3a0f1", "primary-fixed": "#d7e3ff", "surface-container-highest": "#353534", "on-background": "#e5e2e1", "surface-canvas": "#121212", "on-secondary": "#003824", "secondary-fixed": "#7bfac0", "status-info": "#7cc4f0", "series-branch-6": "#e18cb5", "secondary": "#5ddda5", "on-tertiary": "#66060f", "tertiary-container": "#ff7b76", "inverse-on-surface": "#313030", "series-branch-3": "#5ac299", "secondary-fixed-dim": "#5ddda5", "on-secondary-fixed": "#002113", "text-primary": "#f2f2f2", "inverse-primary": "#135db4", "on-primary-fixed-variant": "#00458e", "on-secondary-fixed-variant": "#005236", "text-muted": "#8c8c8c", "surface-muted": "#242424", "tertiary-fixed": "#ffdad7", "surface-container-low": "#1c1b1b", "surface-panel": "#181818", "on-surface-variant": "#c2c6d4", "outline-variant": "#424752", "status-warning": "#f2bd68", "surface-container-high": "#2a2a2a", "border-focus": "#55adff", "series-branch-5": "#d1a24f", "on-primary-container": "#003875", "on-tertiary-container": "#731217", "border-hairline": "#2b2b2b", "text-secondary": "#b4b4b4", "surface": "#131313", "surface-container": "#201f1f", "tertiary": "#ffb3ae", "surface-variant": "#353534", "surface-sunk": "#0e0e0e", "border-subtle": "#222222", "series-branch-2": "#e7936c", "series-branch-1": "#73aff1", "secondary-container": "#04a572", "surface-container-lowest": "#0e0e0e", "surface-raised": "#1f1f1f", "on-error": "#690005", "on-secondary-container": "#00311f", "surface-bright": "#393939", "primary-fixed-dim": "#aac7ff", "surface-dim": "#131313", "on-primary-fixed": "#001b3e", "on-tertiary-fixed-variant": "#862122", "surface-tint": "#aac7ff", "error-container": "#93000a", "on-primary": "#002f65", "error": "#ffb4ab", "primary": "#aac7ff", "tertiary-fixed-dim": "#ffb3ae", "on-error-container": "#ffdad6" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-lg": "1rem", "margin": "1rem", "margin-desktop": "1.5rem", "space-sm": "0.5rem", "gutter": "0.75rem", "space-md": "0.75rem", "gutter-desktop": "1rem", "space-xl": "1.5rem", "space-xs": "0.25rem" }, "fontFamily": { "body-md": ["Inter"], "headline-md": ["Geist"], "code-base": ["JetBrains Mono"], "headline-lg": ["Geist"], "headline-lg-mobile": ["Geist"], "label-md": ["Inter"], "title-md": ["Geist"], "body-lg": ["Inter"], "headline-sm": ["Geist"], "code-metric": ["JetBrains Mono"], "label-sm": ["Inter"] }, "fontSize": { "body-md": ["13px", { "lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400" }], "headline-md": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "500" }], "code-base": ["12.5px", { "lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400" }], "headline-lg": ["36px", { "lineHeight": "40px", "letterSpacing": "-0.025em", "fontWeight": "500" }], "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "500" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0", "fontWeight": "500" }], "title-md": ["17px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "500" }], "body-lg": ["15px", { "lineHeight": "23px", "letterSpacing": "0", "fontWeight": "400" }], "headline-sm": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "500" }], "code-metric": ["15px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500" }], "label-sm": ["11px", { "lineHeight": "15px", "letterSpacing": "0.04em", "fontWeight": "500" }] } } } };</script></head><body class="bg-surface-canvas text-on-surface font-body-md text-body-md min-h-screen selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 left-0 right-0 h-16 bg-surface-panel/90 backdrop-blur-xl z-50 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full px-margin-desktop flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md shrink-0"><div class="flex items-center gap-space-xs pr-space-sm"><span class="w-3 h-3 rounded-full bg-error inline-block"></span><span class="w-3 h-3 rounded-full bg-status-warning inline-block"></span><span class="w-3 h-3 rounded-full bg-secondary inline-block"></span></div><img alt="GitNex Repo Manager Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrDHboWyClxBvwwYRqnqbB01OXauToGyMLrTuH_EwkyAkgTCyW575dwfxBYGT_8d-e96uwEf4-qWwICGxu3oIfyvvRdL2ld53QPdC6kUSBbM39bAROIlfswWN4Ixw4dK5YRX_ZaOXUU_R3IBH7Fk9AL_OdsbvTQii_jpCBSvP5CLMf-xTt9S1YyRz5R0kzlvyhYf_NyqFjVtXQiyaHvAfzwyHsvcuDQyoTy1oSV-kAsCWg"/><span class="font-title-md text-title-md text-on-surface tracking-tight font-medium">Nexa Git</span><div class="hidden xl:flex items-center gap-space-xs bg-surface-sunk py-space-xs px-space-sm rounded-lg text-on-surface-variant font-code-base text-code-base"><span class="material-symbols-outlined text-primary text-[18px]">folder</span><span class="text-on-surface font-body-md text-body-md">~/code/developer/nexa-core</span><span class="bg-surface-container-high px-space-xs py-0.5 rounded text-secondary font-code-base text-code-base flex items-center gap-space-xs"><span class="material-symbols-outlined text-[14px]">commit</span>main</span><span class="text-on-surface-variant text-[11px]">0↑ 0↓</span><span class="material-symbols-outlined text-on-surface-variant text-[16px]">arrow_drop_down</span></div></div><div class="flex items-center gap-space-sm shrink-0"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-2 text-on-surface-variant text-[16px]">search</span><input class="bg-surface-sunk text-on-surface placeholder:text-on-surface-variant font-body-md text-body-md rounded-lg pl-8 pr-12 py-1.5 focus:outline-none focus:ring-2 focus:ring-border-focus w-64 lg:w-72" placeholder="Search commits, files, symbols..." type="text"/><span class="absolute right-2 font-code-base text-label-sm text-on-surface-variant bg-surface-container-high px-1 py-0.5 rounded">⌘K</span></div><div class="flex items-center gap-space-xs"><button class="bg-surface-container-high text-on-surface hover:bg-surface-bright hover:text-on-surface px-space-sm py-1.5 rounded text-label-md font-label-md flex items-center gap-1 transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">sync</span>Fetch</button><button class="bg-surface-container-high text-on-surface hover:bg-surface-bright hover:text-on-surface px-space-sm py-1.5 rounded text-label-md font-label-md flex items-center gap-1 transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">south</span>Pull</button><button class="bg-primary-container text-on-primary-container font-label-md text-label-md px-space-sm py-1.5 rounded flex items-center gap-1 transition-transform active:scale-95" type="button"><span class="material-symbols-outlined text-[16px]">north</span>Push</button><button class="bg-surface-container-high text-on-surface hover:bg-surface-bright hover:text-on-surface px-space-sm py-1.5 rounded text-label-md font-label-md flex items-center gap-1 transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">archive</span>Stash</button><button class="bg-surface-container-high text-on-surface hover:bg-surface-bright hover:text-on-surface px-space-sm py-1.5 rounded text-label-md font-label-md flex items-center gap-1 transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">terminal</span></button></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><aside class="fixed left-0 top-16 bottom-7 w-64 bg-surface-panel z-40 flex flex-col justify-between overflow-y-auto"><div class="p-space-sm space-y-space-md"><div class="text-on-surface-variant font-label-sm text-label-sm uppercase px-space-sm tracking-wider">Workspace</div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-label-md rounded-lg"><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="repository-pulse-activity-dashboard" href="#"><span class="font-label-md text-label-md">Repository Pulse &amp; Activity</span><span class="bg-surface-container-high text-secondary font-code-base text-label-sm px-space-xs py-0.5 rounded">live</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="working-tree-diff-inspector" href="#"><span class="font-label-md text-label-md">Working Tree &amp; Diff</span><span class="bg-surface-container-high text-status-warning font-code-base text-label-sm px-space-xs py-0.5 rounded">4 mod</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="interactive-commit-graph-log" href="#"><span class="font-label-md text-label-md">Commit Graph &amp; Log</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="interactive-rebase-cherry-pick-studio" href="#"><span class="font-label-md text-label-md">Interactive Rebase Studio</span><span class="bg-surface-container-high text-status-info font-code-base text-label-sm px-space-xs py-0.5 rounded">tools</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="branch-management-merge-hub" href="#"><span class="font-label-md text-label-md">Branches &amp; Merge Hub</span><span class="bg-surface-container-high text-on-surface-variant font-code-base text-label-sm px-space-xs py-0.5 rounded">5</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="pull-requests-code-review-studio" href="#"><span class="font-label-md text-label-md">Pull Requests &amp; Reviews</span><span class="bg-surface-container-high text-status-info font-code-base text-label-sm px-space-xs py-0.5 rounded">3 open</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="stash-workbench-patch-viewer" href="#"><span class="font-label-md text-label-md">Stashes &amp; Patches</span><span class="bg-surface-container-high text-on-surface-variant font-code-base text-label-sm px-space-xs py-0.5 rounded">2</span></a></nav><div class="pt-space-sm"><div class="text-on-surface-variant font-label-sm text-label-sm uppercase px-space-sm tracking-wider mb-space-xs">Local Branches</div><div class="flex flex-col gap-space-xs pl-space-sm font-code-base text-code-base"><div class="flex items-center gap-space-xs text-secondary py-1"><span class="material-symbols-outlined text-[14px]">check</span><span>main</span></div><div class="flex items-center gap-space-xs text-on-surface-variant hover:text-on-surface py-1"><span class="material-symbols-outlined text-[14px]">commit</span><span>feat/cli-tui</span></div><div class="flex items-center gap-space-xs text-on-surface-variant hover:text-on-surface py-1"><span class="material-symbols-outlined text-[14px]">commit</span><span>fix/socket</span></div></div></div><div class="pt-space-sm"><div class="text-on-surface-variant font-label-sm text-label-sm uppercase px-space-sm tracking-wider mb-space-xs">Remote (origin)</div><div class="flex flex-col gap-space-xs pl-space-sm font-code-base text-code-base text-on-surface-variant"><div class="flex items-center gap-space-xs hover:text-on-surface py-1"><span class="material-symbols-outlined text-[14px]">cloud_done</span><span>origin/main</span></div><div class="flex items-center gap-space-xs hover:text-on-surface py-1"><span class="material-symbols-outlined text-[14px]">cloud_done</span><span>origin/feat/cli-tui</span></div></div></div></div><div class="p-space-sm"><div class="bg-surface-sunk p-space-sm rounded-lg flex flex-col gap-1"><div class="flex items-center justify-between font-label-sm text-label-sm"><span class="text-on-surface-variant">Status</span><span class="text-secondary flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-secondary inline-block"></span>Clean Index</span></div><div class="font-code-base text-label-sm text-status-warning">4 unstaged changes</div><div class="text-on-surface-variant font-label-sm text-label-sm">Synced 2m ago</div></div></div></aside><div class="pl-64"><main class="relative pt-16 pb-7 w-full min-h-screen bg-surface-canvas px-margin-desktop"><div class="flex flex-col w-full">
+<!-- Top Command & PR Context Header Bar -->
+<header class="bg-surface-panel rounded-xl shadow-md p-space-md mb-space-md flex flex-col gap-space-md relative overflow-hidden">
+<!-- Subtle gradient glow behind header -->
+<div class="absolute -top-12 -right-12 w-96 h-40 bg-gradient-to-br from-primary-container/10 via-secondary/5 to-transparent blur-3xl pointer-events-none"></div>
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md z-10">
+<!-- Title & Branch Indicator -->
+<div class="flex flex-col gap-space-xs min-w-0">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="inline-flex items-center gap-1 bg-secondary/15 text-secondary px-2 py-0.5 rounded font-code-base text-label-sm uppercase font-semibold">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+            #42 Open
+          </span>
+<span class="text-text-muted font-code-base text-label-sm">opened 4 hours ago by</span>
+<div class="inline-flex items-center gap-1.5 bg-surface-container-high px-2 py-0.5 rounded-full">
+<div class="w-4 h-4 rounded-full bg-primary-container flex items-center justify-center text-[10px] text-on-primary-container font-bold">X</div>
+<span class="font-code-base text-label-sm text-text-primary">@x017</span>
+</div>
+<span class="text-text-muted font-code-base text-label-sm">• Target:</span>
+<div class="inline-flex items-center gap-1.5 bg-surface-sunk px-2.5 py-0.5 rounded font-code-base text-label-sm text-text-secondary">
+<span class="text-series-branch-1 font-semibold">feat/cli-tui</span>
+<span class="material-symbols-outlined text-[14px] text-text-muted">trending_flat</span>
+<span class="text-secondary font-semibold">main</span>
+</div>
+</div>
+<div class="flex items-center gap-space-md pt-0.5">
+<h1 class="font-headline-sm text-headline-sm text-text-primary tracking-tight truncate">
+            feat: integrate CUI skills prompt runner
+          </h1>
+<button class="text-text-muted hover:text-text-primary transition-colors" title="Copy PR Title &amp; Number">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</div>
+<!-- PR Delta stats pill -->
+<div class="flex items-center gap-space-sm font-code-base text-label-sm text-text-muted">
+<span class="text-text-secondary">3 commits</span>
+<span>•</span>
+<span class="text-secondary font-medium">+168 lines</span>
+<span class="text-error font-medium">-43 lines</span>
+<span>•</span>
+<span>4 files changed</span>
+<span>•</span>
+<span class="bg-surface-sunk text-text-muted px-1.5 py-0.2 rounded text-[10px]">mergeable: no conflicts</span>
+</div>
+</div>
+<!-- Action Cluster -->
+<div class="flex items-center gap-space-xs shrink-0 flex-wrap lg:flex-nowrap">
+<button class="bg-surface-container-high hover:bg-surface-bright text-text-primary px-space-sm py-2 rounded-lg font-label-md text-label-md flex items-center gap-1.5 transition-all shadow-sm active:scale-95" id="checkout-pr-btn">
+<span class="material-symbols-outlined text-[16px] text-primary">terminal</span>
+<span>Checkout Locally</span>
+</button>
+<button class="bg-surface-container-high hover:bg-surface-bright text-text-primary px-space-sm py-2 rounded-lg font-label-md text-label-md flex items-center gap-1.5 transition-all shadow-sm active:scale-95">
+<span class="material-symbols-outlined text-[16px] text-series-branch-5">rate_review</span>
+<span>Review Changes</span>
+</button>
+<div class="relative inline-flex items-center">
+<button class="bg-secondary text-on-secondary px-space-md py-2 rounded-l-lg font-label-md text-label-md font-semibold flex items-center gap-1.5 hover:brightness-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">call_merge</span>
+<span>Merge PR</span>
+</button>
+<button class="bg-secondary-container text-on-secondary-container px-2 py-2 rounded-r-lg font-label-md text-label-md hover:brightness-110 transition-colors" id="merge-options-btn">
+<span class="material-symbols-outlined text-[18px]">arrow_drop_down</span>
+</button>
+<!-- Merge Menu Popover (Mock visual) -->
+<div class="hidden absolute right-0 top-12 w-64 bg-surface-raised rounded-xl shadow-xl p-space-sm z-50 flex flex-col gap-space-xs" id="merge-dropdown">
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-sunk text-text-primary text-label-sm font-label-sm">
+<span class="font-medium">Squash &amp; Merge</span>
+<span class="bg-secondary/20 text-secondary text-[10px] px-1.5 py-0.5 rounded uppercase">Default</span>
+</div>
+<div class="p-2 rounded-lg hover:bg-surface-container text-text-secondary text-label-sm font-label-sm cursor-pointer">
+              Rebase &amp; Merge
+            </div>
+<div class="p-2 rounded-lg hover:bg-surface-container text-text-secondary text-label-sm font-label-sm cursor-pointer">
+              Create a Merge Commit
+            </div>
+<div class="pt-space-xs mt-space-xs bg-surface-sunk/40 rounded p-2 flex items-center justify-between">
+<span class="text-text-muted text-[11px] font-body-md">Auto-delete branch</span>
+<input checked="" class="w-3.5 h-3.5 accent-primary-container rounded cursor-pointer" type="checkbox"/>
+</div>
+</div>
+</div>
+<button class="bg-primary-container text-on-primary-container px-space-sm py-2 rounded-lg font-label-md text-label-md font-semibold flex items-center gap-1.5 hover:brightness-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>New PR</span>
+</button>
+</div>
+</div>
+<!-- CI/CD Status Ribbon & Verification Strip -->
+<div class="bg-surface-sunk rounded-lg p-space-sm flex flex-col md:flex-row md:items-center justify-between gap-space-sm text-label-sm font-label-sm">
+<div class="flex items-center gap-space-md flex-wrap">
+<!-- CI Checks -->
+<div class="flex items-center gap-2">
+<div class="w-2.5 h-2.5 rounded-full bg-secondary animate-pulse"></div>
+<span class="text-text-primary font-medium">All checks passed</span>
+<span class="text-text-muted font-code-base text-[11px] bg-surface-container px-1.5 py-0.5 rounded">4/4 passed (1m 18s)</span>
+</div>
+<div class="hidden sm:flex items-center gap-space-xs font-code-base text-[11px] text-text-muted">
+<span class="bg-surface-container px-2 py-0.5 rounded text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">check</span>cargo test
+          </span>
+<span class="bg-surface-container px-2 py-0.5 rounded text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">check</span>rustfmt
+          </span>
+<span class="bg-surface-container px-2 py-0.5 rounded text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">check</span>clippy --all
+          </span>
+<span class="bg-surface-container px-2 py-0.5 rounded text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">check</span>bundle-size -2.4kb
+          </span>
+</div>
+</div>
+<!-- Approvals & Signature -->
+<div class="flex items-center gap-space-md text-text-secondary shrink-0">
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[16px]">verified_user</span>
+<span class="font-code-base text-[11px]">GPG Signed (Key ID: 0x9B14E)</span>
+</div>
+<div class="flex items-center gap-1 text-secondary font-medium">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">thumb_up</span>
+<span>1 Approval (@chiakoRh)</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Interactive Dual-Pane Code Review Studio -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-md items-start">
+<!-- LEFT PANE: Overview, Metadata & Conversation (Col 1-5) -->
+<div class="xl:col-span-5 flex flex-col gap-space-md">
+<!-- Metadata Box: Reviewers, Labels, Assignees -->
+<div class="bg-surface-panel rounded-xl shadow-sm p-space-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between text-label-sm font-label-sm uppercase tracking-wider text-text-muted">
+<span>PR Metadata</span>
+<span class="material-symbols-outlined text-[16px] cursor-pointer hover:text-text-primary">settings</span>
+</div>
+<div class="grid grid-cols-2 gap-space-md font-body-md text-body-md">
+<!-- Reviewers -->
+<div class="flex flex-col gap-1.5">
+<span class="text-text-muted font-label-sm text-label-sm">Reviewers</span>
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between bg-surface-sunk px-2 py-1 rounded">
+<div class="flex items-center gap-1.5">
+<div class="w-4 h-4 rounded-full bg-secondary-container text-on-secondary-container text-[9px] flex items-center justify-center font-bold">C</div>
+<span class="text-text-primary font-code-base text-label-sm">@chiakoRh</span>
+</div>
+<span class="material-symbols-outlined text-secondary text-[16px]">check</span>
+</div>
+<div class="flex items-center justify-between bg-surface-sunk px-2 py-1 rounded">
+<div class="flex items-center gap-1.5">
+<div class="w-4 h-4 rounded-full bg-surface-container-highest text-text-primary text-[9px] flex items-center justify-center font-bold">D</div>
+<span class="text-text-primary font-code-base text-label-sm">@developer</span>
+</div>
+<span class="material-symbols-outlined text-status-warning text-[15px]">schedule</span>
+</div>
+</div>
+</div>
+<!-- Assignees & Milestone -->
+<div class="flex flex-col gap-1.5">
+<span class="text-text-muted font-label-sm text-label-sm">Milestone &amp; Branch</span>
+<div class="bg-surface-sunk p-2 rounded flex flex-col gap-1">
+<div class="flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-text-secondary">Milestone</span>
+<span class="text-primary font-code-base font-semibold">v2.5.0-rc3</span>
+</div>
+<div class="w-full bg-surface-container-high h-1 rounded-full overflow-hidden mt-1">
+<div class="bg-primary h-full rounded-full" style="width: 78%;"></div>
+</div>
+<span class="text-[10px] text-text-muted font-code-base text-right">78% completed</span>
+</div>
+</div>
+</div>
+<!-- Labels Pill Bar -->
+<div class="flex flex-col gap-1.5 pt-space-xs">
+<span class="text-text-muted font-label-sm text-label-sm">Labels</span>
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="bg-primary-container/20 text-primary-fixed-dim px-2 py-0.5 rounded-full font-code-base text-[11px] font-medium">enhancement</span>
+<span class="bg-series-branch-4/20 text-series-branch-4 px-2 py-0.5 rounded-full font-code-base text-[11px] font-medium">cui</span>
+<span class="bg-secondary/15 text-secondary px-2 py-0.5 rounded-full font-code-base text-[11px] font-medium">ready-for-review</span>
+<span class="bg-surface-container-high text-text-muted px-2 py-0.5 rounded-full font-code-base text-[11px] hover:text-text-primary cursor-pointer">+ Add Label</span>
+</div>
+</div>
+</div>
+<!-- Description Block with Markdown Rendering -->
+<div class="bg-surface-panel rounded-xl shadow-sm p-space-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-primary-container flex items-center justify-center text-[11px] text-on-primary-container font-bold">X</div>
+<span class="font-title-md text-title-md text-text-primary">@x017</span>
+<span class="text-text-muted font-label-sm text-label-sm">left a description</span>
+</div>
+<button class="text-text-muted hover:text-text-primary text-label-sm font-label-sm">Edit</button>
+</div>
+<!-- PR Description Body -->
+<div class="bg-surface-sunk p-space-md rounded-lg flex flex-col gap-space-sm text-body-md font-body-md text-text-secondary leading-relaxed">
+<p>
+            Implements the headless terminal prompt evaluator inside the new CUI orchestrator. Connects keyboard listener streams directly to the sub-process execution ring buffer.
+          </p>
+<div class="font-label-md text-label-md text-text-primary font-semibold mt-1">Implementation Tasks:</div>
+<div class="flex flex-col gap-1.5 font-label-sm text-label-sm">
+<label class="flex items-center gap-2 text-text-primary cursor-pointer">
+<input checked="" class="w-3.5 h-3.5 accent-primary-container rounded" type="checkbox"/>
+<span class="line-through text-text-muted">Implemented skill runtime loop with async channels</span>
+</label>
+<label class="flex items-center gap-2 text-text-primary cursor-pointer">
+<input checked="" class="w-3.5 h-3.5 accent-primary-container rounded" type="checkbox"/>
+<span class="line-through text-text-muted">Added fallback telemetry capture on unexpected EOF</span>
+</label>
+<label class="flex items-center gap-2 text-text-primary cursor-pointer">
+<input checked="" class="w-3.5 h-3.5 accent-primary-container rounded" type="checkbox"/>
+<span>Updated test suites for ANSI escape sequences</span>
+</label>
+<label class="flex items-center gap-2 text-text-secondary cursor-pointer">
+<input class="w-3.5 h-3.5 accent-primary-container rounded" type="checkbox"/>
+<span>Validate on Windows ConPTY terminal interface</span>
+</label>
+</div>
+<!-- Architectural Diagram Snippet -->
+<div class="mt-space-xs bg-surface-panel p-space-sm rounded font-code-base text-[11px] text-primary-fixed-dim">
+<div class="text-text-muted mb-1">// Event loop wiring:</div>
+            RawKeyStream -&gt; SkillRingBuffer[64KB] -&gt; RenderContext -&gt; CrosstermBackend
+          </div>
+</div>
+<!-- Reactions Row -->
+<div class="flex items-center gap-1.5">
+<button class="bg-surface-sunk hover:bg-surface-container px-2 py-1 rounded text-label-sm font-label-sm text-text-secondary flex items-center gap-1">
+<span>🚀</span> <span class="font-code-base text-[11px]">3</span>
+</button>
+<button class="bg-surface-sunk hover:bg-surface-container px-2 py-1 rounded text-label-sm font-label-sm text-text-secondary flex items-center gap-1">
+<span>❤️</span> <span class="font-code-base text-[11px]">2</span>
+</button>
+<button class="bg-surface-container text-text-muted hover:text-text-primary px-2 py-1 rounded text-label-sm font-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">add_reaction</span>
+</button>
+</div>
+</div>
+<!-- Threaded Timeline & Review Discussions -->
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between text-label-sm font-label-sm uppercase tracking-wider text-text-muted px-1">
+<span>Review Timeline (3 comments)</span>
+<span class="text-[11px] font-code-base text-secondary">All unresolved resolved</span>
+</div>
+<!-- Timeline Thread Item 1: Outdated thread (Resolved) -->
+<div class="bg-surface-panel rounded-xl shadow-sm overflow-hidden">
+<div class="bg-surface-container p-space-sm flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-5 h-5 rounded-full bg-secondary-container text-on-secondary-container text-[9px] flex items-center justify-center font-bold">C</div>
+<span class="font-label-md text-label-md text-text-primary font-medium">@chiakoRh</span>
+<span class="text-text-muted text-[11px]">commented on <span class="font-code-base text-primary">skills_engine.rs:84</span></span>
+</div>
+<span class="bg-surface-sunk text-text-muted text-[10px] font-code-base px-2 py-0.5 rounded">Resolved</span>
+</div>
+<!-- Code diff snippet attached to comment -->
+<div class="bg-surface-sunk p-2 font-code-base text-[11px] overflow-x-auto text-text-muted">
+<div class="text-error bg-error/10 px-2 py-0.5 rounded-sm">- let mut ring = VecDeque::with_capacity(32);</div>
+<div class="text-secondary bg-secondary/10 px-2 py-0.5 rounded-sm">+ let mut ring = ArrayQueue::new(64); // lock-free crossbeam</div>
+</div>
+<div class="p-space-sm text-body-md font-body-md text-text-secondary">
+            Switching from `VecDeque` lock down to lock-free `ArrayQueue` dropped our render latency from 8ms down to 1.1ms. Good catch!
+          </div>
+<!-- Replies list -->
+<div class="bg-surface-sunk/60 p-space-sm flex flex-col gap-space-xs">
+<div class="flex items-start gap-2">
+<div class="w-4 h-4 rounded-full bg-primary-container text-on-primary-container text-[8px] flex items-center justify-center font-bold mt-0.5">X</div>
+<div class="flex flex-col text-label-sm font-label-sm">
+<span class="text-text-primary font-code-base text-[11px]">@x017 <span class="text-text-muted font-normal">2 hours ago</span></span>
+<span class="text-text-secondary">Applied in commit <span class="font-code-base text-primary">e4f91b2</span>. Benchmark looks spotless!</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Timeline Thread Item 2: Active discussion -->
+<div class="bg-surface-panel rounded-xl shadow-sm overflow-hidden">
+<div class="bg-surface-container p-space-sm flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-5 h-5 rounded-full bg-surface-container-highest text-text-primary text-[9px] flex items-center justify-center font-bold">D</div>
+<span class="font-label-md text-label-md text-text-primary font-medium">@developer</span>
+<span class="text-text-muted text-[11px]">commented on <span class="font-code-base text-primary">render_context.rs:42</span></span>
+</div>
+<span class="bg-status-warning/20 text-status-warning text-[10px] font-code-base px-2 py-0.5 rounded">Pending verdict</span>
+</div>
+<div class="p-space-sm text-body-md font-body-md text-text-secondary">
+            Should we verify whether Windows Terminal handles the fallback glyph `▶` without distortion when UTF-8 mode isn't explicitly configured?
+          </div>
+<div class="p-space-sm flex items-center gap-space-xs">
+<button class="bg-surface-sunk hover:bg-surface-container px-2 py-1 rounded text-label-sm font-label-sm text-text-secondary flex items-center gap-1">
+<span>👍</span> <span class="font-code-base text-[11px]">1</span>
+</button>
+<button class="text-primary hover:underline text-label-sm font-label-sm px-2">Reply...</button>
+</div>
+</div>
+</div>
+<!-- Add New Comment Box with Markdown Toolbar -->
+<div class="bg-surface-panel rounded-xl shadow-sm p-space-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between pb-space-xs">
+<span class="font-label-md text-label-md text-text-primary font-semibold">Leave a Review Note</span>
+<div class="flex items-center gap-1 text-text-muted">
+<button class="p-1 hover:text-text-primary rounded hover:bg-surface-container" title="Bold"><span class="material-symbols-outlined text-[16px]">format_bold</span></button>
+<button class="p-1 hover:text-text-primary rounded hover:bg-surface-container" title="Italic"><span class="material-symbols-outlined text-[16px]">format_italic</span></button>
+<button class="p-1 hover:text-text-primary rounded hover:bg-surface-container" title="Code"><span class="material-symbols-outlined text-[16px]">code</span></button>
+<button class="p-1 hover:text-text-primary rounded hover:bg-surface-container" title="Quote"><span class="material-symbols-outlined text-[16px]">format_quote</span></button>
+<button class="p-1 hover:text-text-primary rounded hover:bg-surface-container" title="Link"><span class="material-symbols-outlined text-[16px]">link</span></button>
+</div>
+</div>
+<div class="relative">
+<textarea class="w-full bg-surface-sunk rounded-lg p-space-sm text-text-primary font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-border-focus resize-none" placeholder="Write markdown or drop images to suggest patches..." rows="3"></textarea>
+<div class="absolute bottom-2 right-2 text-text-muted font-code-base text-[10px]">Markdown supported</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs">
+<div class="flex items-center gap-1.5 text-text-muted text-label-sm font-label-sm">
+<span class="material-symbols-outlined text-[16px]">attach_file</span>
+<span>Attach logs or crash dumps</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="bg-surface-container-high hover:bg-surface-bright text-text-primary px-space-sm py-1.5 rounded-lg text-label-md font-label-md transition-colors">
+              Comment
+            </button>
+<button class="bg-primary text-on-primary px-space-md py-1.5 rounded-lg text-label-md font-label-md font-semibold hover:brightness-110 transition-colors shadow-sm">
+              Start Review
+            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT PANE: Interactive Code Review & Multi-File Diff Inspector (Col 6-12) -->
+<div class="xl:col-span-7 flex flex-col gap-space-md">
+<!-- Files Changed Navigation & Filter Drawer -->
+<div class="bg-surface-panel rounded-xl shadow-sm p-space-sm flex flex-col gap-space-xs">
+<div class="flex items-center justify-between px-space-sm py-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">folder_open</span>
+<span class="font-title-md text-title-md text-text-primary font-medium">Changed Files</span>
+<span class="bg-surface-container-high text-text-secondary px-2 py-0.5 rounded font-code-base text-label-sm">4</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="text-text-muted font-label-sm text-label-sm">2 of 4 viewed</span>
+<button class="text-text-muted hover:text-text-primary" title="Diff Settings">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+</button>
+</div>
+</div>
+<!-- File list items -->
+<div class="flex flex-col gap-1 font-code-base text-code-base">
+<!-- File 1 (Active) -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-high text-text-primary cursor-pointer hover:bg-surface-bright transition-colors">
+<div class="flex items-center gap-2 min-w-0">
+<input checked="" class="w-3.5 h-3.5 accent-primary-container rounded" type="checkbox"/>
+<span class="material-symbols-outlined text-secondary text-[16px]">description</span>
+<span class="truncate font-medium">src/runner/skills_engine.rs</span>
+</div>
+<div class="flex items-center gap-2 shrink-0 text-label-sm">
+<span class="text-secondary font-medium">+124</span>
+<span class="text-error font-medium">-18</span>
+<span class="material-symbols-outlined text-primary text-[16px]">visibility</span>
+</div>
+</div>
+<!-- File 2 -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-sunk text-text-secondary hover:text-text-primary hover:bg-surface-container transition-colors cursor-pointer">
+<div class="flex items-center gap-2 min-w-0">
+<input checked="" class="w-3.5 h-3.5 accent-primary-container rounded" type="checkbox"/>
+<span class="material-symbols-outlined text-status-warning text-[16px]">description</span>
+<span class="truncate">src/tui/render_context.rs</span>
+</div>
+<div class="flex items-center gap-2 shrink-0 text-label-sm">
+<span class="text-secondary font-medium">+12</span>
+<span class="text-error font-medium">-22</span>
+<span class="text-text-muted">viewed</span>
+</div>
+</div>
+<!-- File 3 -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-sunk text-text-secondary hover:text-text-primary hover:bg-surface-container transition-colors cursor-pointer">
+<div class="flex items-center gap-2 min-w-0">
+<input class="w-3.5 h-3.5 accent-primary-container rounded" type="checkbox"/>
+<span class="material-symbols-outlined text-series-branch-1 text-[16px]">description</span>
+<span class="truncate">src/protocol/messages.rs</span>
+</div>
+<div class="flex items-center gap-2 shrink-0 text-label-sm">
+<span class="text-secondary font-medium">+28</span>
+<span class="text-error font-medium">-0</span>
+<span class="text-status-warning font-label-sm">unreviewed</span>
+</div>
+</div>
+<!-- File 4 -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-sunk text-text-secondary hover:text-text-primary hover:bg-surface-container transition-colors cursor-pointer">
+<div class="flex items-center gap-2 min-w-0">
+<input class="w-3.5 h-3.5 accent-primary-container rounded" type="checkbox"/>
+<span class="material-symbols-outlined text-series-branch-4 text-[16px]">data_object</span>
+<span class="truncate">Cargo.toml</span>
+</div>
+<div class="flex items-center gap-2 shrink-0 text-label-sm">
+<span class="text-secondary font-medium">+4</span>
+<span class="text-error font-medium">-3</span>
+<span class="text-status-warning font-label-sm">unreviewed</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Rich Unified Code Diff Viewer Panel -->
+<div class="bg-surface-panel rounded-xl shadow-md overflow-hidden flex flex-col">
+<!-- Diff Header & Actions Bar -->
+<div class="bg-surface-container px-space-md py-space-sm flex items-center justify-between gap-space-sm flex-wrap">
+<div class="flex items-center gap-2 min-w-0">
+<span class="font-code-base font-semibold text-text-primary truncate">src/runner/skills_engine.rs</span>
+<span class="bg-surface-sunk text-text-muted font-code-base text-[11px] px-2 py-0.5 rounded">Rust 2021</span>
+<span class="text-secondary font-code-base text-label-sm">+124 / -18</span>
+</div>
+<div class="flex items-center gap-space-xs font-code-base text-label-sm">
+<div class="flex items-center bg-surface-sunk rounded-lg p-0.5">
+<button class="px-2 py-1 rounded bg-surface-container-high text-text-primary font-medium">Unified</button>
+<button class="px-2 py-1 rounded text-text-muted hover:text-text-primary">Split</button>
+</div>
+<button class="bg-surface-sunk hover:bg-surface-container-high text-text-secondary px-2 py-1 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">content_copy</span>
+<span>Raw</span>
+</button>
+<label class="flex items-center gap-1.5 bg-surface-sunk px-2 py-1 rounded text-text-secondary cursor-pointer hover:text-text-primary">
+<input checked="" class="w-3.5 h-3.5 accent-primary-container rounded" type="checkbox"/>
+<span>Viewed</span>
+</label>
+</div>
+</div>
+<!-- Code Chunk 1: Diff Lines -->
+<div class="bg-surface-sunk p-2 overflow-x-auto font-code-base text-code-base leading-tight select-text">
+<!-- Diff Hunk Banner -->
+<div class="text-text-muted bg-surface-panel px-3 py-1 rounded text-[11px] my-1 flex items-center justify-between">
+<span>@@ -78,9 +78,16 @@ impl SkillsEngine for HeadlessRunner {</span>
+<span class="text-[10px]">Jump to symbol: execute_stream()</span>
+</div>
+<!-- Unchanged line -->
+<div class="group flex items-center hover:bg-surface-container/60 rounded px-1 transition-colors">
+<span class="w-8 shrink-0 text-right pr-3 text-text-muted text-[11px] select-none">78</span>
+<span class="w-8 shrink-0 text-right pr-3 text-text-muted text-[11px] select-none">78</span>
+<span class="w-4 shrink-0 text-center text-text-muted select-none"> </span>
+<span class="text-text-secondary whitespace-pre">    pub async fn new(config: EngineConfig) -&gt; Result&lt;Self&gt; {</span>
+<button class="ml-auto opacity-0 group-hover:opacity-100 text-primary text-[14px] px-1 hover:scale-110" title="Comment on line 78">+</button>
+</div>
+<!-- Unchanged line -->
+<div class="group flex items-center hover:bg-surface-container/60 rounded px-1 transition-colors">
+<span class="w-8 shrink-0 text-right pr-3 text-text-muted text-[11px] select-none">79</span>
+<span class="w-8 shrink-0 text-right pr-3 text-text-muted text-[11px] select-none">79</span>
+<span class="w-4 shrink-0 text-center text-text-muted select-none"> </span>
+<span class="text-text-secondary whitespace-pre">        let (tx, mut rx) = mpsc::channel(256);</span>
+<button class="ml-auto opacity-0 group-hover:opacity-100 text-primary text-[14px] px-1 hover:scale-110" title="Comment on line 79">+</button>
+</div>
+<!-- Removed line -->
+<div class="group flex items-center bg-error/15 text-error rounded px-1 transition-colors">
+<span class="w-8 shrink-0 text-right pr-3 text-error/60 text-[11px] select-none">80</span>
+<span class="w-8 shrink-0 text-right pr-3 text-transparent text-[11px] select-none">.</span>
+<span class="w-4 shrink-0 text-center font-bold select-none">-</span>
+<span class="whitespace-pre">        let ring = Arc::new(Mutex::new(VecDeque::with_capacity(32)));</span>
+<button class="ml-auto opacity-0 group-hover:opacity-100 text-error text-[14px] px-1 hover:scale-110" title="Comment on removed line">+</button>
+</div>
+<!-- Added lines -->
+<div class="group flex items-center bg-secondary/15 text-secondary rounded px-1 transition-colors">
+<span class="w-8 shrink-0 text-right pr-3 text-transparent text-[11px] select-none">.</span>
+<span class="w-8 shrink-0 text-right pr-3 text-secondary/60 text-[11px] select-none">80</span>
+<span class="w-4 shrink-0 text-center font-bold select-none">+</span>
+<span class="whitespace-pre">        // Lock-free ring buffer directly bounded to avoid runtime mutex contention</span>
+<button class="ml-auto opacity-0 group-hover:opacity-100 text-secondary text-[14px] px-1 hover:scale-110" title="Comment on added line">+</button>
+</div>
+<div class="group flex items-center bg-secondary/15 text-secondary rounded px-1 transition-colors">
+<span class="w-8 shrink-0 text-right pr-3 text-transparent text-[11px] select-none">.</span>
+<span class="w-8 shrink-0 text-right pr-3 text-secondary/60 text-[11px] select-none">81</span>
+<span class="w-4 shrink-0 text-center font-bold select-none">+</span>
+<span class="whitespace-pre">        let ring = Arc::new(ArrayQueue::new(64));</span>
+<button class="ml-auto opacity-0 group-hover:opacity-100 text-secondary text-[14px] px-1 hover:scale-110" title="Comment on added line">+</button>
+</div>
+<div class="group flex items-center bg-secondary/15 text-secondary rounded px-1 transition-colors">
+<span class="w-8 shrink-0 text-right pr-3 text-transparent text-[11px] select-none">.</span>
+<span class="w-8 shrink-0 text-right pr-3 text-secondary/60 text-[11px] select-none">82</span>
+<span class="w-4 shrink-0 text-center font-bold select-none">+</span>
+<span class="whitespace-pre">        let telemetry = TelemetryEmitter::boot(&amp;config).await?;</span>
+<button class="ml-auto opacity-0 group-hover:opacity-100 text-secondary text-[14px] px-1 hover:scale-110" title="Comment on added line">+</button>
+</div>
+<!-- Unchanged line -->
+<div class="group flex items-center hover:bg-surface-container/60 rounded px-1 transition-colors">
+<span class="w-8 shrink-0 text-right pr-3 text-text-muted text-[11px] select-none">81</span>
+<span class="w-8 shrink-0 text-right pr-3 text-text-muted text-[11px] select-none">83</span>
+<span class="w-4 shrink-0 text-center text-text-muted select-none"> </span>
+<span class="text-text-secondary whitespace-pre">        Ok(Self {</span>
+<button class="ml-auto opacity-0 group-hover:opacity-100 text-primary text-[14px] px-1 hover:scale-110" title="Comment on line 83">+</button>
+</div>
+<!-- Unchanged line -->
+<div class="group flex items-center hover:bg-surface-container/60 rounded px-1 transition-colors">
+<span class="w-8 shrink-0 text-right pr-3 text-text-muted text-[11px] select-none">82</span>
+<span class="w-8 shrink-0 text-right pr-3 text-text-muted text-[11px] select-none">84</span>
+<span class="w-4 shrink-0 text-center text-text-muted select-none"> </span>
+<span class="text-text-secondary whitespace-pre">            tx,</span>
+<button class="ml-auto opacity-0 group-hover:opacity-100 text-primary text-[14px] px-1 hover:scale-110" title="Comment on line 84">+</button>
+</div>
+<div class="group flex items-center hover:bg-surface-container/60 rounded px-1 transition-colors">
+<span class="w-8 shrink-0 text-right pr-3 text-text-muted text-[11px] select-none">83</span>
+<span class="w-8 shrink-0 text-right pr-3 text-text-muted text-[11px] select-none">85</span>
+<span class="w-4 shrink-0 text-center text-text-muted select-none"> </span>
+<span class="text-text-secondary whitespace-pre">            ring,</span>
+<button class="ml-auto opacity-0 group-hover:opacity-100 text-primary text-[14px] px-1 hover:scale-110" title="Comment on line 85">+</button>
+</div>
+<!-- Inline hover comment box preview trigger -->
+<div class="my-2 p-2 bg-surface-raised rounded-lg border-l-2 border-primary flex items-center justify-between text-label-sm font-label-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary">add_comment</span>
+<span class="text-text-primary">Click on any gutter (+) to insert inline code suggestions or test requests</span>
+</div>
+<span class="text-text-muted font-code-base text-[10px]">Shortcuts: Ctrl+Shift+C</span>
+</div>
+<!-- Unchanged line -->
+<div class="group flex items-center hover:bg-surface-container/60 rounded px-1 transition-colors">
+<span class="w-8 shrink-0 text-right pr-3 text-text-muted text-[11px] select-none">84</span>
+<span class="w-8 shrink-0 text-right pr-3 text-text-muted text-[11px] select-none">86</span>
+<span class="w-4 shrink-0 text-center text-text-muted select-none"> </span>
+<span class="text-text-secondary whitespace-pre">            telemetry,</span>
+<button class="ml-auto opacity-0 group-hover:opacity-100 text-primary text-[14px] px-1 hover:scale-110" title="Comment on line 86">+</button>
+</div>
+<div class="group flex items-center hover:bg-surface-container/60 rounded px-1 transition-colors">
+<span class="w-8 shrink-0 text-right pr-3 text-text-muted text-[11px] select-none">85</span>
+<span class="w-8 shrink-0 text-right pr-3 text-text-muted text-[11px] select-none">87</span>
+<span class="w-4 shrink-0 text-center text-text-muted select-none"> </span>
+<span class="text-text-secondary whitespace-pre">        })</span>
+<button class="ml-auto opacity-0 group-hover:opacity-100 text-primary text-[14px] px-1 hover:scale-110" title="Comment on line 87">+</button>
+</div>
+<div class="group flex items-center hover:bg-surface-container/60 rounded px-1 transition-colors">
+<span class="w-8 shrink-0 text-right pr-3 text-text-muted text-[11px] select-none">86</span>
+<span class="w-8 shrink-0 text-right pr-3 text-text-muted text-[11px] select-none">88</span>
+<span class="w-4 shrink-0 text-center text-text-muted select-none"> </span>
+<span class="text-text-secondary whitespace-pre">    }</span>
+<button class="ml-auto opacity-0 group-hover:opacity-100 text-primary text-[14px] px-1 hover:scale-110" title="Comment on line 88">+</button>
+</div>
+</div>
+</div>
+<!-- Formal Review Verdict Bar (Sticky/Bottom card) -->
+<div class="bg-surface-panel rounded-xl shadow-lg p-space-md flex flex-col gap-space-sm border-t-2 border-primary/20">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">gavel</span>
+<span class="font-title-md text-title-md text-text-primary font-semibold">Submit Your Verdict</span>
+</div>
+<span class="text-text-muted font-code-base text-label-sm">Reviewing as @developer</span>
+</div>
+<!-- Verdict Radio Options -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-sm pt-space-xs">
+<!-- Option 1: Comment -->
+<label class="flex items-start gap-space-xs p-space-sm rounded-lg bg-surface-sunk hover:bg-surface-container cursor-pointer transition-all">
+<input class="mt-0.5 accent-primary-container" name="review_verdict" type="radio" value="comment"/>
+<div class="flex flex-col">
+<span class="text-text-primary font-label-md text-label-md font-medium">Comment</span>
+<span class="text-text-muted text-[11px]">Submit general feedback without approving</span>
+</div>
+</label>
+<!-- Option 2: Approve -->
+<label class="flex items-start gap-space-xs p-space-sm rounded-lg bg-surface-sunk hover:bg-secondary/10 cursor-pointer transition-all">
+<input checked="" class="mt-0.5 accent-secondary" name="review_verdict" type="radio" value="approve"/>
+<div class="flex flex-col">
+<span class="text-secondary font-label-md text-label-md font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check</span> Approve
+              </span>
+<span class="text-text-muted text-[11px]">Authorize merge into target branch</span>
+</div>
+</label>
+<!-- Option 3: Request changes -->
+<label class="flex items-start gap-space-xs p-space-sm rounded-lg bg-surface-sunk hover:bg-error/10 cursor-pointer transition-all">
+<input class="mt-0.5 accent-error" name="review_verdict" type="radio" value="request_changes"/>
+<div class="flex flex-col">
+<span class="text-error font-label-md text-label-md font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">block</span> Request Changes
+              </span>
+<span class="text-text-muted text-[11px]">Block merge until issues are addressed</span>
+</div>
+</label>
+</div>
+<!-- Verdict Comment Input -->
+<div class="pt-space-xs">
+<input class="w-full bg-surface-sunk rounded-lg px-space-sm py-2 text-text-primary font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-border-focus" placeholder="Summary notes for author (optional when approving)..." type="text"/>
+</div>
+<div class="flex items-center justify-between pt-space-xs">
+<div class="flex items-center gap-1.5 text-text-muted font-code-base text-label-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">security</span>
+<span>Signature: ECDSA sha256</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="bg-surface-sunk hover:bg-surface-container text-text-muted hover:text-text-primary px-space-sm py-1.5 rounded-lg text-label-md font-label-md transition-colors">
+              Discard Draft
+            </button>
+<button class="bg-primary-container text-on-primary-container px-space-md py-1.5 rounded-lg text-label-md font-label-md font-bold flex items-center gap-1.5 hover:brightness-110 active:scale-95 transition-all shadow-sm">
+<span class="material-symbols-outlined text-[16px]">send</span>
+<span>Submit Review (⌘Enter)</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Micro-interaction handlers for Pull Request studio
+  const mergeBtn = document.getElementById('merge-options-btn');
+  const mergeDropdown = document.getElementById('merge-dropdown');
+
+  if (mergeBtn && mergeDropdown) {
+    mergeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      mergeDropdown.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!mergeDropdown.contains(e.target) && e.target !== mergeBtn) {
+        mergeDropdown.classList.add('hidden');
+      }
+    });
+  }
+
+  const checkoutBtn = document.getElementById('checkout-pr-btn');
+  if (checkoutBtn) {
+    checkoutBtn.addEventListener('click', () => {
+      const origText = checkoutBtn.innerHTML;
+      checkoutBtn.innerHTML = '<span class="material-symbols-outlined text-[16px] text-secondary">check</span><span>Branch Checked Out!</span>';
+      setTimeout(() => {
+        checkoutBtn.innerHTML = origText;
+      }, 2000);
+    });
+  }
+</script></main></div><footer class="fixed bottom-0 left-0 right-0 h-7 bg-surface-panel text-on-surface-variant z-50 flex items-center justify-between px-margin-desktop font-code-base text-label-sm select-none"><div class="flex items-center gap-space-md"><span>git 2.45.1</span><div class="flex items-center gap-space-xs text-secondary"><span class="w-2 h-2 rounded-full bg-secondary inline-block"></span><span>SSH Verified</span></div><div class="flex items-center gap-space-xs text-on-surface"><span class="material-symbols-outlined text-[14px] text-primary">fork_right</span><span>main</span></div><span class="text-on-surface-variant">e4f91b2 (HEAD -&gt; main)</span></div><div class="flex items-center gap-space-md"><span class="hover:text-on-surface cursor-pointer">LF</span><span class="hover:text-on-surface cursor-pointer">UTF-8</span><span class="text-secondary flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">cloud_sync</span>synced</span></div></footer></body></html>

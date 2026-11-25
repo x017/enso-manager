@@ -1,0 +1,606 @@
+<!DOCTYPE html><html class="dark" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_dashboard" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "background": "#131313", "primary-container": "#6ba3ff", "on-surface": "#e5e2e1", "outline": "#8c919d", "on-tertiary-fixed": "#410004", "inverse-surface": "#e5e2e1", "series-branch-4": "#a3a0f1", "primary-fixed": "#d7e3ff", "surface-container-highest": "#353534", "on-background": "#e5e2e1", "surface-canvas": "#121212", "on-secondary": "#003824", "secondary-fixed": "#7bfac0", "status-info": "#7cc4f0", "series-branch-6": "#e18cb5", "secondary": "#5ddda5", "on-tertiary": "#66060f", "tertiary-container": "#ff7b76", "inverse-on-surface": "#313030", "series-branch-3": "#5ac299", "secondary-fixed-dim": "#5ddda5", "on-secondary-fixed": "#002113", "text-primary": "#f2f2f2", "inverse-primary": "#135db4", "on-primary-fixed-variant": "#00458e", "on-secondary-fixed-variant": "#005236", "text-muted": "#8c8c8c", "surface-muted": "#242424", "tertiary-fixed": "#ffdad7", "surface-container-low": "#1c1b1b", "surface-panel": "#181818", "on-surface-variant": "#c2c6d4", "outline-variant": "#424752", "status-warning": "#f2bd68", "surface-container-high": "#2a2a2a", "border-focus": "#55adff", "series-branch-5": "#d1a24f", "on-primary-container": "#003875", "on-tertiary-container": "#731217", "border-hairline": "#2b2b2b", "text-secondary": "#b4b4b4", "surface": "#131313", "surface-container": "#201f1f", "tertiary": "#ffb3ae", "surface-variant": "#353534", "surface-sunk": "#0e0e0e", "border-subtle": "#222222", "series-branch-2": "#e7936c", "series-branch-1": "#73aff1", "secondary-container": "#04a572", "surface-container-lowest": "#0e0e0e", "surface-raised": "#1f1f1f", "on-error": "#690005", "on-secondary-container": "#00311f", "surface-bright": "#393939", "primary-fixed-dim": "#aac7ff", "surface-dim": "#131313", "on-primary-fixed": "#001b3e", "on-tertiary-fixed-variant": "#862122", "surface-tint": "#aac7ff", "error-container": "#93000a", "on-primary": "#002f65", "error": "#ffb4ab", "primary": "#aac7ff", "tertiary-fixed-dim": "#ffb3ae", "on-error-container": "#ffdad6" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-lg": "1rem", "margin": "1rem", "margin-desktop": "1.5rem", "space-sm": "0.5rem", "gutter": "0.75rem", "space-md": "0.75rem", "gutter-desktop": "1rem", "space-xl": "1.5rem", "space-xs": "0.25rem" }, "fontFamily": { "body-md": ["Inter"], "headline-md": ["Geist"], "code-base": ["JetBrains Mono"], "headline-lg": ["Geist"], "headline-lg-mobile": ["Geist"], "label-md": ["Inter"], "title-md": ["Geist"], "body-lg": ["Inter"], "headline-sm": ["Geist"], "code-metric": ["JetBrains Mono"], "label-sm": ["Inter"] }, "fontSize": { "body-md": ["13px", { "lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400" }], "headline-md": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "500" }], "code-base": ["12.5px", { "lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400" }], "headline-lg": ["36px", { "lineHeight": "40px", "letterSpacing": "-0.025em", "fontWeight": "500" }], "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "500" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0", "fontWeight": "500" }], "title-md": ["17px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "500" }], "body-lg": ["15px", { "lineHeight": "23px", "letterSpacing": "0", "fontWeight": "400" }], "headline-sm": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "500" }], "code-metric": ["15px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500" }], "label-sm": ["11px", { "lineHeight": "15px", "letterSpacing": "0.04em", "fontWeight": "500" }] } } } };</script></head><body class="bg-surface-canvas text-on-surface font-body-md text-body-md min-h-screen selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 left-0 right-0 h-16 bg-surface-panel/90 backdrop-blur-xl z-50 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full px-margin-desktop flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md shrink-0"><div class="flex items-center gap-space-xs pr-space-sm"><span class="w-3 h-3 rounded-full bg-error inline-block"></span><span class="w-3 h-3 rounded-full bg-status-warning inline-block"></span><span class="w-3 h-3 rounded-full bg-secondary inline-block"></span></div><img alt="GitNex Repo Manager Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrDHboWyClxBvwwYRqnqbB01OXauToGyMLrTuH_EwkyAkgTCyW575dwfxBYGT_8d-e96uwEf4-qWwICGxu3oIfyvvRdL2ld53QPdC6kUSBbM39bAROIlfswWN4Ixw4dK5YRX_ZaOXUU_R3IBH7Fk9AL_OdsbvTQii_jpCBSvP5CLMf-xTt9S1YyRz5R0kzlvyhYf_NyqFjVtXQiyaHvAfzwyHsvcuDQyoTy1oSV-kAsCWg"><span class="font-title-md text-title-md text-on-surface tracking-tight font-medium">Nexa Git</span><div class="hidden xl:flex items-center gap-space-xs bg-surface-sunk py-space-xs px-space-sm rounded-lg text-on-surface-variant font-code-base text-code-base"><span class="material-symbols-outlined text-primary text-[18px]">folder</span><span class="text-on-surface font-body-md text-body-md">~/code/developer/nexa-core</span><span class="bg-surface-container-high px-space-xs py-0.5 rounded text-secondary font-code-base text-code-base flex items-center gap-space-xs"><span class="material-symbols-outlined text-[14px]">commit</span>main</span><span class="text-on-surface-variant text-[11px]">0↑ 0↓</span><span class="material-symbols-outlined text-on-surface-variant text-[16px]">arrow_drop_down</span></div></div><div class="flex items-center gap-space-sm shrink-0"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-2 text-on-surface-variant text-[16px]">search</span><input class="bg-surface-sunk text-on-surface placeholder:text-on-surface-variant font-body-md text-body-md rounded-lg pl-8 pr-12 py-1.5 focus:outline-none focus:ring-2 focus:ring-border-focus w-64 lg:w-72" placeholder="Search commits, files, symbols..." type="text"><span class="absolute right-2 font-code-base text-label-sm text-on-surface-variant bg-surface-container-high px-1 py-0.5 rounded">⌘K</span></div><div class="flex items-center gap-space-xs"><button class="bg-surface-container-high text-on-surface hover:bg-surface-bright hover:text-on-surface px-space-sm py-1.5 rounded text-label-md font-label-md flex items-center gap-1 transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">sync</span>Fetch</button><button class="bg-surface-container-high text-on-surface hover:bg-surface-bright hover:text-on-surface px-space-sm py-1.5 rounded text-label-md font-label-md flex items-center gap-1 transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">south</span>Pull</button><button class="bg-primary-container text-on-primary-container font-label-md text-label-md px-space-sm py-1.5 rounded flex items-center gap-1 transition-transform active:scale-95" type="button"><span class="material-symbols-outlined text-[16px]">north</span>Push</button><button class="bg-surface-container-high text-on-surface hover:bg-surface-bright hover:text-on-surface px-space-sm py-1.5 rounded text-label-md font-label-md flex items-center gap-1 transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">archive</span>Stash</button><button class="bg-surface-container-high text-on-surface hover:bg-surface-bright hover:text-on-surface px-space-sm py-1.5 rounded text-label-md font-label-md flex items-center gap-1 transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">terminal</span></button></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><aside class="fixed left-0 top-16 bottom-7 w-64 bg-surface-panel z-40 flex flex-col justify-between overflow-y-auto"><div class="p-space-sm space-y-space-md"><div class="text-on-surface-variant font-label-sm text-label-sm uppercase px-space-sm tracking-wider">Workspace</div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-label-md rounded-lg"><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="working-tree" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">pending_actions</span><span class="font-label-md text-label-md">Working Tree</span></div><span class="bg-surface-container-high text-status-warning font-code-base text-label-sm px-space-xs py-0.5 rounded">4 mod</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="commit-graph" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">schema</span><span class="font-label-md text-label-md">Commit Graph</span></div></a><a aria-current="page" class="flex items-center justify-between px-space-sm py-2 transition-colors bg-primary-container text-on-primary-container font-label-md rounded-lg" data-path="branches" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">fork_right</span><span class="font-label-md text-label-md">Branches</span></div><span class="bg-surface-container-high text-on-surface-variant font-code-base text-label-sm px-space-xs py-0.5 rounded">5</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="pull-requests" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">call_merge</span><span class="font-label-md text-label-md">Pull Requests</span></div><span class="bg-surface-container-high text-status-info font-code-base text-label-sm px-space-xs py-0.5 rounded">2</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="stashes" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">inventory_2</span><span class="font-label-md text-label-md">Stashes</span></div><span class="bg-surface-container-high text-on-surface-variant font-code-base text-label-sm px-space-xs py-0.5 rounded">2</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="tags-and-releases" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">sell</span><span class="font-label-md text-label-md">Tags &amp; Releases</span></div></a></nav><div class="pt-space-sm"><div class="text-on-surface-variant font-label-sm text-label-sm uppercase px-space-sm tracking-wider mb-space-xs">Local Branches</div><div class="flex flex-col gap-space-xs pl-space-sm font-code-base text-code-base"><div class="flex items-center gap-space-xs text-secondary py-1"><span class="material-symbols-outlined text-[14px]">check</span><span>main</span></div><div class="flex items-center gap-space-xs text-on-surface-variant hover:text-on-surface py-1"><span class="material-symbols-outlined text-[14px]">commit</span><span>feat/cli-tui</span></div><div class="flex items-center gap-space-xs text-on-surface-variant hover:text-on-surface py-1"><span class="material-symbols-outlined text-[14px]">commit</span><span>fix/socket</span></div></div></div><div class="pt-space-sm"><div class="text-on-surface-variant font-label-sm text-label-sm uppercase px-space-sm tracking-wider mb-space-xs">Remote (origin)</div><div class="flex flex-col gap-space-xs pl-space-sm font-code-base text-code-base text-on-surface-variant"><div class="flex items-center gap-space-xs hover:text-on-surface py-1"><span class="material-symbols-outlined text-[14px]">cloud_done</span><span>origin/main</span></div><div class="flex items-center gap-space-xs hover:text-on-surface py-1"><span class="material-symbols-outlined text-[14px]">cloud_done</span><span>origin/feat/cli-tui</span></div></div></div></div><div class="p-space-sm"><div class="bg-surface-sunk p-space-sm rounded-lg flex flex-col gap-1"><div class="flex items-center justify-between font-label-sm text-label-sm"><span class="text-on-surface-variant">Status</span><span class="text-secondary flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-secondary inline-block"></span>Clean Index</span></div><div class="font-code-base text-label-sm text-status-warning">4 unstaged changes</div><div class="text-on-surface-variant font-label-sm text-label-sm">Synced 2m ago</div></div></div></aside><div class="pl-64"><main class="relative pt-16 pb-7 w-full min-h-screen bg-surface-canvas px-margin-desktop"><div class="flex flex-col w-full space-y-space-xl">
+<!-- Top Command Strip & Breadcrumb Flow -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md pt-space-xs">
+<div class="space-y-space-xs">
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+<span class="text-primary font-code-base text-code-base">repo:nexa-core</span>
+<span>/</span>
+<span>vcs topology</span>
+<span>/</span>
+<span class="text-secondary flex items-center gap-1 font-code-base"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>tree clean</span>
+</div>
+<div class="flex items-baseline gap-space-md">
+<h1 class="font-headline-md text-headline-md text-text-primary tracking-tight">Branches &amp; Remotes</h1>
+<span class="font-code-base text-label-md bg-surface-container-high text-on-surface-variant px-space-sm py-0.5 rounded-full">8 active refs</span>
+</div>
+</div>
+<!-- Action Toolbar -->
+<div class="flex flex-wrap items-center gap-space-xs">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-2.5 text-on-surface-variant text-[16px]">filter_list</span>
+<input class="bg-surface-sunk text-text-primary placeholder:text-text-muted font-body-md text-body-md rounded-lg pl-8 pr-12 py-1.5 focus:outline-none focus:bg-surface-container-high w-64 lg:w-72 transition-colors" id="branchFilterInput" placeholder="Filter branches by ref or author..." type="text">
+<span class="absolute right-2 font-code-base text-label-sm text-text-muted bg-surface-container px-1 py-0.5 rounded">/</span>
+</div>
+<button class="bg-surface-container-high text-text-primary hover:bg-surface-bright px-space-md py-1.5 rounded text-label-md font-label-md flex items-center gap-1.5 transition-all shadow-sm" id="openRebaseBtn" type="button">
+<span class="material-symbols-outlined text-[16px] text-series-branch-1">alt_route</span>
+        Interactive Rebase
+      </button>
+<button class="bg-surface-container-high text-text-primary hover:bg-surface-bright px-space-md py-1.5 rounded text-label-md font-label-md flex items-center gap-1.5 transition-all shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">cleaning_services</span>
+        Prune Merged
+      </button>
+<button class="bg-surface-container-high text-text-primary hover:bg-surface-bright px-space-md py-1.5 rounded text-label-md font-label-md flex items-center gap-1.5 transition-all shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">cloud_download</span>
+        Fetch Remotes
+      </button>
+<button class="bg-primary-container text-on-primary-container font-label-md text-label-md px-space-md py-1.5 rounded flex items-center gap-1.5 hover:bg-primary-fixed-dim transition-transform active:scale-95 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span>
+        New Branch
+      </button>
+</div>
+</div>
+<!-- Metric / Telemetry High-Density Header -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-space-md">
+<div class="bg-surface-container rounded-xl p-space-md flex items-center justify-between shadow-sm">
+<div class="space-y-0.5">
+<span class="text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider block">Checked Out</span>
+<div class="flex items-center gap-2">
+<span class="font-code-metric text-code-metric text-secondary font-medium">main</span>
+<span class="material-symbols-outlined text-[16px] text-secondary">verified</span>
+</div>
+</div>
+<div class="bg-surface-sunk w-10 h-10 rounded-lg flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">target</span>
+</div>
+</div>
+<div class="bg-surface-container rounded-xl p-space-md flex items-center justify-between shadow-sm">
+<div class="space-y-0.5">
+<span class="text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider block">Divergence Index</span>
+<div class="flex items-center gap-1.5 font-code-metric text-code-metric text-status-warning">
+<span>+3</span>
+<span class="text-text-muted">/</span>
+<span class="text-error">-1</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant font-normal">commits pending</span>
+</div>
+</div>
+<div class="bg-surface-sunk w-10 h-10 rounded-lg flex items-center justify-center text-status-warning">
+<span class="material-symbols-outlined text-[20px]">sync_problem</span>
+</div>
+</div>
+<div class="bg-surface-container rounded-xl p-space-md flex items-center justify-between shadow-sm">
+<div class="space-y-0.5">
+<span class="text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider block">Merged Status</span>
+<div class="flex items-center gap-1.5">
+<span class="font-code-metric text-code-metric text-text-primary">1 branch</span>
+<span class="text-label-sm font-label-sm text-secondary bg-surface-sunk px-1.5 py-0.5 rounded">Safe Clean</span>
+</div>
+</div>
+<div class="bg-surface-sunk w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">delete_sweep</span>
+</div>
+</div>
+<div class="bg-surface-container rounded-xl p-space-md flex items-center justify-between shadow-sm">
+<div class="space-y-0.5">
+<span class="text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider block">Remote Latency</span>
+<div class="flex items-center gap-1.5">
+<span class="font-code-metric text-code-metric text-text-primary">24ms</span>
+<span class="text-label-sm font-label-sm text-text-muted font-code-base">origin/main</span>
+</div>
+</div>
+<div class="bg-surface-sunk w-10 h-10 rounded-lg flex items-center justify-center text-status-info">
+<span class="material-symbols-outlined text-[20px]">bolt</span>
+</div>
+</div>
+</div>
+<!-- Branch Workbench: Master Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg">
+<!-- Left 8 Cols: Branch Listing & Details -->
+<div class="xl:col-span-8 space-y-space-lg">
+<!-- Section: Local Branches -->
+<div class="bg-surface-panel rounded-xl p-space-md space-y-space-md shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-primary">source_environment</span>
+<h2 class="font-title-md text-title-md text-text-primary tracking-tight">Local Branches</h2>
+<span class="font-code-base text-label-sm text-on-surface-variant bg-surface-container px-2 py-0.5 rounded-full">3 registered</span>
+</div>
+<div class="flex items-center gap-space-xs text-label-sm font-label-sm text-on-surface-variant">
+<span>Sort by:</span>
+<button class="bg-surface-container px-2 py-1 rounded text-text-primary hover:bg-surface-bright flex items-center gap-1">
+              Recent Commits <span class="material-symbols-outlined text-[14px]">expand_more</span>
+</button>
+</div>
+</div>
+<div class="space-y-space-xs font-body-md" id="branchListContainer">
+<!-- Item 1: main (Default, Protected, Current HEAD) -->
+<div class="bg-surface-container rounded-lg p-space-md hover:bg-surface-container-high transition-colors space-y-space-sm group">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary shrink-0 shadow-[0_0_8px_rgba(93,221,165,0.4)]"></span>
+<span class="font-code-metric text-code-metric text-text-primary font-medium truncate">main</span>
+<span class="bg-secondary/15 text-secondary font-code-base text-label-sm px-2 py-0.5 rounded uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">done_all</span> HEAD
+                </span>
+<span class="bg-surface-sunk text-on-surface-variant font-code-base text-label-sm px-2 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px] text-status-warning">lock</span> protected
+                </span>
+<span class="font-code-base text-label-sm text-text-muted hidden sm:inline">tracking <span class="text-on-surface-variant">origin/main</span></span>
+</div>
+<!-- Sync Status & CTAs -->
+<div class="flex items-center gap-space-xs shrink-0">
+<div class="bg-surface-sunk px-2 py-1 rounded font-code-base text-label-sm text-secondary flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span>0↑ 0↓ syncd</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="bg-surface-container-high hover:bg-surface-bright text-text-primary p-1.5 rounded transition-colors" title="Rebase on..." type="button">
+<span class="material-symbols-outlined text-[16px]">alt_route</span>
+</button>
+<button class="bg-surface-container-high hover:bg-surface-bright text-text-primary p-1.5 rounded transition-colors" title="Merge into other ref" type="button">
+<span class="material-symbols-outlined text-[16px]">call_merge</span>
+</button>
+<button class="bg-surface-container-high hover:bg-surface-bright text-text-primary p-1.5 rounded transition-colors" title="Branch Policies" type="button">
+<span class="material-symbols-outlined text-[16px]">shield</span>
+</button>
+<button class="bg-surface-container-high hover:bg-surface-bright text-on-surface-variant hover:text-text-primary p-1.5 rounded transition-colors" title="More Options" type="button">
+<span class="material-symbols-outlined text-[16px]">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Commit Snippet -->
+<div class="bg-surface-sunk rounded-md px-space-sm py-2 flex flex-col sm:flex-row sm:items-center justify-between text-label-sm gap-2">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="font-code-base text-primary font-medium">e4f91b2</span>
+<span class="text-on-surface truncate">release: cut v2.4.0 with optimized zero-copy diff visualizer</span>
+</div>
+<div class="flex items-center gap-space-md text-text-muted shrink-0 font-code-base">
+<span>alex.dev@nexa</span>
+<span>23m ago</span>
+</div>
+</div>
+</div>
+<!-- Item 2: feat/cli-tui (Active Development) -->
+<div class="bg-surface-container rounded-lg p-space-md hover:bg-surface-container-high transition-colors space-y-space-sm group">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="w-2.5 h-2.5 rounded-full bg-status-warning shrink-0 shadow-[0_0_8px_rgba(242,189,104,0.3)]"></span>
+<span class="font-code-metric text-code-metric text-text-primary font-medium truncate">feat/cli-tui</span>
+<span class="bg-primary-container/20 text-primary font-code-base text-label-sm px-2 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">account_tree</span> Active Feature
+                </span>
+<span class="font-code-base text-label-sm text-text-muted hidden sm:inline">tracking <span class="text-on-surface-variant">origin/feat/cli-tui</span></span>
+</div>
+<!-- Sync Status & CTAs -->
+<div class="flex items-center gap-space-xs shrink-0">
+<div class="bg-surface-sunk px-2.5 py-1 rounded font-code-base text-label-sm text-status-warning flex items-center gap-2">
+<span class="font-medium text-secondary">↑ 3</span>
+<span class="text-text-muted">/</span>
+<span class="font-medium text-error">↓ 1</span>
+</div>
+<button class="bg-secondary/20 hover:bg-secondary/30 text-secondary px-2.5 py-1 rounded text-label-sm font-label-md flex items-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]">sync</span>
+                  Fast-Forward / Sync
+                </button>
+<button class="bg-surface-container-high hover:bg-surface-bright text-text-primary px-2.5 py-1 rounded text-label-sm font-label-md flex items-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]">terminal</span>
+                  Checkout
+                </button>
+<button class="bg-surface-container-high hover:bg-error/20 hover:text-error text-on-surface-variant p-1.5 rounded transition-colors" title="Delete Branch" type="button">
+<span class="material-symbols-outlined text-[16px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Commit Snippet -->
+<div class="bg-surface-sunk rounded-md px-space-sm py-2 flex flex-col sm:flex-row sm:items-center justify-between text-label-sm gap-2">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="font-code-base text-primary font-medium">b910ca3</span>
+<span class="text-on-surface truncate">refactor(tui): replace termion layout box with declarative nexa frame matrix</span>
+</div>
+<div class="flex items-center gap-space-md text-text-muted shrink-0 font-code-base">
+<span>sarah.k@nexa</span>
+<span>1h ago</span>
+</div>
+</div>
+<!-- Action Ribbon -->
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-space-xs text-label-sm font-code-base text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px] text-series-branch-1">merge_type</span>
+<span>Ahead by 3 commits (needs push to remote)</span>
+</div>
+<button class="text-primary hover:text-primary-fixed font-label-sm text-label-sm flex items-center gap-1 group-hover:translate-x-0.5 transition-transform" id="visualizeMergeTrigger" type="button">
+                Launch Compare &amp; Merge Visualizer <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Item 3: fix/socket-reconnect (Merged safe delete) -->
+<div class="bg-surface-container rounded-lg p-space-md hover:bg-surface-container-high transition-colors space-y-space-sm group">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="w-2.5 h-2.5 rounded-full bg-text-muted shrink-0"></span>
+<span class="font-code-metric text-code-metric text-text-primary font-medium truncate">fix/socket-reconnect</span>
+<span class="bg-surface-sunk text-secondary font-code-base text-label-sm px-2 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">done</span> Merged into main
+                </span>
+<span class="font-code-base text-label-sm text-text-muted hidden sm:inline">fully synced</span>
+</div>
+<!-- Sync Status & CTAs -->
+<div class="flex items-center gap-space-xs shrink-0">
+<button class="bg-surface-container-high hover:bg-surface-bright text-text-primary px-2.5 py-1 rounded text-label-sm font-label-md flex items-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]">terminal</span>
+                  Checkout
+                </button>
+<button class="bg-error/15 hover:bg-error/25 text-error px-2.5 py-1 rounded text-label-sm font-label-md flex items-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]">delete</span>
+                  Safe Delete
+                </button>
+</div>
+</div>
+<!-- Commit Snippet -->
+<div class="bg-surface-sunk rounded-md px-space-sm py-2 flex flex-col sm:flex-row sm:items-center justify-between text-label-sm gap-2">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="font-code-base text-primary font-medium">41c78e9</span>
+<span class="text-on-surface truncate">fix(transport): handle abrupt TCP reset gracefully with backoff clamp</span>
+</div>
+<div class="flex items-center gap-space-md text-text-muted shrink-0 font-code-base">
+<span>david.m@nexa</span>
+<span>yesterday</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Section: Remote Tracking Branches -->
+<div class="bg-surface-panel rounded-xl p-space-md space-y-space-md shadow-sm">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-status-info">cloud_sync</span>
+<h2 class="font-title-md text-title-md text-text-primary tracking-tight">Remote Tracking (origin)</h2>
+<span class="bg-surface-sunk text-on-surface-variant font-code-base text-label-sm px-2 py-0.5 rounded">git@github.com:x017/nexa.git</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-code-base text-label-sm text-text-muted">Authenticated SSH (id_ed25519)</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-sm font-code-base">
+<!-- Remote Card 1 -->
+<div class="bg-surface-container rounded-lg p-space-md space-y-space-xs hover:bg-surface-container-high transition-colors">
+<div class="flex items-center justify-between">
+<span class="text-text-primary text-label-md font-medium">origin/main</span>
+<span class="material-symbols-outlined text-[16px] text-secondary">cloud_done</span>
+</div>
+<div class="text-text-muted text-label-sm truncate">HEAD -&gt; e4f91b2</div>
+<div class="text-label-sm text-on-surface-variant flex items-center justify-between pt-2">
+<span>Tracked by 1 local</span>
+<button class="hover:text-primary transition-colors text-label-sm">Fetch</button>
+</div>
+</div>
+<!-- Remote Card 2 -->
+<div class="bg-surface-container rounded-lg p-space-md space-y-space-xs hover:bg-surface-container-high transition-colors">
+<div class="flex items-center justify-between">
+<span class="text-text-primary text-label-md font-medium">origin/feat/cli-tui</span>
+<span class="material-symbols-outlined text-[16px] text-status-warning">sync_saved_locally</span>
+</div>
+<div class="text-text-muted text-label-sm truncate">HEAD -&gt; d801f11</div>
+<div class="text-label-sm text-on-surface-variant flex items-center justify-between pt-2">
+<span class="text-status-warning">1 behind local</span>
+<button class="hover:text-primary transition-colors text-label-sm">Compare</button>
+</div>
+</div>
+<!-- Remote Card 3 -->
+<div class="bg-surface-container rounded-lg p-space-md space-y-space-xs hover:bg-surface-container-high transition-colors">
+<div class="flex items-center justify-between">
+<span class="text-text-primary text-label-md font-medium">origin/docs-update</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">cloud</span>
+</div>
+<div class="text-text-muted text-label-sm truncate">HEAD -&gt; 72aa980</div>
+<div class="text-label-sm text-on-surface-variant flex items-center justify-between pt-2">
+<span>Remote only</span>
+<button class="hover:text-primary transition-colors text-label-sm">Checkout</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right 4 Cols: Interactive Rebase & Merge Visualizer Station -->
+<div class="xl:col-span-4 space-y-space-lg">
+<!-- Compare & Visual Conflict Checker Card -->
+<div class="bg-surface-panel rounded-xl p-space-md space-y-space-md shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-series-branch-1">call_split</span>
+<h3 class="font-title-md text-title-md text-text-primary tracking-tight">Merge &amp; Rebase Workbench</h3>
+</div>
+<span class="font-code-base text-label-sm text-secondary bg-secondary/15 px-2 py-0.5 rounded">Fast-Forward Ready</span>
+</div>
+<!-- Visual Branch Graph Track Preview -->
+<div class="bg-surface-sunk rounded-lg p-space-md space-y-space-sm">
+<div class="text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider flex items-center justify-between">
+<span>Topology Flow</span>
+<span class="font-code-base text-text-muted">feat/cli-tui → main</span>
+</div>
+<!-- SVG Visual Branch Divergence Diagram -->
+<div class="w-full flex items-center justify-center py-2">
+<svg class="w-full h-24 text-text-primary" fill="none" viewBox="0 0 320 90" xmlns="http://www.w3.org/2000/svg">
+<!-- Grid background tick marks -->
+<line stroke="currentColor" stroke-dasharray="2 2" stroke-opacity="0.05" x1="40" x2="40" y1="10" y2="80"></line>
+<line stroke="currentColor" stroke-dasharray="2 2" stroke-opacity="0.05" x1="120" x2="120" y1="10" y2="80"></line>
+<line stroke="currentColor" stroke-dasharray="2 2" stroke-opacity="0.05" x1="200" x2="200" y1="10" y2="80"></line>
+<line stroke="currentColor" stroke-dasharray="2 2" stroke-opacity="0.05" x1="280" x2="280" y1="10" y2="80"></line>
+<!-- Main branch line -->
+<path d="M 20 65 L 290 65" stroke="#5ddda5" stroke-linecap="round" stroke-width="2.5"></path>
+<!-- Feature branch diverged curve -->
+<path d="M 90 65 C 130 65 140 25 180 25 L 280 25" stroke="#73aff1" stroke-dasharray="4 2" stroke-linecap="round" stroke-width="2"></path>
+<!-- Proposed fast-forward rebase connector -->
+<path d="M 280 25 C 295 25 290 55 295 62" stroke="#a3a0f1" stroke-dasharray="2 2" stroke-width="2"></path>
+<!-- Commits nodes on main -->
+<circle cx="50" cy="65" fill="#131313" r="4.5" stroke="#5ddda5" stroke-width="2"></circle>
+<circle cx="90" cy="65" fill="#5ddda5" r="5"></circle>
+<circle cx="210" cy="65" fill="#131313" r="4.5" stroke="#5ddda5" stroke-width="2"></circle>
+<circle cx="290" cy="65" fill="#5ddda5" r="6"></circle>
+<!-- Commit nodes on feature branch -->
+<circle cx="180" cy="25" fill="#73aff1" r="4.5"></circle>
+<circle cx="230" cy="25" fill="#73aff1" r="4.5"></circle>
+<circle cx="280" cy="25" fill="#aac7ff" r="5.5"></circle>
+<!-- Labels -->
+<text fill="#5ddda5" font-family="JetBrains Mono" font-size="10" x="20" y="82">main (HEAD)</text>
+<text fill="#73aff1" font-family="JetBrains Mono" font-size="10" x="180" y="16">feat/cli-tui (+3)</text>
+</svg>
+</div>
+<div class="flex items-center justify-between text-label-sm font-code-base pt-1">
+<span class="text-text-muted">Base Ref: <span class="text-text-primary">main (e4f91b2)</span></span>
+<span class="text-text-muted">Head: <span class="text-primary">feat/cli-tui (b910ca3)</span></span>
+</div>
+</div>
+<!-- Conflict Analysis Status -->
+<div class="bg-secondary/10 rounded-lg p-space-sm flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0 mt-0.5">verified</span>
+<div class="space-y-0.5">
+<div class="font-label-md text-label-md text-secondary font-medium">Zero Conflicts Detected</div>
+<div class="font-body-md text-label-sm text-on-surface-variant">All 3 incoming commit ranges cleanly map against the parent workspace. Fast-forward ready.</div>
+</div>
+</div>
+<!-- Workflow Resolution Modes -->
+<div class="space-y-space-xs">
+<label class="text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider block">Execution Strategy</label>
+<!-- Strategy Option 1 -->
+<label class="flex items-start gap-space-sm p-space-sm bg-surface-container rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors">
+<input class="mt-1 accent-primary" name="merge_mode" type="radio" value="merge_no_ff">
+<div class="space-y-0.5">
+<div class="font-label-md text-label-md text-text-primary font-medium flex items-center gap-1.5">
+<span>Merge commit</span>
+<span class="font-code-base text-label-sm text-text-muted">--no-ff</span>
+</div>
+<div class="text-label-sm text-on-surface-variant">Preserves feature branch lineage history and creates a dedicated merge commit node.</div>
+</div>
+</label>
+<!-- Strategy Option 2 -->
+<label class="flex items-start gap-space-sm p-space-sm bg-surface-container rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors">
+<input class="mt-1 accent-primary" name="merge_mode" type="radio" value="squash">
+<div class="space-y-0.5">
+<div class="font-label-md text-label-md text-text-primary font-medium flex items-center gap-1.5">
+<span>Squash and merge</span>
+<span class="font-code-base text-label-sm text-text-muted">--squash</span>
+</div>
+<div class="text-label-sm text-on-surface-variant">Collapses 3 commits into a single unified commit on main with linear history.</div>
+</div>
+</label>
+<!-- Strategy Option 3 (Default Checked) -->
+<label class="flex items-start gap-space-sm p-space-sm bg-surface-container rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors">
+<input checked="" class="mt-1 accent-primary" name="merge_mode" type="radio" value="rebase">
+<div class="space-y-0.5">
+<div class="font-label-md text-label-md text-text-primary font-medium flex items-center gap-1.5">
+<span>Rebase and merge</span>
+<span class="font-code-base text-label-sm text-text-muted">rebase -i</span>
+</div>
+<div class="text-label-sm text-on-surface-variant">Replays commits on top of base branch individually without generating a merge bubble.</div>
+</div>
+</label>
+</div>
+<!-- Strategy Options Drawer Trigger Button -->
+<div class="space-y-space-xs pt-space-xs">
+<button class="w-full bg-primary-container text-on-primary-container font-label-md text-label-md py-2.5 rounded-lg flex items-center justify-center gap-2 hover:bg-primary-fixed-dim transition-all shadow-md active:scale-98" id="executeWorkflowBtn" type="button">
+<span class="material-symbols-outlined text-[18px]">alt_route</span>
+            Run Rebase &amp; Fast-Forward Merge
+          </button>
+<div class="flex items-center justify-between text-label-sm text-text-muted font-code-base px-1">
+<span>Target: refs/heads/main</span>
+<span class="flex items-center gap-1 text-secondary"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>auto-stashes working tree</span>
+</div>
+</div>
+</div>
+<!-- Quick Operations / Rebase Step Cheat Sheet -->
+<div class="bg-surface-panel rounded-xl p-space-md space-y-space-sm shadow-sm">
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">Rebase Command Shortcuts</span>
+<span class="material-symbols-outlined text-[16px] text-text-muted">keyboard</span>
+</div>
+<div class="space-y-space-xs font-code-base text-label-sm">
+<div class="flex items-center justify-between bg-surface-sunk p-2 rounded">
+<span class="text-secondary font-medium">p, pick</span>
+<span class="text-on-surface-variant">use commit as-is</span>
+</div>
+<div class="flex items-center justify-between bg-surface-sunk p-2 rounded">
+<span class="text-series-branch-1 font-medium">r, reword</span>
+<span class="text-on-surface-variant">use commit, edit log</span>
+</div>
+<div class="flex items-center justify-between bg-surface-sunk p-2 rounded">
+<span class="text-status-warning font-medium">s, squash</span>
+<span class="text-on-surface-variant">meld into previous</span>
+</div>
+<div class="flex items-center justify-between bg-surface-sunk p-2 rounded">
+<span class="text-error font-medium">d, drop</span>
+<span class="text-on-surface-variant">remove commit node</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-panel rounded-xl p-space-md space-y-space-md shadow-sm" id="conflictWizardPanel"><div class="flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[18px] text-status-warning">troubleshoot</span><h3 class="font-title-md text-title-md text-text-primary tracking-tight">Conflict Resolution Wizard</h3></div><span class="font-code-base text-label-sm text-status-warning bg-surface-sunk px-2 py-0.5 rounded">2 files</span></div><div class="bg-surface-sunk rounded-lg p-space-sm space-y-space-xs"><div class="flex items-center justify-between text-label-sm font-label-md"><span class="text-primary font-medium">Step 1 of 3: Resolve Conflicts</span><span class="font-code-base text-text-muted">33%</span></div><div class="w-full h-1.5 bg-surface-container-high rounded-full overflow-hidden"><div class="h-full bg-primary-container w-1/3 rounded-full"></div></div><div class="flex items-center justify-between text-[11px] font-code-base text-text-muted pt-0.5"><span class="text-primary">1. Conflicts</span><span>2. Stage</span><span>3. Complete</span></div></div><div class="space-y-space-xs"><div class="text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">Conflicted Files</div><div class="space-y-1 font-code-base text-label-sm"><div class="flex items-center justify-between bg-surface-container-high p-2 rounded-lg cursor-pointer"><div class="flex items-center gap-1.5 min-w-0"><span class="material-symbols-outlined text-[14px] text-status-warning shrink-0">warning</span><span class="text-text-primary truncate">src/tui/frame_matrix.rs</span></div><span class="bg-error/15 text-error px-1.5 py-0.5 rounded text-[11px] shrink-0">2 conflicts</span></div><div class="flex items-center justify-between bg-surface-container p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors"><div class="flex items-center gap-1.5 min-w-0"><span class="material-symbols-outlined text-[14px] text-secondary shrink-0">check_circle</span><span class="text-on-surface-variant truncate">src/transport/socket.rs</span></div><span class="bg-secondary/15 text-secondary px-1.5 py-0.5 rounded text-[11px] shrink-0">Resolved</span></div></div></div><div class="space-y-space-xs"><div class="flex items-center justify-between text-label-sm"><span class="text-on-surface-variant font-label-sm uppercase tracking-wider">Diff Preview (Ours vs Theirs)</span><span class="font-code-base text-text-muted">Ln 42–51</span></div><div class="bg-surface-sunk rounded-lg p-space-sm font-code-base text-[11px] space-y-0.5 overflow-x-auto"><div class="text-secondary bg-secondary/10 px-1.5 py-0.5 rounded-t">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD (Ours · main)</div><div class="text-on-surface px-1.5 py-0.5 bg-secondary/10"><span class="text-text-muted mr-2">42</span><span class="text-primary">let</span> layout = FrameMatrix::fixed(<span class="text-status-warning">80</span>, <span class="text-status-warning">24</span>);</div><div class="text-text-muted px-1.5 py-0.5 bg-surface-container">=======</div><div class="text-on-surface px-1.5 py-0.5 bg-primary-container/20"><span class="text-text-muted mr-2">42</span><span class="text-primary">let</span> layout = FrameMatrix::declarative(ctx.bounds());</div><div class="text-primary bg-primary-container/20 px-1.5 py-0.5 rounded-b">&gt;&gt;&gt;&gt;&gt;&gt;&gt; feat/cli-tui (Theirs)</div></div></div><div class="space-y-space-xs pt-space-xs"><div class="grid grid-cols-3 gap-1.5"><button class="bg-secondary/15 hover:bg-secondary/30 text-secondary py-1.5 px-2 rounded text-[11px] font-label-md transition-colors truncate" type="button">Accept Current</button><button class="bg-primary-container/20 hover:bg-surface-bright text-primary py-1.5 px-2 rounded text-[11px] font-label-md transition-colors truncate" type="button">Accept Incoming</button><button class="bg-surface-container-high hover:bg-surface-bright text-text-primary py-1.5 px-2 rounded text-[11px] font-label-md transition-colors truncate" type="button">Accept Both</button></div><button class="w-full bg-primary-container text-on-primary-container hover:bg-primary-fixed-dim font-label-md text-label-md py-2 rounded-lg flex items-center justify-center gap-1.5 transition-all active:scale-98" type="button"><span class="material-symbols-outlined text-[16px]">task_alt</span>Mark Resolved &amp; Next</button></div></div></div>
+</div>
+<!-- Interactive Slide-Over Drawer: Interactive Rebase Orchestrator (Hidden by default, triggered via JS) -->
+<div class="fixed inset-y-0 right-0 w-full sm:w-[480px] bg-surface-panel shadow-2xl z-50 transform translate-x-full transition-transform duration-200 ease-out flex flex-col justify-between" id="rebaseDrawer">
+<!-- Header -->
+<div class="p-space-lg bg-surface-container flex items-center justify-between">
+<div class="space-y-0.5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">tune</span>
+<h3 class="font-title-md text-title-md text-text-primary">Interactive Rebase Sequence</h3>
+</div>
+<div class="font-code-base text-label-sm text-text-muted">branch: feat/cli-tui onto main (3 steps)</div>
+</div>
+<button class="text-on-surface-variant hover:text-text-primary p-1.5 rounded-lg hover:bg-surface-bright transition-colors" id="closeDrawerBtn" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Scrollable Rebase Commits List -->
+<div class="p-space-lg flex-1 overflow-y-auto space-y-space-md font-code-base">
+<div class="text-label-sm text-on-surface-variant font-sans">
+        Drag commit blocks to re-order sequence or toggle action operator:
+      </div>
+<!-- Commit 1 -->
+<div class="bg-surface-sunk rounded-lg p-space-md space-y-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-text-muted cursor-grab">drag_indicator</span>
+<select class="bg-surface-container-high text-secondary text-label-sm font-code-base rounded px-2 py-1 focus:outline-none">
+<option value="pick">pick</option>
+<option value="reword">reword</option>
+<option value="squash">squash</option>
+<option value="fixup">fixup</option>
+<option value="drop">drop</option>
+</select>
+<span class="text-primary font-medium">9a410b0</span>
+</div>
+<span class="text-text-muted text-label-sm">#1</span>
+</div>
+<div class="text-text-primary text-label-sm pl-6 truncate font-sans">
+          feat(tui): bootstrap ratatui engine and terminal loop
+        </div>
+</div>
+<!-- Commit 2 -->
+<div class="bg-surface-sunk rounded-lg p-space-md space-y-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-text-muted cursor-grab">drag_indicator</span>
+<select class="bg-surface-container-high text-status-warning text-label-sm font-code-base rounded px-2 py-1 focus:outline-none">
+<option selected="" value="squash">squash</option>
+<option value="pick">pick</option>
+<option value="reword">reword</option>
+<option value="fixup">fixup</option>
+<option value="drop">drop</option>
+</select>
+<span class="text-primary font-medium">f402c81</span>
+</div>
+<span class="text-text-muted text-label-sm">#2</span>
+</div>
+<div class="text-text-primary text-label-sm pl-6 truncate font-sans">
+          fixup: adjust raw mode signal listener on crash
+        </div>
+</div>
+<!-- Commit 3 -->
+<div class="bg-surface-sunk rounded-lg p-space-md space-y-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-text-muted cursor-grab">drag_indicator</span>
+<select class="bg-surface-container-high text-secondary text-label-sm font-code-base rounded px-2 py-1 focus:outline-none">
+<option selected="" value="pick">pick</option>
+<option value="reword">reword</option>
+<option value="squash">squash</option>
+<option value="fixup">fixup</option>
+<option value="drop">drop</option>
+</select>
+<span class="text-primary font-medium">b910ca3</span>
+</div>
+<span class="text-text-muted text-label-sm">#3</span>
+</div>
+<div class="text-text-primary text-label-sm pl-6 truncate font-sans">
+          refactor: replace termion layout box with declarative nexa frame matrix
+        </div>
+</div>
+<!-- Preview Summary of Output Commit Result -->
+<div class="bg-surface-container rounded-lg p-space-md space-y-2 mt-4">
+<div class="text-on-surface-variant font-label-sm uppercase tracking-wider font-sans">Rebase Result Preview</div>
+<div class="text-secondary text-label-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">arrow_downward</span>
+<span>Reduces 3 commits to 2 distinct clean log points</span>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="p-space-lg bg-surface-container flex items-center justify-end gap-space-sm">
+<button class="bg-surface-container-high hover:bg-surface-bright text-text-primary px-space-md py-2 rounded-lg text-label-md font-label-md transition-colors" id="cancelDrawerBtn" type="button">
+        Cancel Rebase
+      </button>
+<button class="bg-primary-container text-on-primary-container hover:bg-primary-fixed-dim px-space-lg py-2 rounded-lg text-label-md font-label-md flex items-center gap-1.5 transition-transform active:scale-95 shadow-sm" id="startRebaseRunBtn" type="button">
+<span class="material-symbols-outlined text-[16px]">play_arrow</span>
+        Apply Rebase (git rebase -i)
+      </button>
+</div>
+</div>
+<!-- Ambient Drawer Overlay -->
+<div class="fixed inset-0 bg-background/60 backdrop-blur-sm z-40 hidden transition-opacity" id="drawerOverlay"></div>
+</div>
+<script>
+  (function initBranchWorkstation() {
+    const drawer = document.getElementById('rebaseDrawer');
+    const overlay = document.getElementById('drawerOverlay');
+    const openRebaseBtn = document.getElementById('openRebaseBtn');
+    const visualizeTrigger = document.getElementById('visualizeMergeTrigger');
+    const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+    const cancelDrawerBtn = document.getElementById('cancelDrawerBtn');
+    const executeWorkflowBtn = document.getElementById('executeWorkflowBtn');
+    const filterInput = document.getElementById('branchFilterInput');
+
+    function openDrawer() {
+      drawer.classList.remove('translate-x-full');
+      overlay.classList.remove('hidden');
+    }
+
+    function closeDrawer() {
+      drawer.classList.add('translate-x-full');
+      overlay.classList.add('hidden');
+    }
+
+    if (openRebaseBtn) openRebaseBtn.addEventListener('click', openDrawer);
+    if (visualizeTrigger) visualizeTrigger.addEventListener('click', openDrawer);
+    if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeDrawer);
+    if (cancelDrawerBtn) cancelDrawerBtn.addEventListener('click', closeDrawer);
+    if (overlay) overlay.addEventListener('click', closeDrawer);
+
+    if (executeWorkflowBtn) {
+      executeWorkflowBtn.addEventListener('click', function() {
+        const prevText = executeWorkflowBtn.innerHTML;
+        executeWorkflowBtn.disabled = true;
+        executeWorkflowBtn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">refresh</span> Rebasing feat/cli-tui onto main...';
+        
+        setTimeout(function() {
+          executeWorkflowBtn.disabled = false;
+          executeWorkflowBtn.innerHTML = '<span class="material-symbols-outlined text-[18px] text-secondary">check</span> Fast-Forward Merged Successfully!';
+          setTimeout(function() {
+            executeWorkflowBtn.innerHTML = prevText;
+          }, 3000);
+        }, 1200);
+      });
+    }
+
+    // Dynamic Filter
+    if (filterInput) {
+      filterInput.addEventListener('input', function(e) {
+        const query = e.target.value.toLowerCase();
+        const branchCards = document.querySelectorAll('#branchListContainer > div');
+        branchCards.forEach(card => {
+          const text = card.textContent.toLowerCase();
+          if (text.includes(query)) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    }
+  })();
+</script></main></div><footer class="fixed bottom-0 left-0 right-0 h-7 bg-surface-panel text-on-surface-variant z-50 flex items-center justify-between px-margin-desktop font-code-base text-label-sm select-none"><div class="flex items-center gap-space-md"><span>git 2.45.1</span><div class="flex items-center gap-space-xs text-secondary"><span class="w-2 h-2 rounded-full bg-secondary inline-block"></span><span>SSH Verified</span></div><div class="flex items-center gap-space-xs text-on-surface"><span class="material-symbols-outlined text-[14px] text-primary">fork_right</span><span>main</span></div><span class="text-on-surface-variant">e4f91b2 (HEAD -&gt; main)</span></div><div class="flex items-center gap-space-md"><span class="hover:text-on-surface cursor-pointer">LF</span><span class="hover:text-on-surface cursor-pointer">UTF-8</span><span class="text-secondary flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">cloud_sync</span>synced</span></div></footer>
+
+</body></html>

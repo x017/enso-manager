@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "background": "#131313", "primary-container": "#6ba3ff", "on-surface": "#e5e2e1", "outline": "#8c919d", "on-tertiary-fixed": "#410004", "inverse-surface": "#e5e2e1", "series-branch-4": "#a3a0f1", "primary-fixed": "#d7e3ff", "surface-container-highest": "#353534", "on-background": "#e5e2e1", "surface-canvas": "#121212", "on-secondary": "#003824", "secondary-fixed": "#7bfac0", "status-info": "#7cc4f0", "series-branch-6": "#e18cb5", "secondary": "#5ddda5", "on-tertiary": "#66060f", "tertiary-container": "#ff7b76", "inverse-on-surface": "#313030", "series-branch-3": "#5ac299", "secondary-fixed-dim": "#5ddda5", "on-secondary-fixed": "#002113", "text-primary": "#f2f2f2", "inverse-primary": "#135db4", "on-primary-fixed-variant": "#00458e", "on-secondary-fixed-variant": "#005236", "text-muted": "#8c8c8c", "surface-muted": "#242424", "tertiary-fixed": "#ffdad7", "surface-container-low": "#1c1b1b", "surface-panel": "#181818", "on-surface-variant": "#c2c6d4", "outline-variant": "#424752", "status-warning": "#f2bd68", "surface-container-high": "#2a2a2a", "border-focus": "#55adff", "series-branch-5": "#d1a24f", "on-primary-container": "#003875", "on-tertiary-container": "#731217", "border-hairline": "#2b2b2b", "text-secondary": "#b4b4b4", "surface": "#131313", "surface-container": "#201f1f", "tertiary": "#ffb3ae", "surface-variant": "#353534", "surface-sunk": "#0e0e0e", "border-subtle": "#222222", "series-branch-2": "#e7936c", "series-branch-1": "#73aff1", "secondary-container": "#04a572", "surface-container-lowest": "#0e0e0e", "surface-raised": "#1f1f1f", "on-error": "#690005", "on-secondary-container": "#00311f", "surface-bright": "#393939", "primary-fixed-dim": "#aac7ff", "surface-dim": "#131313", "on-primary-fixed": "#001b3e", "on-tertiary-fixed-variant": "#862122", "surface-tint": "#aac7ff", "error-container": "#93000a", "on-primary": "#002f65", "error": "#ffb4ab", "primary": "#aac7ff", "tertiary-fixed-dim": "#ffb3ae", "on-error-container": "#ffdad6" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-lg": "1rem", "margin": "1rem", "margin-desktop": "1.5rem", "space-sm": "0.5rem", "gutter": "0.75rem", "space-md": "0.75rem", "gutter-desktop": "1rem", "space-xl": "1.5rem", "space-xs": "0.25rem" }, "fontFamily": { "body-md": ["Inter"], "headline-md": ["Geist"], "code-base": ["JetBrains Mono"], "headline-lg": ["Geist"], "headline-lg-mobile": ["Geist"], "label-md": ["Inter"], "title-md": ["Geist"], "body-lg": ["Inter"], "headline-sm": ["Geist"], "code-metric": ["JetBrains Mono"], "label-sm": ["Inter"] }, "fontSize": { "body-md": ["13px", { "lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400" }], "headline-md": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "500" }], "code-base": ["12.5px", { "lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400" }], "headline-lg": ["36px", { "lineHeight": "40px", "letterSpacing": "-0.025em", "fontWeight": "500" }], "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "500" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0", "fontWeight": "500" }], "title-md": ["17px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "500" }], "body-lg": ["15px", { "lineHeight": "23px", "letterSpacing": "0", "fontWeight": "400" }], "headline-sm": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "500" }], "code-metric": ["15px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500" }], "label-sm": ["11px", { "lineHeight": "15px", "letterSpacing": "0.04em", "fontWeight": "500" }] } } } };</script></head><body class="bg-surface-canvas text-on-surface font-body-md text-body-md min-h-screen selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 left-0 right-0 h-16 bg-surface-panel/90 backdrop-blur-xl z-50 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full px-margin-desktop flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md shrink-0"><div class="flex items-center gap-space-xs pr-space-sm"><span class="w-3 h-3 rounded-full bg-error inline-block"></span><span class="w-3 h-3 rounded-full bg-status-warning inline-block"></span><span class="w-3 h-3 rounded-full bg-secondary inline-block"></span></div><img alt="GitNex Repo Manager Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrDHboWyClxBvwwYRqnqbB01OXauToGyMLrTuH_EwkyAkgTCyW575dwfxBYGT_8d-e96uwEf4-qWwICGxu3oIfyvvRdL2ld53QPdC6kUSBbM39bAROIlfswWN4Ixw4dK5YRX_ZaOXUU_R3IBH7Fk9AL_OdsbvTQii_jpCBSvP5CLMf-xTt9S1YyRz5R0kzlvyhYf_NyqFjVtXQiyaHvAfzwyHsvcuDQyoTy1oSV-kAsCWg"/><span class="font-title-md text-title-md text-on-surface tracking-tight font-medium">Nexa Git</span><div class="hidden xl:flex items-center gap-space-xs bg-surface-sunk py-space-xs px-space-sm rounded-lg text-on-surface-variant font-code-base text-code-base"><span class="material-symbols-outlined text-primary text-[18px]">folder</span><span class="text-on-surface font-body-md text-body-md">~/code/developer/nexa-core</span><span class="bg-surface-container-high px-space-xs py-0.5 rounded text-secondary font-code-base text-code-base flex items-center gap-space-xs"><span class="material-symbols-outlined text-[14px]">commit</span>main</span><span class="text-on-surface-variant text-[11px]">0↑ 0↓</span><span class="material-symbols-outlined text-on-surface-variant text-[16px]">arrow_drop_down</span></div></div><div class="flex items-center gap-space-sm shrink-0"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-2 text-on-surface-variant text-[16px]">search</span><input class="bg-surface-sunk text-on-surface placeholder:text-on-surface-variant font-body-md text-body-md rounded-lg pl-8 pr-12 py-1.5 focus:outline-none focus:ring-2 focus:ring-border-focus w-64 lg:w-72" placeholder="Search commits, files, symbols..." type="text"/><span class="absolute right-2 font-code-base text-label-sm text-on-surface-variant bg-surface-container-high px-1 py-0.5 rounded">⌘K</span></div><div class="flex items-center gap-space-xs"><button class="bg-surface-container-high text-on-surface hover:bg-surface-bright hover:text-on-surface px-space-sm py-1.5 rounded text-label-md font-label-md flex items-center gap-1 transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">sync</span>Fetch</button><button class="bg-surface-container-high text-on-surface hover:bg-surface-bright hover:text-on-surface px-space-sm py-1.5 rounded text-label-md font-label-md flex items-center gap-1 transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">south</span>Pull</button><button class="bg-primary-container text-on-primary-container font-label-md text-label-md px-space-sm py-1.5 rounded flex items-center gap-1 transition-transform active:scale-95" type="button"><span class="material-symbols-outlined text-[16px]">north</span>Push</button><button class="bg-surface-container-high text-on-surface hover:bg-surface-bright hover:text-on-surface px-space-sm py-1.5 rounded text-label-md font-label-md flex items-center gap-1 transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">archive</span>Stash</button><button class="bg-surface-container-high text-on-surface hover:bg-surface-bright hover:text-on-surface px-space-sm py-1.5 rounded text-label-md font-label-md flex items-center gap-1 transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">terminal</span></button></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><aside class="fixed left-0 top-16 bottom-7 w-64 bg-surface-panel z-40 flex flex-col justify-between overflow-y-auto"><div class="p-space-sm space-y-space-md"><div class="text-on-surface-variant font-label-sm text-label-sm uppercase px-space-sm tracking-wider">Workspace</div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-label-md rounded-lg"><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="repository-pulse-activity-dashboard" href="#"><span class="font-label-md text-label-md">Repository Pulse &amp; Activity</span><span class="bg-surface-container-high text-secondary font-code-base text-label-sm px-space-xs py-0.5 rounded">live</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="working-tree-diff-inspector" href="#"><span class="font-label-md text-label-md">Working Tree &amp; Diff</span><span class="bg-surface-container-high text-status-warning font-code-base text-label-sm px-space-xs py-0.5 rounded">4 mod</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="interactive-commit-graph-log" href="#"><span class="font-label-md text-label-md">Commit Graph &amp; Log</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="interactive-rebase-cherry-pick-studio" href="#"><span class="font-label-md text-label-md">Interactive Rebase Studio</span><span class="bg-surface-container-high text-status-info font-code-base text-label-sm px-space-xs py-0.5 rounded">tools</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="branch-management-merge-hub" href="#"><span class="font-label-md text-label-md">Branches &amp; Merge Hub</span><span class="bg-surface-container-high text-on-surface-variant font-code-base text-label-sm px-space-xs py-0.5 rounded">5</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="pull-requests-code-review-studio" href="#"><span class="font-label-md text-label-md">Pull Requests &amp; Reviews</span><span class="bg-surface-container-high text-status-info font-code-base text-label-sm px-space-xs py-0.5 rounded">3 open</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="stash-workbench-patch-viewer" href="#"><span class="font-label-md text-label-md">Stashes &amp; Patches</span><span class="bg-surface-container-high text-on-surface-variant font-code-base text-label-sm px-space-xs py-0.5 rounded">2</span></a></nav><div class="pt-space-sm"><div class="text-on-surface-variant font-label-sm text-label-sm uppercase px-space-sm tracking-wider mb-space-xs">Local Branches</div><div class="flex flex-col gap-space-xs pl-space-sm font-code-base text-code-base"><div class="flex items-center gap-space-xs text-secondary py-1"><span class="material-symbols-outlined text-[14px]">check</span><span>main</span></div><div class="flex items-center gap-space-xs text-on-surface-variant hover:text-on-surface py-1"><span class="material-symbols-outlined text-[14px]">commit</span><span>feat/cli-tui</span></div><div class="flex items-center gap-space-xs text-on-surface-variant hover:text-on-surface py-1"><span class="material-symbols-outlined text-[14px]">commit</span><span>fix/socket</span></div></div></div><div class="pt-space-sm"><div class="text-on-surface-variant font-label-sm text-label-sm uppercase px-space-sm tracking-wider mb-space-xs">Remote (origin)</div><div class="flex flex-col gap-space-xs pl-space-sm font-code-base text-code-base text-on-surface-variant"><div class="flex items-center gap-space-xs hover:text-on-surface py-1"><span class="material-symbols-outlined text-[14px]">cloud_done</span><span>origin/main</span></div><div class="flex items-center gap-space-xs hover:text-on-surface py-1"><span class="material-symbols-outlined text-[14px]">cloud_done</span><span>origin/feat/cli-tui</span></div></div></div></div><div class="p-space-sm"><div class="bg-surface-sunk p-space-sm rounded-lg flex flex-col gap-1"><div class="flex items-center justify-between font-label-sm text-label-sm"><span class="text-on-surface-variant">Status</span><span class="text-secondary flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-secondary inline-block"></span>Clean Index</span></div><div class="font-code-base text-label-sm text-status-warning">4 unstaged changes</div><div class="text-on-surface-variant font-label-sm text-label-sm">Synced 2m ago</div></div></div></aside><div class="pl-64"><main class="relative pt-16 pb-7 w-full min-h-screen bg-surface-canvas px-margin-desktop"><div class="flex flex-col w-full text-on-surface">
+<!-- Top Utility Context Bar -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md pb-space-md pt-space-xs">
+<div class="flex flex-col gap-1 min-w-0">
+<div class="flex items-center gap-space-xs text-label-sm font-label-sm uppercase tracking-wider text-text-muted flex-wrap">
+<span>REPO: NEXA-CORE</span>
+<span class="text-surface-container-highest">/</span>
+<span class="text-primary">REBASE WORKBENCH</span>
+<span class="text-surface-container-highest">/</span>
+<span class="font-code-base text-text-secondary lowercase">feat/cli-tui onto main</span>
+<span class="bg-surface-sunk text-text-muted px-1.5 py-0.5 rounded font-code-base text-label-sm">(base: e4f91b2)</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<h1 class="font-headline-sm text-headline-sm text-text-primary tracking-tight">Interactive Rebase Studio</h1>
+<div class="flex items-center gap-1.5 bg-status-warning/15 text-status-warning px-2.5 py-0.5 rounded-full font-code-base text-label-sm">
+<span class="w-2 h-2 rounded-full bg-status-warning animate-pulse"></span>
+          Rebase in Progress: Step 2 of 5
+        </div>
+</div>
+</div>
+<!-- Rebase Session Control Actions -->
+<div class="flex items-center gap-space-xs shrink-0 flex-wrap">
+<button class="bg-surface-panel hover:bg-surface-raised text-text-primary px-space-md py-1.5 rounded text-label-md font-label-md flex items-center gap-1.5 transition-colors shadow-sm" id="btn-preview-history" type="button">
+<span class="material-symbols-outlined text-[16px] text-series-branch-1">account_tree</span>
+        Preview Resulting History
+      </button>
+<button class="bg-surface-panel hover:bg-surface-raised text-text-muted hover:text-text-primary px-space-md py-1.5 rounded text-label-md font-label-md flex items-center gap-1.5 transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">redo</span>
+        Skip Commit
+      </button>
+<button class="bg-error/10 hover:bg-error/20 text-error px-space-md py-1.5 rounded text-label-md font-label-md flex items-center gap-1.5 transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">cancel</span>
+        Abort Rebase
+      </button>
+<button class="bg-primary-container text-on-primary-container hover:bg-primary px-space-lg py-1.5 rounded text-label-md font-label-md flex items-center gap-1.5 transition-transform active:scale-95 shadow-md" id="btn-continue-rebase" type="button">
+<span class="material-symbols-outlined text-[16px]">play_arrow</span>
+        Continue Rebase
+        <span class="bg-on-primary-container/20 text-on-primary-container px-1 py-0.2 rounded font-code-base text-label-sm">⌘↵</span>
+</button>
+</div>
+</div>
+<!-- Rebase Conflict Alert Banner (Step 2 Active Interruption) -->
+<div class="mb-space-md bg-surface-panel rounded-lg p-space-md flex flex-col md:flex-row md:items-center justify-between gap-space-md shadow-sm">
+<div class="flex items-start md:items-center gap-space-sm min-w-0">
+<div class="w-8 h-8 rounded-lg bg-status-warning/15 text-status-warning flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">warning</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="font-title-md text-title-md text-text-primary">Merge Conflict Detected</span>
+<span class="font-code-base text-label-sm text-status-warning bg-surface-sunk px-2 py-0.5 rounded">src/terminal/renderer.rs:42</span>
+</div>
+<p class="font-body-md text-body-md text-text-secondary truncate">
+          Commit <code class="font-code-base text-secondary bg-surface-sunk px-1 rounded">8a2c419</code> diverges from target state. Resolve hunks below or checkout fast variants.
+        </p>
+</div>
+</div>
+<div class="flex items-center gap-space-xs shrink-0 font-code-base text-label-sm">
+<button class="bg-surface-sunk hover:bg-surface-container-high text-text-secondary hover:text-text-primary px-space-sm py-1.5 rounded flex items-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span> --ours
+      </button>
+<button class="bg-surface-sunk hover:bg-surface-container-high text-text-secondary hover:text-text-primary px-space-sm py-1.5 rounded flex items-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span> --theirs
+      </button>
+<button class="bg-primary/10 text-primary hover:bg-primary/20 px-space-sm py-1.5 rounded flex items-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]">terminal</span> Open CLI Merge Tool
+      </button>
+</div>
+</div>
+<!-- Main Dual-Pane Workbench -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-md items-start w-full">
+<!-- LEFT / CENTER PANEL: Rebase Todo List & Cherry-Pick Studio (5 Cols on XL) -->
+<div class="xl:col-span-5 flex flex-col gap-space-md">
+<!-- Workbench Source Mode Switcher -->
+<div class="bg-surface-panel rounded-lg p-space-sm flex flex-col gap-space-sm shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center bg-surface-sunk p-0.5 rounded-lg text-label-sm font-label-sm">
+<button class="px-space-md py-1 rounded bg-surface-raised text-text-primary shadow-sm flex items-center gap-1.5 font-medium transition-colors" type="button">
+<span class="material-symbols-outlined text-[15px] text-primary">low_priority</span>
+              Rebase Plan (5)
+            </button>
+<button class="px-space-md py-1 rounded text-text-muted hover:text-text-secondary flex items-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-[15px] text-series-branch-2">content_paste_go</span>
+              Cherry-Pick Picker
+            </button>
+</div>
+<div class="hidden sm:flex items-center gap-1 font-code-base text-label-sm text-text-muted">
+<span>Target:</span>
+<span class="text-secondary bg-surface-sunk px-1.5 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">fork_right</span>
+              feat/cli-tui
+            </span>
+</div>
+</div>
+<!-- Mode Meta Quick-Bar -->
+<div class="flex items-center justify-between text-label-sm font-label-sm text-text-muted bg-surface-sunk px-space-sm py-1.5 rounded">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-status-info">tune</span>
+            Keys: <kbd class="font-code-base bg-surface-panel px-1 rounded text-text-primary">p</kbd>ick, <kbd class="font-code-base bg-surface-panel px-1 rounded text-text-primary">s</kbd>quash, <kbd class="font-code-base bg-surface-panel px-1 rounded text-text-primary">d</kbd>rop
+          </span>
+<span class="font-code-base text-text-secondary">Onto: main (HEAD)</span>
+</div>
+</div>
+<!-- Commit Todo Replay Queue -->
+<div class="bg-surface-panel rounded-lg flex flex-col shadow-sm overflow-hidden">
+<div class="px-space-md py-space-sm bg-surface-panel flex items-center justify-between text-label-sm font-label-sm text-text-muted">
+<span class="uppercase tracking-wider">Queue Sequence</span>
+<div class="flex items-center gap-2">
+<span class="text-secondary font-code-base">1 Applied</span>
+<span>•</span>
+<span class="text-status-warning font-code-base">1 In-Flight</span>
+<span>•</span>
+<span class="text-text-muted font-code-base">3 Pending</span>
+</div>
+</div>
+<div class="flex flex-col divide-y divide-surface-container/40 p-space-xs" id="rebase-todo-list">
+<!-- ITEM 1: APPLIED -->
+<div class="p-space-sm rounded-lg hover:bg-surface-raised/40 transition-colors flex items-center justify-between gap-space-sm group opacity-85">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="cursor-grab text-surface-container-highest group-hover:text-text-muted flex items-center">
+<span class="material-symbols-outlined text-[18px]">drag_indicator</span>
+</div>
+<div class="w-5 h-5 rounded-full bg-secondary/15 text-secondary flex items-center justify-center shrink-0 font-code-base text-label-sm">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</div>
+<div class="bg-secondary/15 text-secondary px-2 py-0.5 rounded font-code-base text-label-sm uppercase font-semibold">
+                pick
+              </div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-code-base text-label-sm text-primary">b910ca3</span>
+<span class="font-body-md text-body-md text-text-primary truncate">refactor(render): extract frame-buffer allocator</span>
+</div>
+<div class="flex items-center gap-2 text-label-sm font-label-sm text-text-muted">
+<span class="text-text-secondary">alex.m</span>
+<span>•</span>
+<span>2 hours ago</span>
+<span>•</span>
+<span class="font-code-base text-label-sm">3 files (+142, -18)</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-1 shrink-0">
+<span class="bg-surface-sunk text-secondary px-2 py-0.5 rounded font-code-base text-label-sm">Replayed</span>
+</div>
+</div>
+<!-- ITEM 2: ACTIVE (IN CONFLICT) -->
+<div class="p-space-sm rounded-lg bg-surface-raised shadow-md flex items-center justify-between gap-space-sm group">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="cursor-grab text-status-warning flex items-center">
+<span class="material-symbols-outlined text-[18px]">drag_indicator</span>
+</div>
+<div class="w-5 h-5 rounded-full bg-status-warning/20 text-status-warning flex items-center justify-center shrink-0 font-code-base text-label-sm font-bold">
+                2
+              </div>
+<!-- Interactive Action Dropdown Pill -->
+<div class="relative">
+<button class="bg-status-warning/20 text-status-warning hover:bg-status-warning/30 px-2 py-0.5 rounded font-code-base text-label-sm uppercase font-bold flex items-center gap-1 transition-colors" type="button">
+                  edit
+                  <span class="material-symbols-outlined text-[14px]">expand_more</span>
+</button>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-code-base text-label-sm text-status-warning font-semibold">8a2c419</span>
+<span class="font-body-md text-body-md text-text-primary font-medium truncate">feat(cli): bind real-time event dispatcher to loop</span>
+</div>
+<div class="flex items-center gap-2 text-label-sm font-label-sm text-text-muted">
+<span class="text-text-secondary">sarah.k</span>
+<span>•</span>
+<span>1 hour ago</span>
+<span>•</span>
+<span class="font-code-base text-label-sm text-status-warning">1 conflict (renderer.rs)</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-1 shrink-0">
+<span class="bg-status-warning text-on-surface-variant font-code-base text-label-sm px-2 py-0.5 rounded uppercase font-semibold">Current Step</span>
+</div>
+</div>
+<!-- ITEM 3: PENDING (SQUASH TARGET) -->
+<div class="p-space-sm rounded-lg hover:bg-surface-raised/40 transition-colors flex items-center justify-between gap-space-sm group">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="cursor-grab text-surface-container-highest group-hover:text-text-muted flex items-center">
+<span class="material-symbols-outlined text-[18px]">drag_indicator</span>
+</div>
+<div class="w-5 h-5 rounded-full bg-surface-sunk text-text-muted flex items-center justify-center shrink-0 font-code-base text-label-sm">
+                3
+              </div>
+<div class="bg-series-branch-1/15 text-series-branch-1 px-2 py-0.5 rounded font-code-base text-label-sm uppercase font-semibold">
+                squash
+              </div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-code-base text-label-sm text-primary">3f109de</span>
+<span class="font-body-md text-body-md text-text-primary truncate">fix(render): debounce screen repaint triggers</span>
+</div>
+<div class="flex items-center gap-2 text-label-sm font-label-sm text-text-muted">
+<span class="text-text-secondary">sarah.k</span>
+<span>•</span>
+<span>45 mins ago</span>
+<span>•</span>
+<span class="font-code-base text-label-sm">1 file (+8, -2)</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-1 shrink-0">
+<span class="font-code-base text-label-sm text-text-muted bg-surface-sunk px-1.5 py-0.5 rounded">meld into 8a2c</span>
+</div>
+</div>
+<!-- ITEM 4: PENDING (REWORD) -->
+<div class="p-space-sm rounded-lg hover:bg-surface-raised/40 transition-colors flex items-center justify-between gap-space-sm group">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="cursor-grab text-surface-container-highest group-hover:text-text-muted flex items-center">
+<span class="material-symbols-outlined text-[18px]">drag_indicator</span>
+</div>
+<div class="w-5 h-5 rounded-full bg-surface-sunk text-text-muted flex items-center justify-center shrink-0 font-code-base text-label-sm">
+                4
+              </div>
+<div class="bg-series-branch-4/15 text-series-branch-4 px-2 py-0.5 rounded font-code-base text-label-sm uppercase font-semibold">
+                reword
+              </div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-code-base text-label-sm text-primary">99cd310</span>
+<span class="font-body-md text-body-md text-text-primary truncate">perf: cache layout glyph boundaries for ANSI</span>
+</div>
+<div class="flex items-center gap-2 text-label-sm font-label-sm text-text-muted">
+<span class="text-text-secondary">dave.v</span>
+<span>•</span>
+<span>32 mins ago</span>
+<span>•</span>
+<span class="font-code-base text-label-sm">2 files (+44, -9)</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-1 shrink-0">
+<span class="material-symbols-outlined text-[16px] text-text-muted">edit_note</span>
+</div>
+</div>
+<!-- ITEM 5: PENDING (DROP CANDIDATE) -->
+<div class="p-space-sm rounded-lg hover:bg-surface-raised/40 transition-colors flex items-center justify-between gap-space-sm group">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="cursor-grab text-surface-container-highest group-hover:text-text-muted flex items-center">
+<span class="material-symbols-outlined text-[18px]">drag_indicator</span>
+</div>
+<div class="w-5 h-5 rounded-full bg-surface-sunk text-text-muted flex items-center justify-center shrink-0 font-code-base text-label-sm">
+                5
+              </div>
+<div class="bg-error/15 text-error px-2 py-0.5 rounded font-code-base text-label-sm uppercase font-semibold">
+                drop
+              </div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-code-base text-label-sm text-text-muted line-through">0cb2184</span>
+<span class="font-body-md text-body-md text-text-muted line-through truncate">temp: debug log prints for terminal dimensions</span>
+</div>
+<div class="flex items-center gap-2 text-label-sm font-label-sm text-text-muted">
+<span class="text-text-muted">sarah.k</span>
+<span>•</span>
+<span>12 mins ago</span>
+<span>•</span>
+<span class="font-code-base text-label-sm">1 file (+15, -0)</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-1 shrink-0">
+<span class="material-symbols-outlined text-[16px] text-error">delete_outline</span>
+</div>
+</div>
+</div>
+<!-- Quick Operation Shortcut Palette -->
+<div class="p-space-sm bg-surface-sunk flex items-center justify-between text-label-sm font-label-sm text-text-muted flex-wrap gap-2">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-primary">keyboard</span>
+<span>Select row + press shortcut:</span>
+</div>
+<div class="flex items-center gap-1.5 font-code-base text-label-sm">
+<span class="bg-surface-panel px-1.5 py-0.5 rounded text-text-primary">[p] pick</span>
+<span class="bg-surface-panel px-1.5 py-0.5 rounded text-text-primary">[r] reword</span>
+<span class="bg-surface-panel px-1.5 py-0.5 rounded text-text-primary">[e] edit</span>
+<span class="bg-surface-panel px-1.5 py-0.5 rounded text-text-primary">[s] squash</span>
+<span class="bg-surface-panel px-1.5 py-0.5 rounded text-text-primary">[d] drop</span>
+</div>
+</div>
+</div>
+<!-- Cherry-Pick Quick Stash & Branch Injector Card -->
+<div class="bg-surface-panel rounded-lg p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-series-branch-2">content_copy</span>
+<span class="font-title-md text-title-md text-text-primary">Cherry-Pick Source Explorer</span>
+</div>
+<span class="bg-series-branch-2/15 text-series-branch-2 font-code-base text-label-sm px-2 py-0.5 rounded">Remote Tracking</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="relative flex-1">
+<select class="w-full bg-surface-sunk text-text-primary font-code-base text-body-md rounded-lg pl-3 pr-8 py-1.5 appearance-none focus:outline-none focus:ring-2 focus:ring-border-focus">
+<option>origin/feat/renderer-next (3 unmerged commits)</option>
+<option>origin/hotfix/socket-reconnect (1 commit)</option>
+<option>upstream/patch/cross-term (4 commits)</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-2 text-text-muted pointer-events-none text-[18px]">expand_more</span>
+</div>
+<button class="bg-surface-raised hover:bg-surface-container-high text-text-primary px-space-md py-1.5 rounded text-label-md font-label-md shrink-0 flex items-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span>
+            Stage SHA
+          </button>
+</div>
+<p class="font-body-md text-body-md text-text-muted">
+          Select commits from external branches to graft directly into the active rebase stream without switching HEAD.
+        </p>
+</div>
+</div>
+<!-- RIGHT PANEL: Hunk Resolution & Diff Sandbox (7 Cols on XL) -->
+<div class="xl:col-span-7 flex flex-col gap-space-md">
+<!-- Hunk Sandbox Header Card -->
+<div class="bg-surface-panel rounded-lg p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs min-w-0">
+<span class="material-symbols-outlined text-[20px] text-status-warning">merge_type</span>
+<span class="font-title-md text-title-md text-text-primary truncate">Three-Way Merge Sandbox</span>
+<span class="font-code-base text-label-sm bg-surface-sunk text-text-secondary px-2 py-0.5 rounded truncate">src/terminal/renderer.rs</span>
+</div>
+<!-- Live Validation Status Indicator -->
+<div class="flex items-center gap-1.5 bg-secondary/15 text-secondary px-2.5 py-1 rounded-full font-code-base text-label-sm shrink-0" id="validation-pill">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span id="validation-text">Resolved: 1/1 markers cleared</span>
+</div>
+</div>
+<!-- Hunk Resolution Action Bar -->
+<div class="flex items-center justify-between flex-wrap gap-2 pt-space-xs">
+<div class="flex items-center gap-space-xs flex-wrap">
+<button class="bg-series-branch-1/20 hover:bg-series-branch-1/30 text-series-branch-1 px-space-sm py-1.5 rounded text-label-md font-label-md flex items-center gap-1 transition-colors" id="btn-accept-incoming" type="button">
+<span class="material-symbols-outlined text-[16px]">arrow_downward</span>
+              Accept Incoming (Theirs)
+            </button>
+<button class="bg-status-warning/20 hover:bg-status-warning/30 text-status-warning px-space-sm py-1.5 rounded text-label-md font-label-md flex items-center gap-1 transition-colors" id="btn-accept-current" type="button">
+<span class="material-symbols-outlined text-[16px]">arrow_upward</span>
+              Accept Current (Ours)
+            </button>
+<button class="bg-surface-sunk hover:bg-surface-raised text-text-primary px-space-sm py-1.5 rounded text-label-md font-label-md flex items-center gap-1 transition-colors" id="btn-accept-both" type="button">
+<span class="material-symbols-outlined text-[16px]">call_merge</span>
+              Accept Both
+            </button>
+</div>
+<div class="flex items-center gap-2">
+<button class="text-text-muted hover:text-text-primary text-label-sm font-label-sm flex items-center gap-1 transition-colors" id="btn-reset-diff" type="button">
+<span class="material-symbols-outlined text-[15px]">restart_alt</span>
+              Reset Buffer
+            </button>
+</div>
+</div>
+</div>
+<!-- Diff & Conflict Editor Well -->
+<div class="bg-surface-sunk rounded-lg overflow-hidden shadow-inner flex flex-col">
+<!-- Diff Tab Bar -->
+<div class="bg-surface-panel px-space-md py-2 flex items-center justify-between text-label-sm font-label-sm">
+<div class="flex items-center gap-space-md">
+<span class="font-code-base text-text-primary flex items-center gap-1.5 font-medium">
+<span class="material-symbols-outlined text-[16px] text-status-warning">edit_document</span>
+              renderer.rs (Interactive Diff Buffer)
+            </span>
+</div>
+<div class="flex items-center gap-space-md text-text-muted font-code-base">
+<span class="flex items-center gap-1 text-series-branch-1"><span class="w-2 h-2 rounded-full bg-series-branch-1 inline-block"></span>Incoming: 8a2c419</span>
+<span class="flex items-center gap-1 text-status-warning"><span class="w-2 h-2 rounded-full bg-status-warning inline-block"></span>Current: main (HEAD)</span>
+</div>
+</div>
+<!-- Code Conflict Viewport -->
+<div class="p-space-sm font-code-base text-code-base leading-6 overflow-x-auto select-text" id="diff-editor-viewport">
+<!-- Context lines before conflict -->
+<div class="flex items-center text-text-muted hover:bg-surface-raised/30 px-space-xs rounded">
+<span class="w-10 select-none text-surface-container-highest shrink-0 text-right pr-4">38</span>
+<span class="text-text-secondary">impl TerminalRenderer {</span>
+</div>
+<div class="flex items-center text-text-muted hover:bg-surface-raised/30 px-space-xs rounded">
+<span class="w-10 select-none text-surface-container-highest shrink-0 text-right pr-4">39</span>
+<span class="text-text-secondary pl-4">pub fn new(config: RendererConfig) -&gt; Self {</span>
+</div>
+<div class="flex items-center text-text-muted hover:bg-surface-raised/30 px-space-xs rounded">
+<span class="w-10 select-none text-surface-container-highest shrink-0 text-right pr-4">40</span>
+<span class="text-text-secondary pl-8">let buffer = BufferPool::allocate_aligned(config.viewport);</span>
+</div>
+<!-- CONFLICT REGION -->
+<div class="my-space-xs rounded overflow-hidden shadow-sm" id="conflict-block">
+<!-- Marker: HEAD (Current / Ours) -->
+<div class="bg-status-warning/15 text-status-warning px-3 py-1 flex items-center justify-between text-label-sm font-semibold select-none">
+<span class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">arrow_downward</span>
+                &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD (Current Change: main)
+              </span>
+<button class="bg-status-warning text-surface-sunk px-2 py-0.5 rounded text-label-sm font-bold hover:opacity-90" id="pill-choose-ours">Use Ours</button>
+</div>
+<!-- Content: Ours -->
+<div class="bg-status-warning/10 py-1" id="hunk-ours">
+<div class="flex items-center text-text-primary px-space-xs">
+<span class="w-10 select-none text-status-warning shrink-0 text-right pr-4">41</span>
+<span class="text-status-warning pl-8 font-semibold">let event_channel = mpsc::sync_channel(512);</span>
+</div>
+<div class="flex items-center text-text-primary px-space-xs">
+<span class="w-10 select-none text-status-warning shrink-0 text-right pr-4">42</span>
+<span class="text-status-warning pl-8 font-semibold">let dispatcher = SyncEventLoop::spawn_with_channel(event_channel);</span>
+</div>
+</div>
+<!-- Marker: Split / Divider -->
+<div class="bg-surface-container-highest text-text-muted px-3 py-0.5 text-center text-label-sm font-semibold select-none">
+              ======= (Base Ancestor Split) =======
+            </div>
+<!-- Content: Theirs (Incoming commit 8a2c419) -->
+<div class="bg-series-branch-1/10 py-1" id="hunk-theirs">
+<div class="flex items-center text-text-primary px-space-xs">
+<span class="w-10 select-none text-series-branch-1 shrink-0 text-right pr-4">41</span>
+<span class="text-series-branch-1 pl-8 font-semibold">let event_channel = crossbeam::channel::bounded(1024);</span>
+</div>
+<div class="flex items-center text-text-primary px-space-xs">
+<span class="w-10 select-none text-series-branch-1 shrink-0 text-right pr-4">42</span>
+<span class="text-series-branch-1 pl-8 font-semibold">let dispatcher = AsyncEventDispatcher::new(event_channel, config.poll_ms);</span>
+</div>
+<div class="flex items-center text-text-primary px-space-xs">
+<span class="w-10 select-none text-series-branch-1 shrink-0 text-right pr-4">43</span>
+<span class="text-series-branch-1 pl-8 font-semibold">dispatcher.register_signal_traps(SIGWINCH | SIGTERM)?;</span>
+</div>
+</div>
+<!-- Marker: Incoming Commit -->
+<div class="bg-series-branch-1/15 text-series-branch-1 px-3 py-1 flex items-center justify-between text-label-sm font-semibold select-none">
+<span class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">arrow_upward</span>
+                &gt;&gt;&gt;&gt;&gt;&gt;&gt; 8a2c419 (Incoming Commit: bind real-time event dispatcher)
+              </span>
+<button class="bg-series-branch-1 text-surface-sunk px-2 py-0.5 rounded text-label-sm font-bold hover:opacity-90" id="pill-choose-theirs">Use Theirs</button>
+</div>
+</div>
+<!-- Context lines after conflict -->
+<div class="flex items-center text-text-muted hover:bg-surface-raised/30 px-space-xs rounded">
+<span class="w-10 select-none text-surface-container-highest shrink-0 text-right pr-4">44</span>
+<span class="text-text-secondary pl-8">Self {</span>
+</div>
+<div class="flex items-center text-text-muted hover:bg-surface-raised/30 px-space-xs rounded">
+<span class="w-10 select-none text-surface-container-highest shrink-0 text-right pr-4">45</span>
+<span class="text-text-secondary pl-12">buffer,</span>
+</div>
+<div class="flex items-center text-text-muted hover:bg-surface-raised/30 px-space-xs rounded">
+<span class="w-10 select-none text-surface-container-highest shrink-0 text-right pr-4">46</span>
+<span class="text-text-secondary pl-12">dispatcher,</span>
+</div>
+<div class="flex items-center text-text-muted hover:bg-surface-raised/30 px-space-xs rounded">
+<span class="w-10 select-none text-surface-container-highest shrink-0 text-right pr-4">47</span>
+<span class="text-text-secondary pl-12">state: RenderState::Idle,</span>
+</div>
+<div class="flex items-center text-text-muted hover:bg-surface-raised/30 px-space-xs rounded">
+<span class="w-10 select-none text-surface-container-highest shrink-0 text-right pr-4">48</span>
+<span class="text-text-secondary pl-8">}</span>
+</div>
+<div class="flex items-center text-text-muted hover:bg-surface-raised/30 px-space-xs rounded">
+<span class="w-10 select-none text-surface-container-highest shrink-0 text-right pr-4">49</span>
+<span class="text-text-secondary pl-4">}</span>
+</div>
+<div class="flex items-center text-text-muted hover:bg-surface-raised/30 px-space-xs rounded">
+<span class="w-10 select-none text-surface-container-highest shrink-0 text-right pr-4">50</span>
+<span class="text-text-secondary">}</span>
+</div>
+</div>
+<!-- Manual Edit Buffer Toggle Strip -->
+<div class="bg-surface-panel p-space-sm flex items-center justify-between text-label-sm font-label-sm">
+<div class="flex items-center gap-space-sm text-text-muted">
+<span class="material-symbols-outlined text-[16px] text-secondary">terminal</span>
+<span>Manual resolution editor buffer ready. Type or paste code directly.</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-code-base text-label-sm text-text-secondary bg-surface-sunk px-2 py-0.5 rounded">Ln 42, Col 18</span>
+<button class="bg-surface-raised hover:bg-surface-container-high text-text-primary px-space-sm py-1 rounded text-label-sm font-label-sm transition-colors" type="button">
+              Format Rust (rustfmt)
+            </button>
+</div>
+</div>
+</div>
+<!-- Resulting Branch Topology Visualizer Card -->
+<div class="bg-surface-panel rounded-lg p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-series-branch-3">schema</span>
+<span class="font-title-md text-title-md text-text-primary">Projected History Topology</span>
+</div>
+<span class="font-code-base text-label-sm text-text-secondary">Linear Replay Sequence</span>
+</div>
+<!-- Inline Topology Graph SVG -->
+<div class="w-full bg-surface-sunk rounded-lg p-space-md flex flex-col gap-2 overflow-x-auto">
+<svg class="w-full h-16" fill="none" viewbox="0 0 680 64" xmlns="http://www.w3.org/2000/svg">
+<!-- Main branch base line -->
+<line stroke="#353534" stroke-dasharray="4 4" stroke-width="2" x1="20" x2="660" y1="32" y2="32"></line>
+<!-- Linear replayed path -->
+<line stroke="#5ddda5" stroke-width="3" x1="20" x2="160" y1="32" y2="32"></line>
+<line stroke="#f2bd68" stroke-width="3" x1="160" x2="300" y1="32" y2="32"></line>
+<line stroke="#8c919d" stroke-dasharray="2 2" stroke-width="2" x1="300" x2="580" y1="32" y2="32"></line>
+<!-- Node 1: Base HEAD -->
+<circle cx="20" cy="32" fill="#181818" r="7" stroke="#aac7ff" stroke-width="3"></circle>
+<text fill="#8c919d" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="20" y="54">e4f91b2 (HEAD)</text>
+<!-- Node 2: Replayed Step 1 -->
+<circle cx="160" cy="32" fill="#181818" r="7" stroke="#5ddda5" stroke-width="3"></circle>
+<text fill="#5ddda5" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="160" y="54">b910ca3 (pick)</text>
+<!-- Node 3: Current Rebase Conflict -->
+<circle cx="300" cy="32" fill="#f2bd68" r="9" stroke="#131313" stroke-width="2"></circle>
+<circle cx="300" cy="32" r="13" stroke="#f2bd68" stroke-opacity="0.4" stroke-width="1.5"></circle>
+<text fill="#f2bd68" font-family="JetBrains Mono" font-size="10" font-weight="bold" text-anchor="middle" x="300" y="54">8a2c419* (edit)</text>
+<!-- Node 4: Squashed Node -->
+<circle cx="440" cy="32" fill="#181818" r="6" stroke="#73aff1" stroke-width="2"></circle>
+<text fill="#8c919d" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="440" y="54">3f109de (squash)</text>
+<!-- Node 5: Reword Target -->
+<circle cx="580" cy="32" fill="#181818" r="6" stroke="#a3a0f1" stroke-width="2"></circle>
+<text fill="#8c919d" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="580" y="54">99cd310 (reword)</text>
+</svg>
+</div>
+<div class="flex items-center justify-between text-label-sm font-label-sm text-text-muted pt-1">
+<span class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-status-warning inline-block"></span>
+            Resolution will advance HEAD from 8a2c419* directly to 3f109de squashed changeset.
+          </span>
+<span class="font-code-base text-text-secondary">4 commits will be rewritten</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  (function initRebaseStudio() {
+    const conflictBlock = document.getElementById('conflict-block');
+    const validationPill = document.getElementById('validation-pill');
+    const validationText = document.getElementById('validation-text');
+    const btnAcceptIncoming = document.getElementById('btn-accept-incoming');
+    const btnAcceptCurrent = document.getElementById('btn-accept-current');
+    const btnAcceptBoth = document.getElementById('btn-accept-both');
+    const btnResetDiff = document.getElementById('btn-reset-diff');
+    const pillChooseOurs = document.getElementById('pill-choose-ours');
+    const pillChooseTheirs = document.getElementById('pill-choose-theirs');
+    const btnContinueRebase = document.getElementById('btn-continue-rebase');
+
+    const originalContent = conflictBlock ? conflictBlock.innerHTML : '';
+
+    function resolveWithContent(type) {
+      if (!conflictBlock) return;
+      if (type === 'theirs') {
+        conflictBlock.innerHTML = `
+          <div class="bg-series-branch-1/10 p-space-sm rounded border-l-2 border-series-branch-1 font-code-base text-series-branch-1">
+            <div class="text-label-sm uppercase font-bold text-text-muted mb-1">// Resolved: Accepted Incoming Commit (8a2c419)</div>
+            <div class="pl-4">let event_channel = crossbeam::channel::bounded(1024);</div>
+            <div class="pl-4">let dispatcher = AsyncEventDispatcher::new(event_channel, config.poll_ms);</div>
+            <div class="pl-4">dispatcher.register_signal_traps(SIGWINCH | SIGTERM)?;</div>
+          </div>
+        `;
+      } else if (type === 'ours') {
+        conflictBlock.innerHTML = `
+          <div class="bg-status-warning/10 p-space-sm rounded border-l-2 border-status-warning font-code-base text-status-warning">
+            <div class="text-label-sm uppercase font-bold text-text-muted mb-1">// Resolved: Kept Current Branch (main)</div>
+            <div class="pl-4">let event_channel = mpsc::sync_channel(512);</div>
+            <div class="pl-4">let dispatcher = SyncEventLoop::spawn_with_channel(event_channel);</div>
+          </div>
+        `;
+      } else if (type === 'both') {
+        conflictBlock.innerHTML = `
+          <div class="bg-surface-raised p-space-sm rounded border-l-2 border-primary font-code-base text-text-primary">
+            <div class="text-label-sm uppercase font-bold text-text-muted mb-1">// Resolved: Merged Both Variants</div>
+            <div class="pl-4 text-status-warning">// Legacy Sync Channel</div>
+            <div class="pl-4">let legacy_channel = mpsc::sync_channel(512);</div>
+            <div class="pl-4 text-series-branch-1">// Real-time Dispatcher</div>
+            <div class="pl-4">let event_channel = crossbeam::channel::bounded(1024);</div>
+            <div class="pl-4">let dispatcher = AsyncEventDispatcher::new(event_channel, config.poll_ms);</div>
+          </div>
+        `;
+      }
+
+      if (validationPill && validationText) {
+        validationPill.className = "flex items-center gap-1.5 bg-secondary/20 text-secondary px-2.5 py-1 rounded-full font-code-base text-label-sm shrink-0 shadow-sm";
+        validationText.textContent = "Resolved: Clean Working Tree";
+      }
+
+      if (btnContinueRebase) {
+        btnContinueRebase.classList.add('ring-2', 'ring-secondary');
+      }
+    }
+
+    if (btnAcceptIncoming) btnAcceptIncoming.addEventListener('click', () => resolveWithContent('theirs'));
+    if (pillChooseTheirs) pillChooseTheirs.addEventListener('click', () => resolveWithContent('theirs'));
+
+    if (btnAcceptCurrent) btnAcceptCurrent.addEventListener('click', () => resolveWithContent('ours'));
+    if (pillChooseOurs) pillChooseOurs.addEventListener('click', () => resolveWithContent('ours'));
+
+    if (btnAcceptBoth) btnAcceptBoth.addEventListener('click', () => resolveWithContent('both'));
+
+    if (btnResetDiff) {
+      btnResetDiff.addEventListener('click', () => {
+        if (!conflictBlock) return;
+        conflictBlock.innerHTML = originalContent;
+        if (validationPill && validationText) {
+          validationPill.className = "flex items-center gap-1.5 bg-status-warning/15 text-status-warning px-2.5 py-1 rounded-full font-code-base text-label-sm shrink-0";
+          validationText.textContent = "Pending: 1 Unresolved Conflict";
+        }
+        if (btnContinueRebase) {
+          btnContinueRebase.classList.remove('ring-2', 'ring-secondary');
+        }
+        // Re-attach quick buttons inside refreshed html
+        const newTheirs = document.getElementById('pill-choose-theirs');
+        const newOurs = document.getElementById('pill-choose-ours');
+        if (newTheirs) newTheirs.addEventListener('click', () => resolveWithContent('theirs'));
+        if (newOurs) newOurs.addEventListener('click', () => resolveWithContent('ours'));
+      });
+    }
+
+    // Keyboard shortcut handlers for CUI flow
+    window.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+        e.preventDefault();
+        if (btnContinueRebase) {
+          btnContinueRebase.click();
+        }
+      }
+    });
+  })();
+</script></main></div><footer class="fixed bottom-0 left-0 right-0 h-7 bg-surface-panel text-on-surface-variant z-50 flex items-center justify-between px-margin-desktop font-code-base text-label-sm select-none"><div class="flex items-center gap-space-md"><span>git 2.45.1</span><div class="flex items-center gap-space-xs text-secondary"><span class="w-2 h-2 rounded-full bg-secondary inline-block"></span><span>SSH Verified</span></div><div class="flex items-center gap-space-xs text-on-surface"><span class="material-symbols-outlined text-[14px] text-primary">fork_right</span><span>main</span></div><span class="text-on-surface-variant">e4f91b2 (HEAD -&gt; main)</span></div><div class="flex items-center gap-space-md"><span class="hover:text-on-surface cursor-pointer">LF</span><span class="hover:text-on-surface cursor-pointer">UTF-8</span><span class="text-secondary flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">cloud_sync</span>synced</span></div></footer></body></html>

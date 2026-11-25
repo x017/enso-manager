@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "background": "#131313", "primary-container": "#6ba3ff", "on-surface": "#e5e2e1", "outline": "#8c919d", "on-tertiary-fixed": "#410004", "inverse-surface": "#e5e2e1", "series-branch-4": "#a3a0f1", "primary-fixed": "#d7e3ff", "surface-container-highest": "#353534", "on-background": "#e5e2e1", "surface-canvas": "#121212", "on-secondary": "#003824", "secondary-fixed": "#7bfac0", "status-info": "#7cc4f0", "series-branch-6": "#e18cb5", "secondary": "#5ddda5", "on-tertiary": "#66060f", "tertiary-container": "#ff7b76", "inverse-on-surface": "#313030", "series-branch-3": "#5ac299", "secondary-fixed-dim": "#5ddda5", "on-secondary-fixed": "#002113", "text-primary": "#f2f2f2", "inverse-primary": "#135db4", "on-primary-fixed-variant": "#00458e", "on-secondary-fixed-variant": "#005236", "text-muted": "#8c8c8c", "surface-muted": "#242424", "tertiary-fixed": "#ffdad7", "surface-container-low": "#1c1b1b", "surface-panel": "#181818", "on-surface-variant": "#c2c6d4", "outline-variant": "#424752", "status-warning": "#f2bd68", "surface-container-high": "#2a2a2a", "border-focus": "#55adff", "series-branch-5": "#d1a24f", "on-primary-container": "#003875", "on-tertiary-container": "#731217", "border-hairline": "#2b2b2b", "text-secondary": "#b4b4b4", "surface": "#131313", "surface-container": "#201f1f", "tertiary": "#ffb3ae", "surface-variant": "#353534", "surface-sunk": "#0e0e0e", "border-subtle": "#222222", "series-branch-2": "#e7936c", "series-branch-1": "#73aff1", "secondary-container": "#04a572", "surface-container-lowest": "#0e0e0e", "surface-raised": "#1f1f1f", "on-error": "#690005", "on-secondary-container": "#00311f", "surface-bright": "#393939", "primary-fixed-dim": "#aac7ff", "surface-dim": "#131313", "on-primary-fixed": "#001b3e", "on-tertiary-fixed-variant": "#862122", "surface-tint": "#aac7ff", "error-container": "#93000a", "on-primary": "#002f65", "error": "#ffb4ab", "primary": "#aac7ff", "tertiary-fixed-dim": "#ffb3ae", "on-error-container": "#ffdad6" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-lg": "1rem", "margin": "1rem", "margin-desktop": "1.5rem", "space-sm": "0.5rem", "gutter": "0.75rem", "space-md": "0.75rem", "gutter-desktop": "1rem", "space-xl": "1.5rem", "space-xs": "0.25rem" }, "fontFamily": { "body-md": ["Inter"], "headline-md": ["Geist"], "code-base": ["JetBrains Mono"], "headline-lg": ["Geist"], "headline-lg-mobile": ["Geist"], "label-md": ["Inter"], "title-md": ["Geist"], "body-lg": ["Inter"], "headline-sm": ["Geist"], "code-metric": ["JetBrains Mono"], "label-sm": ["Inter"] }, "fontSize": { "body-md": ["13px", { "lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400" }], "headline-md": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "500" }], "code-base": ["12.5px", { "lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400" }], "headline-lg": ["36px", { "lineHeight": "40px", "letterSpacing": "-0.025em", "fontWeight": "500" }], "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "500" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0", "fontWeight": "500" }], "title-md": ["17px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "500" }], "body-lg": ["15px", { "lineHeight": "23px", "letterSpacing": "0", "fontWeight": "400" }], "headline-sm": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "500" }], "code-metric": ["15px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500" }], "label-sm": ["11px", { "lineHeight": "15px", "letterSpacing": "0.04em", "fontWeight": "500" }] } } } };</script></head><body class="bg-surface-canvas text-on-surface font-body-md text-body-md min-h-screen selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 left-0 right-0 h-16 bg-surface-panel/90 backdrop-blur-xl z-50 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full px-margin-desktop flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md shrink-0"><div class="flex items-center gap-space-xs pr-space-sm"><span class="w-3 h-3 rounded-full bg-error inline-block"></span><span class="w-3 h-3 rounded-full bg-status-warning inline-block"></span><span class="w-3 h-3 rounded-full bg-secondary inline-block"></span></div><img alt="GitNex Repo Manager Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrDHboWyClxBvwwYRqnqbB01OXauToGyMLrTuH_EwkyAkgTCyW575dwfxBYGT_8d-e96uwEf4-qWwICGxu3oIfyvvRdL2ld53QPdC6kUSBbM39bAROIlfswWN4Ixw4dK5YRX_ZaOXUU_R3IBH7Fk9AL_OdsbvTQii_jpCBSvP5CLMf-xTt9S1YyRz5R0kzlvyhYf_NyqFjVtXQiyaHvAfzwyHsvcuDQyoTy1oSV-kAsCWg"/><span class="font-title-md text-title-md text-on-surface tracking-tight font-medium">Nexa Git</span><div class="hidden xl:flex items-center gap-space-xs bg-surface-sunk py-space-xs px-space-sm rounded-lg text-on-surface-variant font-code-base text-code-base"><span class="material-symbols-outlined text-primary text-[18px]">folder</span><span class="text-on-surface font-body-md text-body-md">~/code/developer/nexa-core</span><span class="bg-surface-container-high px-space-xs py-0.5 rounded text-secondary font-code-base text-code-base flex items-center gap-space-xs"><span class="material-symbols-outlined text-[14px]">commit</span>main</span><span class="text-on-surface-variant text-[11px]">0↑ 0↓</span><span class="material-symbols-outlined text-on-surface-variant text-[16px]">arrow_drop_down</span></div></div><div class="flex items-center gap-space-sm shrink-0"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-2 text-on-surface-variant text-[16px]">search</span><input class="bg-surface-sunk text-on-surface placeholder:text-on-surface-variant font-body-md text-body-md rounded-lg pl-8 pr-12 py-1.5 focus:outline-none focus:ring-2 focus:ring-border-focus w-64 lg:w-72" placeholder="Search commits, files, symbols..." type="text"/><span class="absolute right-2 font-code-base text-label-sm text-on-surface-variant bg-surface-container-high px-1 py-0.5 rounded">⌘K</span></div><div class="flex items-center gap-space-xs"><button class="bg-surface-container-high text-on-surface hover:bg-surface-bright hover:text-on-surface px-space-sm py-1.5 rounded text-label-md font-label-md flex items-center gap-1 transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">sync</span>Fetch</button><button class="bg-surface-container-high text-on-surface hover:bg-surface-bright hover:text-on-surface px-space-sm py-1.5 rounded text-label-md font-label-md flex items-center gap-1 transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">south</span>Pull</button><button class="bg-primary-container text-on-primary-container font-label-md text-label-md px-space-sm py-1.5 rounded flex items-center gap-1 transition-transform active:scale-95" type="button"><span class="material-symbols-outlined text-[16px]">north</span>Push</button><button class="bg-surface-container-high text-on-surface hover:bg-surface-bright hover:text-on-surface px-space-sm py-1.5 rounded text-label-md font-label-md flex items-center gap-1 transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">archive</span>Stash</button><button class="bg-surface-container-high text-on-surface hover:bg-surface-bright hover:text-on-surface px-space-sm py-1.5 rounded text-label-md font-label-md flex items-center gap-1 transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">terminal</span></button></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><aside class="fixed left-0 top-16 bottom-7 w-64 bg-surface-panel z-40 flex flex-col justify-between overflow-y-auto"><div class="p-space-sm space-y-space-md"><div class="text-on-surface-variant font-label-sm text-label-sm uppercase px-space-sm tracking-wider">Workspace</div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-label-md rounded-lg"><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="working-tree" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">pending_actions</span><span class="font-label-md text-label-md">Working Tree</span></div><span class="bg-surface-container-high text-status-warning font-code-base text-label-sm px-space-xs py-0.5 rounded">4 mod</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="commit-graph" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">schema</span><span class="font-label-md text-label-md">Commit Graph</span></div></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="branches" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">fork_right</span><span class="font-label-md text-label-md">Branches</span></div><span class="bg-surface-container-high text-on-surface-variant font-code-base text-label-sm px-space-xs py-0.5 rounded">5</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="pull-requests" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">call_merge</span><span class="font-label-md text-label-md">Pull Requests</span></div><span class="bg-surface-container-high text-status-info font-code-base text-label-sm px-space-xs py-0.5 rounded">2</span></a><a aria-current="page" class="flex items-center justify-between px-space-sm py-2 transition-colors bg-primary-container text-on-primary-container font-label-md rounded-lg" data-path="stashes" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">inventory_2</span><span class="font-label-md text-label-md">Stashes</span></div><span class="bg-surface-container-high text-on-surface-variant font-code-base text-label-sm px-space-xs py-0.5 rounded">2</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="tags-and-releases" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">sell</span><span class="font-label-md text-label-md">Tags & Releases</span></div></a></nav><div class="pt-space-sm"><div class="text-on-surface-variant font-label-sm text-label-sm uppercase px-space-sm tracking-wider mb-space-xs">Local Branches</div><div class="flex flex-col gap-space-xs pl-space-sm font-code-base text-code-base"><div class="flex items-center gap-space-xs text-secondary py-1"><span class="material-symbols-outlined text-[14px]">check</span><span>main</span></div><div class="flex items-center gap-space-xs text-on-surface-variant hover:text-on-surface py-1"><span class="material-symbols-outlined text-[14px]">commit</span><span>feat/cli-tui</span></div><div class="flex items-center gap-space-xs text-on-surface-variant hover:text-on-surface py-1"><span class="material-symbols-outlined text-[14px]">commit</span><span>fix/socket</span></div></div></div><div class="pt-space-sm"><div class="text-on-surface-variant font-label-sm text-label-sm uppercase px-space-sm tracking-wider mb-space-xs">Remote (origin)</div><div class="flex flex-col gap-space-xs pl-space-sm font-code-base text-code-base text-on-surface-variant"><div class="flex items-center gap-space-xs hover:text-on-surface py-1"><span class="material-symbols-outlined text-[14px]">cloud_done</span><span>origin/main</span></div><div class="flex items-center gap-space-xs hover:text-on-surface py-1"><span class="material-symbols-outlined text-[14px]">cloud_done</span><span>origin/feat/cli-tui</span></div></div></div></div><div class="p-space-sm"><div class="bg-surface-sunk p-space-sm rounded-lg flex flex-col gap-1"><div class="flex items-center justify-between font-label-sm text-label-sm"><span class="text-on-surface-variant">Status</span><span class="text-secondary flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-secondary inline-block"></span>Clean Index</span></div><div class="font-code-base text-label-sm text-status-warning">4 unstaged changes</div><div class="text-on-surface-variant font-label-sm text-label-sm">Synced 2m ago</div></div></div></aside><div class="pl-64"><main class="relative pt-16 pb-7 w-full min-h-screen bg-surface-canvas px-margin-desktop"><div class="flex flex-col w-full">
+<!-- Interactive Workbench State Manager Script included inline -->
+<div class="flex flex-col gap-space-md w-full pb-space-xl">
+<!-- Top Workbench Header & Command Action Deck -->
+<div class="bg-surface-panel rounded-xl p-space-md shadow-sm flex flex-col gap-space-md">
+<div class="flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary-container shadow-inner">
+<span class="material-symbols-outlined text-[24px]">inventory_2</span>
+</div>
+<div>
+<div class="flex items-center gap-space-xs">
+<h1 class="font-headline-sm text-headline-sm text-text-primary tracking-tight">Stash Management</h1>
+<span class="bg-surface-container-highest text-secondary font-code-base text-label-sm px-space-xs py-0.5 rounded">2 shelved sets</span>
+<span class="bg-surface-sunk text-status-info font-code-base text-label-sm px-space-xs py-0.5 rounded flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-status-info animate-pulse"></span>
+                Clean Working Index Ready
+              </span>
+</div>
+<p class="font-body-md text-body-md text-text-muted">Isolate, inspect, cherry-restore, or spin branches from deferred local changes without dirtying the commit log.</p>
+</div>
+</div>
+<!-- Quick Primary Action Group -->
+<div class="flex items-center flex-wrap gap-space-xs">
+<button class="bg-primary-container text-on-primary-container font-label-md text-label-md px-space-md py-2 rounded-lg flex items-center gap-1.5 shadow-sm hover:brightness-110 active:scale-95 transition-all" id="open-stash-modal-btn">
+<span class="material-symbols-outlined text-[18px]">add_box</span>
+<span>+ Create New Stash</span>
+</button>
+<button class="bg-surface-container-high text-on-surface hover:bg-surface-bright px-space-md py-2 rounded-lg font-label-md text-label-md flex items-center gap-1.5 shadow-sm active:scale-95 transition-all" id="btn-pop-latest">
+<span class="material-symbols-outlined text-[16px] text-secondary">unarchive</span>
+<span>Pop Latest</span>
+<span class="bg-surface-muted text-on-surface-variant font-code-base text-label-sm px-1 py-0.5 rounded">@{0}</span>
+</button>
+<button class="bg-surface-container-high text-on-surface hover:bg-surface-bright px-space-md py-2 rounded-lg font-label-md text-label-md flex items-center gap-1.5 shadow-sm active:scale-95 transition-all" id="btn-apply-latest">
+<span class="material-symbols-outlined text-[16px] text-primary">content_paste_go</span>
+<span>Apply Latest</span>
+</button>
+<button class="bg-surface-container-low text-error hover:bg-error-container hover:text-on-error-container px-space-sm py-2 rounded-lg font-label-md text-label-md flex items-center gap-1 shadow-sm transition-colors" id="btn-clear-stashes">
+<span class="material-symbols-outlined text-[16px]">delete_sweep</span>
+<span>Clear All</span>
+</button>
+</div>
+</div>
+<!-- Filter, Search & Monospaced Quick Stats Bar -->
+<div class="bg-surface-sunk rounded-lg p-space-xs flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm flex-1 min-w-[280px]">
+<div class="relative w-full max-w-md flex items-center">
+<span class="material-symbols-outlined absolute left-2.5 text-on-surface-variant text-[16px]">filter_list</span>
+<input class="w-full bg-surface-panel text-text-primary placeholder:text-text-muted font-body-md text-body-md rounded-md pl-9 pr-14 py-1.5 focus:outline-none focus:bg-surface-container-high" id="stash-search-input" placeholder="Search stash messages, branches, or changed files..." type="text"/>
+<span class="absolute right-2 font-code-base text-label-sm text-text-muted bg-surface-container-high px-1 py-0.5 rounded">ESC to reset</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="bg-surface-container-high text-on-surface px-space-xs py-1 rounded text-label-sm font-label-sm flex items-center gap-1">
+<span>Branch: All</span>
+<span class="material-symbols-outlined text-[14px]">arrow_drop_down</span>
+</button>
+<button class="bg-surface-panel text-text-muted hover:text-on-surface px-space-xs py-1 rounded text-label-sm font-label-sm flex items-center gap-1">
+<span>Sort: Newest First</span>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-space-md px-space-sm font-code-base text-label-sm text-text-muted">
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span>2 saved diff sets</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-series-branch-1">swap_horiz</span>
+<span>Total delta: +96, -20 lines</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main 2-Pane Stash Workbench Layout -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-md items-start">
+<!-- Left Column: Stash History Feed (5 cols) -->
+<div class="xl:col-span-5 flex flex-col gap-space-md">
+<!-- Stash Item 0 (Active Item) -->
+<div class="stash-card bg-surface-panel rounded-xl p-space-md shadow-md cursor-pointer transition-all relative overflow-hidden bg-gradient-to-r from-primary-container/10 via-surface-panel to-surface-panel" id="card-stash-0" onclick="selectStash(0)">
+<!-- Active Indicator Pill on Left Edge -->
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-primary-container"></div>
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="bg-primary-container text-on-primary-container font-code-base text-label-sm px-2 py-0.5 rounded font-medium shadow-sm">stash@{0}</span>
+<span class="bg-surface-sunk text-secondary font-code-base text-label-sm px-2 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">commit</span>feat/cli-tui
+              </span>
+</div>
+<span class="font-code-base text-label-sm text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>45m ago
+            </span>
+</div>
+<div class="mt-space-sm">
+<h2 class="font-title-md text-title-md text-text-primary tracking-tight font-medium leading-snug">
+              WIP on feat/cli-tui: experimental keybind handler for cui skills
+            </h2>
+<p class="font-body-md text-body-md text-text-secondary mt-1">Shelved prior to pulling upstream origin/main to test fresh interactive render pipeline.</p>
+</div>
+<div class="mt-space-md pt-space-xs flex items-center justify-between flex-wrap gap-space-xs">
+<div class="flex items-center gap-space-sm font-code-base text-label-sm">
+<span class="text-text-muted flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">description</span>3 files
+              </span>
+<span class="text-secondary bg-surface-sunk px-1.5 py-0.5 rounded">+84</span>
+<span class="text-error bg-surface-sunk px-1.5 py-0.5 rounded">-16</span>
+</div>
+<!-- Quick Action Context Buttons for Item 0 -->
+<div class="flex items-center gap-1">
+<button class="bg-surface-container-high hover:bg-surface-bright text-text-primary px-2 py-1 rounded text-label-sm font-label-sm flex items-center gap-1 transition-all" onclick="event.stopPropagation(); triggerNotification('Applied stash@{0} cleanly to current working tree.')" title="Apply Stash">
+<span class="material-symbols-outlined text-[14px] text-secondary">check</span>Apply
+              </button>
+<button class="bg-surface-container-high hover:bg-surface-bright text-text-primary px-2 py-1 rounded text-label-sm font-label-sm flex items-center gap-1 transition-all" onclick="event.stopPropagation(); triggerNotification('Popped stash@{0}. Dropped from stash list.')" title="Pop Stash">
+<span class="material-symbols-outlined text-[14px] text-primary">unarchive</span>Pop
+              </button>
+<button class="bg-surface-container-high hover:bg-surface-bright text-text-primary px-2 py-1 rounded text-label-sm font-label-sm flex items-center gap-1 transition-all" onclick="event.stopPropagation(); openBranchModal('feat/keybind-handler-exp')" title="Branch from Stash">
+<span class="material-symbols-outlined text-[14px] text-series-branch-1">fork_right</span>Branch
+              </button>
+<button class="bg-surface-sunk hover:bg-error-container hover:text-on-error-container text-error px-2 py-1 rounded text-label-sm font-label-sm flex items-center transition-all" onclick="event.stopPropagation(); triggerNotification('stash@{0} permanently dropped.', true)" title="Drop Stash">
+<span class="material-symbols-outlined text-[14px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Stash Item 1 (Inactive item) -->
+<div class="stash-card bg-surface-panel rounded-xl p-space-md shadow-sm cursor-pointer hover:bg-surface-container-high transition-all relative overflow-hidden" id="card-stash-1" onclick="selectStash(1)">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="bg-surface-container-highest text-on-surface-variant font-code-base text-label-sm px-2 py-0.5 rounded font-medium">stash@{1}</span>
+<span class="bg-surface-sunk text-on-surface-variant font-code-base text-label-sm px-2 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">commit</span>main
+              </span>
+</div>
+<span class="font-code-base text-label-sm text-text-muted flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>Yesterday 17:42
+            </span>
+</div>
+<div class="mt-space-sm">
+<h2 class="font-title-md text-title-md text-text-primary tracking-tight font-medium leading-snug">
+              WIP on main: partial refactor of repo watcher configuration
+            </h2>
+<p class="font-body-md text-body-md text-text-secondary mt-1">Temporary hold while switching context to urgent hotfix patch for socket disconnects.</p>
+</div>
+<div class="mt-space-md pt-space-xs flex items-center justify-between flex-wrap gap-space-xs">
+<div class="flex items-center gap-space-sm font-code-base text-label-sm">
+<span class="text-text-muted flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">description</span>1 file
+              </span>
+<span class="text-secondary bg-surface-sunk px-1.5 py-0.5 rounded">+12</span>
+<span class="text-error bg-surface-sunk px-1.5 py-0.5 rounded">-4</span>
+</div>
+<!-- Quick Action Context Buttons for Item 1 -->
+<div class="flex items-center gap-1">
+<button class="bg-surface-container-high hover:bg-surface-bright text-text-primary px-2 py-1 rounded text-label-sm font-label-sm flex items-center gap-1 transition-all" onclick="event.stopPropagation(); triggerNotification('Applied stash@{1} cleanly to current working tree.')" title="Apply Stash">
+<span class="material-symbols-outlined text-[14px] text-secondary">check</span>Apply
+              </button>
+<button class="bg-surface-container-high hover:bg-surface-bright text-text-primary px-2 py-1 rounded text-label-sm font-label-sm flex items-center gap-1 transition-all" onclick="event.stopPropagation(); triggerNotification('Popped stash@{1}.')" title="Pop Stash">
+<span class="material-symbols-outlined text-[14px] text-primary">unarchive</span>Pop
+              </button>
+<button class="bg-surface-container-high hover:bg-surface-bright text-text-primary px-2 py-1 rounded text-label-sm font-label-sm flex items-center gap-1 transition-all" onclick="event.stopPropagation(); openBranchModal('refactor/watcher-config')" title="Branch from Stash">
+<span class="material-symbols-outlined text-[14px] text-series-branch-1">fork_right</span>Branch
+              </button>
+<button class="bg-surface-sunk hover:bg-error-container hover:text-on-error-container text-error px-2 py-1 rounded text-label-sm font-label-sm flex items-center transition-all" onclick="event.stopPropagation(); triggerNotification('stash@{1} dropped.', true)" title="Drop Stash">
+<span class="material-symbols-outlined text-[14px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Informational Tips Box -->
+<div class="bg-surface-sunk rounded-xl p-space-md text-text-secondary flex gap-space-md shadow-inner">
+<span class="material-symbols-outlined text-primary text-[22px] shrink-0">tips_and_updates</span>
+<div class="font-body-md text-body-md space-y-1">
+<span class="font-title-md text-text-primary block text-[14px]">Pro-tip: Untracked & Ignored Shelving</span>
+<p>Use <code class="font-code-base text-label-sm text-secondary bg-surface-container-high px-1 py-0.5 rounded">git stash -u</code> to prevent newly generated assets or config overrides from cluttering checkout branches.</p>
+</div>
+</div>
+<!-- Inline Visual: Stash Activity & Shelf Lifetime Sparkline -->
+<div class="bg-surface-panel rounded-xl p-space-md shadow-sm">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-text-muted">Repository Stash Velocity (Last 14 Days)</span>
+<span class="font-code-base text-label-sm text-secondary">92% resolution rate</span>
+</div>
+<div class="h-16 w-full flex items-end gap-1.5 pt-2">
+<div class="flex-1 bg-surface-container-high hover:bg-primary-container h-[20%] rounded-t transition-colors" title="Day 1: 1 stash"></div>
+<div class="flex-1 bg-surface-container-high hover:bg-primary-container h-[45%] rounded-t transition-colors" title="Day 2: 2 stashes"></div>
+<div class="flex-1 bg-surface-container-high hover:bg-primary-container h-[30%] rounded-t transition-colors" title="Day 3: 1 stash"></div>
+<div class="flex-1 bg-surface-container-high hover:bg-primary-container h-[10%] rounded-t transition-colors" title="Day 4: 0 stashes"></div>
+<div class="flex-1 bg-surface-container-high hover:bg-primary-container h-[70%] rounded-t transition-colors" title="Day 5: 4 stashes"></div>
+<div class="flex-1 bg-surface-container-high hover:bg-primary-container h-[50%] rounded-t transition-colors" title="Day 6: 2 stashes"></div>
+<div class="flex-1 bg-surface-container-high hover:bg-primary-container h-[25%] rounded-t transition-colors" title="Day 7: 1 stash"></div>
+<div class="flex-1 bg-surface-container-high hover:bg-primary-container h-[60%] rounded-t transition-colors" title="Day 8: 3 stashes"></div>
+<div class="flex-1 bg-surface-container-high hover:bg-primary-container h-[85%] rounded-t transition-colors" title="Day 9: 5 stashes"></div>
+<div class="flex-1 bg-surface-container-high hover:bg-primary-container h-[40%] rounded-t transition-colors" title="Day 10: 2 stashes"></div>
+<div class="flex-1 bg-surface-container-high hover:bg-primary-container h-[95%] rounded-t transition-colors" title="Day 11: 6 stashes"></div>
+<div class="flex-1 bg-surface-container-high hover:bg-primary-container h-[55%] rounded-t transition-colors" title="Day 12: 3 stashes"></div>
+<div class="flex-1 bg-primary-container h-[65%] rounded-t shadow-sm" title="Yesterday: 3 stashes"></div>
+<div class="flex-1 bg-secondary h-[40%] rounded-t shadow-sm" title="Today: 2 active"></div>
+</div>
+<div class="flex items-center justify-between text-text-muted font-code-base text-[10px] mt-2">
+<span>May 10</span>
+<span>May 17</span>
+<span>Today (2 Shelved)</span>
+</div>
+</div>
+</div>
+<!-- Right Column: Stash Content Inspector & Live Diff Workspace (7 cols) -->
+<div class="xl:col-span-7 flex flex-col gap-space-md">
+<!-- Inspector Card Container -->
+<div class="bg-surface-panel rounded-xl shadow-lg flex flex-col overflow-hidden">
+<!-- Inspector Header with Deep Metadata -->
+<div class="p-space-md bg-surface-container-high flex flex-col gap-space-sm">
+<div class="flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="bg-primary text-on-primary font-code-base text-label-sm px-2 py-0.5 rounded font-bold shadow-sm">INSPECTING stash@{0}</span>
+<span class="font-code-base text-label-sm text-text-muted flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">terminal</span>Base commit:
+                  <code class="text-text-primary bg-surface-sunk px-1.5 py-0.5 rounded">8a2c419</code>
+</span>
+</div>
+<div class="flex items-center gap-space-xs text-text-muted font-code-base text-label-sm">
+<span class="material-symbols-outlined text-[15px] text-primary">account_circle</span>
+<span>Shelved by</span>
+<span class="text-secondary font-medium">@developer</span>
+</div>
+</div>
+<!-- Subject Line with commit parent info -->
+<div class="bg-surface-sunk p-space-sm rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs">
+<div class="font-code-base text-body-md text-text-primary flex items-center gap-2 truncate">
+<span class="material-symbols-outlined text-status-warning text-[18px]">find_replace</span>
+<span class="truncate">WIP on feat/cli-tui: experimental keybind handler for cui skills</span>
+</div>
+<div class="shrink-0 font-code-base text-label-sm text-text-muted">
+                parent: <span class="text-text-secondary">7b19de0</span>
+</div>
+</div>
+<!-- Files in this Stash Horizontal List -->
+<div class="pt-space-xs">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-text-muted">Shelved Files (3)</span>
+<span class="font-code-base text-label-sm text-text-muted">Select to preview patch</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-xs">
+<!-- File 1 (Active) -->
+<button class="file-tab bg-surface-sunk text-left p-space-sm rounded-lg flex items-center justify-between bg-primary-container/15 transition-all" id="file-tab-0" onclick="switchDiffFile(0)">
+<div class="flex items-center gap-2 min-w-0">
+<span class="material-symbols-outlined text-primary text-[18px]">javascript</span>
+<span class="font-code-base text-label-md text-text-primary truncate">src/input/keybinds.ts</span>
+</div>
+<div class="flex items-center gap-1 font-code-base text-label-sm shrink-0">
+<span class="text-secondary">+62</span>
+<span class="text-error">-10</span>
+</div>
+</button>
+<!-- File 2 -->
+<button class="file-tab bg-surface-sunk text-left p-space-sm rounded-lg flex items-center justify-between hover:bg-surface-container-highest transition-all opacity-80" id="file-tab-1" onclick="switchDiffFile(1)">
+<div class="flex items-center gap-2 min-w-0">
+<span class="material-symbols-outlined text-status-info text-[18px]">data_object</span>
+<span class="font-code-base text-label-md text-text-primary truncate">src/types/events.ts</span>
+</div>
+<div class="flex items-center gap-1 font-code-base text-label-sm shrink-0">
+<span class="text-secondary">+22</span>
+<span class="text-error">-6</span>
+</div>
+</button>
+</div>
+</div>
+</div>
+<!-- Diff View Toolbar -->
+<div class="bg-surface-panel px-space-md py-2 flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-space-sm">
+<span class="font-code-base text-label-md text-text-primary font-medium flex items-center gap-1.5" id="diff-filepath">
+<span class="material-symbols-outlined text-secondary text-[16px]">edit_note</span>
+                src/input/keybinds.ts
+              </span>
+<span class="bg-surface-container-high text-text-muted font-code-base text-label-sm px-1.5 py-0.5 rounded">TypeScript</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<div class="bg-surface-sunk rounded p-0.5 flex items-center font-code-base text-label-sm">
+<button class="px-2 py-0.5 rounded bg-surface-container-high text-text-primary">Unified</button>
+<button class="px-2 py-0.5 rounded text-text-muted hover:text-text-primary">Split</button>
+</div>
+<button class="p-1 rounded hover:bg-surface-container-high text-text-muted hover:text-text-primary" onclick="triggerNotification('Copied git diff patch to clipboard!')" title="Copy Patch Raw">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+</button>
+</div>
+</div>
+<!-- Live Code Diff Preview Well -->
+<div class="bg-surface-sunk p-space-xs font-code-base text-code-base overflow-x-auto select-text max-h-[460px] overflow-y-auto" id="diff-container">
+<!-- Diff chunk keybinds.ts -->
+<div class="flex flex-col text-[12px] leading-5" id="diff-file-0">
+<div class="bg-surface-container text-text-muted px-3 py-1 font-medium">
+                @@ -14,10 +14,18 @@ import { TerminalKey, KeyEvent } from '../types/events';
+              </div>
+<div class="flex hover:bg-surface-panel/40 px-2 py-0.5 text-text-muted">
+<span class="w-8 shrink-0 text-text-muted text-right pr-3 select-none">14</span>
+<span class="w-8 shrink-0 text-text-muted text-right pr-3 select-none">14</span>
+<span class="w-4 select-none"> </span>
+<span class="text-text-secondary">export class KeybindRegistry {</span>
+</div>
+<div class="flex hover:bg-surface-panel/40 px-2 py-0.5 text-text-muted">
+<span class="w-8 shrink-0 text-text-muted text-right pr-3 select-none">15</span>
+<span class="w-8 shrink-0 text-text-muted text-right pr-3 select-none">15</span>
+<span class="w-4 select-none"> </span>
+<span class="text-text-secondary pl-2">private bindings = new Map<string, KeyAction>();</span>
+</div>
+<!-- Removals -->
+<div class="flex bg-error-container/20 text-error px-2 py-0.5">
+<span class="w-8 shrink-0 text-error/60 text-right pr-3 select-none">16</span>
+<span class="w-8 shrink-0 text-right pr-3 select-none"></span>
+<span class="w-4 font-bold select-none">-</span>
+<span class="pl-2">private legacyMode: boolean = false;</span>
+</div>
+<div class="flex bg-error-container/20 text-error px-2 py-0.5">
+<span class="w-8 shrink-0 text-error/60 text-right pr-3 select-none">17</span>
+<span class="w-8 shrink-0 text-right pr-3 select-none"></span>
+<span class="w-4 font-bold select-none">-</span>
+<span class="pl-2">public register(chord: string, callback: () => void): void {</span>
+</div>
+<!-- Additions -->
+<div class="flex bg-secondary-container/20 text-secondary px-2 py-0.5">
+<span class="w-8 shrink-0 text-right pr-3 select-none"></span>
+<span class="w-8 shrink-0 text-secondary/70 text-right pr-3 select-none">16</span>
+<span class="w-4 font-bold select-none">+</span>
+<span class="pl-2">private keySequenceBuffer: TerminalKey[] = [];</span>
+</div>
+<div class="flex bg-secondary-container/20 text-secondary px-2 py-0.5">
+<span class="w-8 shrink-0 text-right pr-3 select-none"></span>
+<span class="w-8 shrink-0 text-secondary/70 text-right pr-3 select-none">17</span>
+<span class="w-4 font-bold select-none">+</span>
+<span class="pl-2">private activeChordTimeout: NodeJS.Timeout | null = null;</span>
+</div>
+<div class="flex bg-secondary-container/20 text-secondary px-2 py-0.5">
+<span class="w-8 shrink-0 text-right pr-3 select-none"></span>
+<span class="w-8 shrink-0 text-secondary/70 text-right pr-3 select-none">18</span>
+<span class="w-4 font-bold select-none">+</span>
+<span class="pl-2">public register(chord: string, action: KeyActionOptions): Disposable {</span>
+</div>
+<div class="flex bg-secondary-container/20 text-secondary px-2 py-0.5">
+<span class="w-8 shrink-0 text-right pr-3 select-none"></span>
+<span class="w-8 shrink-0 text-secondary/70 text-right pr-3 select-none">19</span>
+<span class="w-4 font-bold select-none">+</span>
+<span class="pl-4">const normalized = KeyParser.normalize(chord);</span>
+</div>
+<div class="flex bg-secondary-container/20 text-secondary px-2 py-0.5">
+<span class="w-8 shrink-0 text-right pr-3 select-none"></span>
+<span class="w-8 shrink-0 text-secondary/70 text-right pr-3 select-none">20</span>
+<span class="w-4 font-bold select-none">+</span>
+<span class="pl-4">if (this.bindings.has(normalized) && !action.override) {</span>
+</div>
+<div class="flex bg-secondary-container/20 text-secondary px-2 py-0.5">
+<span class="w-8 shrink-0 text-right pr-3 select-none"></span>
+<span class="w-8 shrink-0 text-secondary/70 text-right pr-3 select-none">21</span>
+<span class="w-4 font-bold select-none">+</span>
+<span class="pl-6">throw new CollisionError(`Binding conflict for chord: ${chord}`);</span>
+</div>
+<div class="flex bg-secondary-container/20 text-secondary px-2 py-0.5">
+<span class="w-8 shrink-0 text-right pr-3 select-none"></span>
+<span class="w-8 shrink-0 text-secondary/70 text-right pr-3 select-none">22</span>
+<span class="w-4 font-bold select-none">+</span>
+<span class="pl-4">}</span>
+</div>
+<!-- Context continuation -->
+<div class="flex hover:bg-surface-panel/40 px-2 py-0.5 text-text-muted">
+<span class="w-8 shrink-0 text-text-muted text-right pr-3 select-none">18</span>
+<span class="w-8 shrink-0 text-text-muted text-right pr-3 select-none">23</span>
+<span class="w-4 select-none"> </span>
+<span class="text-text-secondary pl-4">this.bindings.set(normalized, action);</span>
+</div>
+<div class="flex hover:bg-surface-panel/40 px-2 py-0.5 text-text-muted">
+<span class="w-8 shrink-0 text-text-muted text-right pr-3 select-none">19</span>
+<span class="w-8 shrink-0 text-text-muted text-right pr-3 select-none">24</span>
+<span class="w-4 select-none"> </span>
+<span class="text-text-secondary pl-4">return { dispose: () => this.bindings.delete(normalized) };</span>
+</div>
+<div class="flex hover:bg-surface-panel/40 px-2 py-0.5 text-text-muted">
+<span class="w-8 shrink-0 text-text-muted text-right pr-3 select-none">20</span>
+<span class="w-8 shrink-0 text-text-muted text-right pr-3 select-none">25</span>
+<span class="w-4 select-none"> </span>
+<span class="text-text-secondary pl-2">}</span>
+</div>
+</div>
+<!-- Alternate diff chunk for events.ts (Hidden by default) -->
+<div class="hidden flex-col text-[12px] leading-5" id="diff-file-1">
+<div class="bg-surface-container text-text-muted px-3 py-1 font-medium">
+                @@ -1,8 +1,14 @@ export interface KeyActionOptions {
+              </div>
+<div class="flex bg-secondary-container/20 text-secondary px-2 py-0.5">
+<span class="w-8 shrink-0 text-right pr-3 select-none"></span>
+<span class="w-8 shrink-0 text-secondary/70 text-right pr-3 select-none">1</span>
+<span class="w-4 font-bold select-none">+</span>
+<span class="pl-2">export interface KeyActionOptions {</span>
+</div>
+<div class="flex bg-secondary-container/20 text-secondary px-2 py-0.5">
+<span class="w-8 shrink-0 text-right pr-3 select-none"></span>
+<span class="w-8 shrink-0 text-secondary/70 text-right pr-3 select-none">2</span>
+<span class="w-4 font-bold select-none">+</span>
+<span class="pl-4">id: string;</span>
+</div>
+<div class="flex bg-secondary-container/20 text-secondary px-2 py-0.5">
+<span class="w-8 shrink-0 text-right pr-3 select-none"></span>
+<span class="w-8 shrink-0 text-secondary/70 text-right pr-3 select-none">3</span>
+<span class="w-4 font-bold select-none">+</span>
+<span class="pl-4">description?: string;</span>
+</div>
+<div class="flex bg-secondary-container/20 text-secondary px-2 py-0.5">
+<span class="w-8 shrink-0 text-right pr-3 select-none"></span>
+<span class="w-8 shrink-0 text-secondary/70 text-right pr-3 select-none">4</span>
+<span class="w-4 font-bold select-none">+</span>
+<span class="pl-4">execute: (context: ActionContext) => Promise<void>;</span>
+</div>
+<div class="flex bg-secondary-container/20 text-secondary px-2 py-0.5">
+<span class="w-8 shrink-0 text-right pr-3 select-none"></span>
+<span class="w-8 shrink-0 text-secondary/70 text-right pr-3 select-none">5</span>
+<span class="w-4 font-bold select-none">+</span>
+<span class="pl-4">override?: boolean;</span>
+</div>
+<div class="flex bg-secondary-container/20 text-secondary px-2 py-0.5">
+<span class="w-8 shrink-0 text-right pr-3 select-none"></span>
+<span class="w-8 shrink-0 text-secondary/70 text-right pr-3 select-none">6</span>
+<span class="w-4 font-bold select-none">+</span>
+<span class="pl-2">}</span>
+</div>
+<div class="flex hover:bg-surface-panel/40 px-2 py-0.5 text-text-muted">
+<span class="w-8 shrink-0 text-text-muted text-right pr-3 select-none">1</span>
+<span class="w-8 shrink-0 text-text-muted text-right pr-3 select-none">7</span>
+<span class="w-4 select-none"> </span>
+<span class="text-text-secondary">export type TerminalKey = 'Enter' | 'Escape' | 'Tab' | string;</span>
+</div>
+</div>
+</div>
+<!-- Bottom Action Execution Banner (Mandated) -->
+<div class="p-space-md bg-surface-container-high flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[24px]">published_with_changes</span>
+<div>
+<span class="font-title-md text-title-md text-text-primary block leading-none">Ready to restore this work?</span>
+<span class="font-body-md text-label-sm text-text-muted">Changes will merge into the active branch (<code class="text-secondary font-code-base">feat/cli-tui</code>).</span>
+</div>
+</div>
+<!-- Action Banner Button Cluster -->
+<div class="flex items-center flex-wrap gap-space-xs">
+<button class="bg-surface-panel hover:bg-surface-bright text-text-primary px-space-md py-2 rounded-lg font-label-md text-label-md flex items-center gap-1.5 shadow-sm active:scale-95 transition-all" onclick="triggerNotification('stash@{0} applied! 3 files reinstated in working directory.')">
+<span class="material-symbols-outlined text-[16px] text-secondary">check_circle</span>
+<span>Apply to Working Tree</span>
+</button>
+<button class="bg-primary-container text-on-primary-container hover:brightness-110 px-space-md py-2 rounded-lg font-label-md text-label-md flex items-center gap-1.5 shadow-sm active:scale-95 transition-all" onclick="triggerNotification('stash@{0} popped! Unstaged into index and dropped from shelf.')">
+<span class="material-symbols-outlined text-[16px]">unarchive</span>
+<span>Pop & Delete Stash</span>
+</button>
+<button class="bg-surface-container-highest hover:bg-surface-bright text-primary px-space-md py-2 rounded-lg font-label-md text-label-md flex items-center gap-1.5 shadow-sm active:scale-95 transition-all" onclick="openBranchModal('feat/keybinds')">
+<span class="material-symbols-outlined text-[16px]">fork_right</span>
+<span>Create Branch "feat/keybinds"</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Interactive Modal 1: + Create New Stash Modal -->
+<div class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden items-center justify-center p-space-md" id="create-stash-modal">
+<div class="bg-surface-panel w-full max-w-lg rounded-2xl shadow-2xl p-space-lg flex flex-col gap-space-md animate-in fade-in zoom-in-95 duration-150">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary-container text-[22px]">archive</span>
+<h3 class="font-headline-sm text-headline-sm text-text-primary tracking-tight">Create New Stash</h3>
+</div>
+<button class="w-8 h-8 rounded-lg bg-surface-container-high text-text-muted hover:text-text-primary flex items-center justify-center" onclick="closeStashModal()">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<p class="font-body-md text-body-md text-text-muted">
+        Temporarily shelve dirty changes in your current working tree to switch tasks cleanly.
+      </p>
+<div class="space-y-space-sm">
+<label class="block font-label-md text-label-md text-text-primary" for="stash-message-input">Stash Message (Optional)</label>
+<input class="w-full bg-surface-sunk text-text-primary placeholder:text-text-muted font-body-md text-body-md rounded-lg p-space-sm focus:outline-none focus:bg-surface-container-high" id="stash-message-input" placeholder="e.g. WIP: refactoring modal backdrop and shortcut listener" type="text"/>
+</div>
+<!-- Specific Options Requested in Prompt -->
+<div class="bg-surface-sunk rounded-xl p-space-md space-y-space-sm">
+<label class="flex items-center gap-space-sm cursor-pointer select-none">
+<input checked="" class="w-4 h-4 rounded bg-surface-panel accent-primary-container" id="opt-untracked" type="checkbox"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-text-primary">Include untracked files</span>
+<span class="font-body-md text-label-sm text-text-muted">Includes newly created files not yet tracked by git (<code class="text-secondary font-code-base">-u</code> / <code class="text-secondary font-code-base">--include-untracked</code>).</span>
+</div>
+</label>
+<div class="h-[1px] bg-surface-container-high w-full"></div>
+<label class="flex items-center gap-space-sm cursor-pointer select-none">
+<input class="w-4 h-4 rounded bg-surface-panel accent-primary-container" id="opt-keep-index" type="checkbox"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-text-primary">Keep index staged</span>
+<span class="font-body-md text-label-sm text-text-muted">Preserve files already added with <code class="text-primary font-code-base">git add</code> in the index (<code class="text-primary font-code-base">--keep-index</code>).</span>
+</div>
+</label>
+</div>
+<!-- Stash Modal Actions -->
+<div class="flex items-center justify-end gap-space-xs pt-space-xs">
+<button class="bg-surface-container-high hover:bg-surface-bright text-text-primary px-space-md py-2 rounded-lg font-label-md text-label-md" onclick="closeStashModal()">
+          Cancel
+        </button>
+<button class="bg-primary-container text-on-primary-container font-label-md text-label-md px-space-md py-2 rounded-lg flex items-center gap-1.5 shadow-md active:scale-95 transition-all" onclick="executeCreateStash()">
+<span class="material-symbols-outlined text-[16px]">save</span>
+<span>Save Changes to Stash</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Interactive Modal 2: Branch from Stash Modal -->
+<div class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden items-center justify-center p-space-md" id="branch-modal">
+<div class="bg-surface-panel w-full max-w-md rounded-2xl shadow-2xl p-space-lg flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-series-branch-1 text-[22px]">fork_right</span>
+<h3 class="font-headline-sm text-headline-sm text-text-primary tracking-tight">Branch from Stash</h3>
+</div>
+<button class="w-8 h-8 rounded-lg bg-surface-container-high text-text-muted hover:text-text-primary flex items-center justify-center" onclick="closeBranchModal()">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<p class="font-body-md text-body-md text-text-muted">
+        Create and immediately check out a clean new branch directly from this stash baseline commit.
+      </p>
+<div class="space-y-space-sm">
+<label class="block font-label-md text-label-md text-text-primary" for="branch-name-input">Branch Name</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-2.5 top-2.5 text-text-muted text-[16px]">alt_route</span>
+<input class="w-full bg-surface-sunk text-text-primary font-code-base text-body-md rounded-lg pl-9 pr-3 py-2 focus:outline-none focus:bg-surface-container-high" id="branch-name-input" type="text" value="feat/keybinds"/>
+</div>
+</div>
+<div class="flex items-center justify-end gap-space-xs pt-space-xs">
+<button class="bg-surface-container-high hover:bg-surface-bright text-text-primary px-space-md py-2 rounded-lg font-label-md text-label-md" onclick="closeBranchModal()">
+          Cancel
+        </button>
+<button class="bg-primary-container text-on-primary-container font-label-md text-label-md px-space-md py-2 rounded-lg flex items-center gap-1.5 shadow-md active:scale-95 transition-all" onclick="executeCreateBranch()">
+<span class="material-symbols-outlined text-[16px]">call_split</span>
+<span>Create & Checkout Branch</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Toast Notification System -->
+<div class="fixed bottom-10 right-10 z-50 transform translate-y-24 opacity-0 transition-all duration-200 pointer-events-none bg-surface-raised text-text-primary px-space-md py-space-sm rounded-xl shadow-2xl flex items-center gap-space-sm font-label-md text-label-md" id="toast">
+<span class="material-symbols-outlined text-secondary text-[20px]" id="toast-icon">check_circle</span>
+<span id="toast-msg">Action performed successfully</span>
+</div>
+<!-- Inline Behavioral Script for Stashes Workbench -->
+<script>
+    // Stash Data models
+    const stashesData = [
+      {
+        id: 0,
+        ref: 'stash@{0}',
+        branch: 'feat/cli-tui',
+        title: 'WIP on feat/cli-tui: experimental keybind handler for cui skills',
+        desc: 'Shelved prior to pulling upstream origin/main to test fresh interactive render pipeline.',
+        time: '45m ago',
+        baseCommit: '8a2c419',
+        author: '@developer',
+        filesCount: 3,
+        linesAdded: 84,
+        linesDeleted: 16,
+        files: [
+          { name: 'src/input/keybinds.ts', added: '+62', removed: '-10' },
+          { name: 'src/types/events.ts', added: '+22', removed: '-6' }
+        ]
+      },
+      {
+        id: 1,
+        ref: 'stash@{1}',
+        branch: 'main',
+        title: 'WIP on main: partial refactor of repo watcher configuration',
+        desc: 'Temporary hold while switching context to urgent hotfix patch for socket disconnects.',
+        time: 'Yesterday 17:42',
+        baseCommit: '9c402e1',
+        author: '@developer',
+        filesCount: 1,
+        linesAdded: 12,
+        linesDeleted: 4,
+        files: [
+          { name: 'src/config/watcher.ts', added: '+12', removed: '-4' }
+        ]
+      }
+    ];
+
+    let currentSelectedStash = 0;
+
+    function selectStash(index) {
+      currentSelectedStash = index;
+      
+      // Update UI cards
+      document.querySelectorAll('.stash-card').forEach((el, idx) => {
+        if (idx === index) {
+          el.classList.add('bg-gradient-to-r', 'from-primary-container/10', 'via-surface-panel', 'to-surface-panel');
+          el.classList.remove('opacity-70');
+        } else {
+          el.classList.remove('bg-gradient-to-r', 'from-primary-container/10', 'via-surface-panel', 'to-surface-panel');
+          el.classList.add('opacity-70');
+        }
+      });
+
+      triggerNotification(`Loaded details for ${stashesData[index].ref}`);
+    }
+
+    function switchDiffFile(fileIndex) {
+      const file0 = document.getElementById('diff-file-0');
+      const file1 = document.getElementById('diff-file-1');
+      const tab0 = document.getElementById('file-tab-0');
+      const tab1 = document.getElementById('file-tab-1');
+      const headerTitle = document.getElementById('diff-filepath');
+
+      if (fileIndex === 0) {
+        file0.classList.remove('hidden');
+        file1.classList.add('hidden');
+        tab0.classList.add('bg-primary-container/15');
+        tab0.classList.remove('opacity-80');
+        tab1.classList.remove('bg-primary-container/15');
+        tab1.classList.add('opacity-80');
+        headerTitle.innerHTML = '<span class="material-symbols-outlined text-secondary text-[16px]">edit_note</span>src/input/keybinds.ts';
+      } else {
+        file0.classList.add('hidden');
+        file1.classList.remove('hidden');
+        file1.classList.add('flex');
+        tab1.classList.add('bg-primary-container/15');
+        tab1.classList.remove('opacity-80');
+        tab0.classList.remove('bg-primary-container/15');
+        tab0.classList.add('opacity-80');
+        headerTitle.innerHTML = '<span class="material-symbols-outlined text-status-info text-[16px]">edit_note</span>src/types/events.ts';
+      }
+    }
+
+    // Modal Control
+    const stashModal = document.getElementById('create-stash-modal');
+    const branchModal = document.getElementById('branch-modal');
+
+    document.getElementById('open-stash-modal-btn').addEventListener('click', () => {
+      stashModal.classList.remove('hidden');
+      stashModal.classList.add('flex');
+      document.getElementById('stash-message-input').focus();
+    });
+
+    function closeStashModal() {
+      stashModal.classList.add('hidden');
+      stashModal.classList.remove('flex');
+    }
+
+    function openBranchModal(defaultName) {
+      if (defaultName) {
+        document.getElementById('branch-name-input').value = defaultName;
+      }
+      branchModal.classList.remove('hidden');
+      branchModal.classList.add('flex');
+      document.getElementById('branch-name-input').focus();
+    }
+
+    function closeBranchModal() {
+      branchModal.classList.add('hidden');
+      branchModal.classList.remove('flex');
+    }
+
+    function executeCreateStash() {
+      const msg = document.getElementById('stash-message-input').value || 'WIP on working tree';
+      const incUntracked = document.getElementById('opt-untracked').checked;
+      closeStashModal();
+      triggerNotification(`Created new stash: "${msg}" ${incUntracked ? '(with untracked files)' : ''}`);
+    }
+
+    function executeCreateBranch() {
+      const branchName = document.getElementById('branch-name-input').value;
+      closeBranchModal();
+      triggerNotification(`Created & checked out new branch "${branchName}" from stash@{0}`);
+    }
+
+    // Toast alert triggers
+    let toastTimeout;
+    function triggerNotification(msg, isError = false) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-msg');
+      const toastIcon = document.getElementById('toast-icon');
+
+      clearTimeout(toastTimeout);
+      toastMsg.innerText = msg;
+
+      if (isError) {
+        toastIcon.innerText = 'warning';
+        toastIcon.classList.remove('text-secondary');
+        toastIcon.classList.add('text-error');
+      } else {
+        toastIcon.innerText = 'check_circle';
+        toastIcon.classList.remove('text-error');
+        toastIcon.classList.add('text-secondary');
+      }
+
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      toastTimeout = setTimeout(() => {
+        toast.classList.add('translate-y-24', 'opacity-0');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 3200);
+    }
+
+    // Header buttons bindings
+    document.getElementById('btn-pop-latest').addEventListener('click', () => {
+      triggerNotification('Popped stash@{0}. Stash state applied and deleted from reflog.');
+    });
+
+    document.getElementById('btn-apply-latest').addEventListener('click', () => {
+      triggerNotification('Applied stash@{0} cleanly. Ref preserved.');
+    });
+
+    document.getElementById('btn-clear-stashes').addEventListener('click', () => {
+      if (confirm('Drop all stashed changes permanently? This cannot be undone.')) {
+        triggerNotification('All stashes dropped. Stash table is now clean.', true);
+      }
+    });
+
+    // Search filter mock
+    const searchInput = document.getElementById('stash-search-input');
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase();
+      const card0 = document.getElementById('card-stash-0');
+      const card1 = document.getElementById('card-stash-1');
+
+      if (!query) {
+        card0.style.display = 'block';
+        card1.style.display = 'block';
+        return;
+      }
+
+      card0.style.display = ('feat/cli-tui keybind handler cui').includes(query) ? 'block' : 'none';
+      card1.style.display = ('main watcher config refactor').includes(query) ? 'block' : 'none';
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeStashModal();
+        closeBranchModal();
+        searchInput.value = '';
+        document.getElementById('card-stash-0').style.display = 'block';
+        document.getElementById('card-stash-1').style.display = 'block';
+      }
+    });
+  </script>
+</div></main></div><footer class="fixed bottom-0 left-0 right-0 h-7 bg-surface-panel text-on-surface-variant z-50 flex items-center justify-between px-margin-desktop font-code-base text-label-sm select-none"><div class="flex items-center gap-space-md"><span>git 2.45.1</span><div class="flex items-center gap-space-xs text-secondary"><span class="w-2 h-2 rounded-full bg-secondary inline-block"></span><span>SSH Verified</span></div><div class="flex items-center gap-space-xs text-on-surface"><span class="material-symbols-outlined text-[14px] text-primary">fork_right</span><span>main</span></div><span class="text-on-surface-variant">e4f91b2 (HEAD -> main)</span></div><div class="flex items-center gap-space-md"><span class="hover:text-on-surface cursor-pointer">LF</span><span class="hover:text-on-surface cursor-pointer">UTF-8</span><span class="text-secondary flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">cloud_sync</span>synced</span></div></footer></body></html>

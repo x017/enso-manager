@@ -1,0 +1,637 @@
+<!DOCTYPE html><html class="dark" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_dashboard" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "background": "#131313", "primary-container": "#6ba3ff", "on-surface": "#e5e2e1", "outline": "#8c919d", "on-tertiary-fixed": "#410004", "inverse-surface": "#e5e2e1", "series-branch-4": "#a3a0f1", "primary-fixed": "#d7e3ff", "surface-container-highest": "#353534", "on-background": "#e5e2e1", "surface-canvas": "#121212", "on-secondary": "#003824", "secondary-fixed": "#7bfac0", "status-info": "#7cc4f0", "series-branch-6": "#e18cb5", "secondary": "#5ddda5", "on-tertiary": "#66060f", "tertiary-container": "#ff7b76", "inverse-on-surface": "#313030", "series-branch-3": "#5ac299", "secondary-fixed-dim": "#5ddda5", "on-secondary-fixed": "#002113", "text-primary": "#f2f2f2", "inverse-primary": "#135db4", "on-primary-fixed-variant": "#00458e", "on-secondary-fixed-variant": "#005236", "text-muted": "#8c8c8c", "surface-muted": "#242424", "tertiary-fixed": "#ffdad7", "surface-container-low": "#1c1b1b", "surface-panel": "#181818", "on-surface-variant": "#c2c6d4", "outline-variant": "#424752", "status-warning": "#f2bd68", "surface-container-high": "#2a2a2a", "border-focus": "#55adff", "series-branch-5": "#d1a24f", "on-primary-container": "#003875", "on-tertiary-container": "#731217", "border-hairline": "#2b2b2b", "text-secondary": "#b4b4b4", "surface": "#131313", "surface-container": "#201f1f", "tertiary": "#ffb3ae", "surface-variant": "#353534", "surface-sunk": "#0e0e0e", "border-subtle": "#222222", "series-branch-2": "#e7936c", "series-branch-1": "#73aff1", "secondary-container": "#04a572", "surface-container-lowest": "#0e0e0e", "surface-raised": "#1f1f1f", "on-error": "#690005", "on-secondary-container": "#00311f", "surface-bright": "#393939", "primary-fixed-dim": "#aac7ff", "surface-dim": "#131313", "on-primary-fixed": "#001b3e", "on-tertiary-fixed-variant": "#862122", "surface-tint": "#aac7ff", "error-container": "#93000a", "on-primary": "#002f65", "error": "#ffb4ab", "primary": "#aac7ff", "tertiary-fixed-dim": "#ffb3ae", "on-error-container": "#ffdad6" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-lg": "1rem", "margin": "1rem", "margin-desktop": "1.5rem", "space-sm": "0.5rem", "gutter": "0.75rem", "space-md": "0.75rem", "gutter-desktop": "1rem", "space-xl": "1.5rem", "space-xs": "0.25rem" }, "fontFamily": { "body-md": ["Inter"], "headline-md": ["Geist"], "code-base": ["JetBrains Mono"], "headline-lg": ["Geist"], "headline-lg-mobile": ["Geist"], "label-md": ["Inter"], "title-md": ["Geist"], "body-lg": ["Inter"], "headline-sm": ["Geist"], "code-metric": ["JetBrains Mono"], "label-sm": ["Inter"] }, "fontSize": { "body-md": ["13px", { "lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400" }], "headline-md": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "500" }], "code-base": ["12.5px", { "lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400" }], "headline-lg": ["36px", { "lineHeight": "40px", "letterSpacing": "-0.025em", "fontWeight": "500" }], "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "500" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0", "fontWeight": "500" }], "title-md": ["17px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "500" }], "body-lg": ["15px", { "lineHeight": "23px", "letterSpacing": "0", "fontWeight": "400" }], "headline-sm": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "500" }], "code-metric": ["15px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500" }], "label-sm": ["11px", { "lineHeight": "15px", "letterSpacing": "0.04em", "fontWeight": "500" }] } } } };</script></head><body class="bg-surface-canvas text-on-surface font-body-md text-body-md min-h-screen selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 left-0 right-0 h-16 bg-surface-panel/90 backdrop-blur-xl z-50 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full px-margin-desktop flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md shrink-0"><div class="flex items-center gap-space-xs pr-space-sm"><span class="w-3 h-3 rounded-full bg-error inline-block"></span><span class="w-3 h-3 rounded-full bg-status-warning inline-block"></span><span class="w-3 h-3 rounded-full bg-secondary inline-block"></span></div><img alt="GitNex Repo Manager Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrDHboWyClxBvwwYRqnqbB01OXauToGyMLrTuH_EwkyAkgTCyW575dwfxBYGT_8d-e96uwEf4-qWwICGxu3oIfyvvRdL2ld53QPdC6kUSBbM39bAROIlfswWN4Ixw4dK5YRX_ZaOXUU_R3IBH7Fk9AL_OdsbvTQii_jpCBSvP5CLMf-xTt9S1YyRz5R0kzlvyhYf_NyqFjVtXQiyaHvAfzwyHsvcuDQyoTy1oSV-kAsCWg"><span class="font-title-md text-title-md text-on-surface tracking-tight font-medium">Nexa Git</span><div class="hidden xl:flex items-center gap-space-xs bg-surface-sunk py-space-xs px-space-sm rounded-lg text-on-surface-variant font-code-base text-code-base"><span class="material-symbols-outlined text-primary text-[18px]">folder</span><span class="text-on-surface font-body-md text-body-md">~/code/developer/nexa-core</span><span class="bg-surface-container-high px-space-xs py-0.5 rounded text-secondary font-code-base text-code-base flex items-center gap-space-xs"><span class="material-symbols-outlined text-[14px]">commit</span>main</span><span class="text-on-surface-variant text-[11px]">0↑ 0↓</span><span class="material-symbols-outlined text-on-surface-variant text-[16px]">arrow_drop_down</span></div></div><div class="flex items-center gap-space-sm shrink-0"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-2 text-on-surface-variant text-[16px]">search</span><input class="bg-surface-sunk text-on-surface placeholder:text-on-surface-variant font-body-md text-body-md rounded-lg pl-8 pr-12 py-1.5 focus:outline-none focus:ring-2 focus:ring-border-focus w-64 lg:w-72" placeholder="Search commits, files, symbols..." type="text"><span class="absolute right-2 font-code-base text-label-sm text-on-surface-variant bg-surface-container-high px-1 py-0.5 rounded">⌘K</span></div><div class="flex items-center gap-space-xs"><button class="bg-surface-container-high text-on-surface hover:bg-surface-bright hover:text-on-surface px-space-sm py-1.5 rounded text-label-md font-label-md flex items-center gap-1 transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">sync</span>Fetch</button><button class="bg-surface-container-high text-on-surface hover:bg-surface-bright hover:text-on-surface px-space-sm py-1.5 rounded text-label-md font-label-md flex items-center gap-1 transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">south</span>Pull</button><button class="bg-primary-container text-on-primary-container font-label-md text-label-md px-space-sm py-1.5 rounded flex items-center gap-1 transition-transform active:scale-95" type="button"><span class="material-symbols-outlined text-[16px]">north</span>Push</button><button class="bg-surface-container-high text-on-surface hover:bg-surface-bright hover:text-on-surface px-space-sm py-1.5 rounded text-label-md font-label-md flex items-center gap-1 transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">archive</span>Stash</button><button class="bg-surface-container-high text-on-surface hover:bg-surface-bright hover:text-on-surface px-space-sm py-1.5 rounded text-label-md font-label-md flex items-center gap-1 transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">terminal</span></button></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><aside class="fixed left-0 top-16 bottom-7 w-64 bg-surface-panel z-40 flex flex-col justify-between overflow-y-auto"><div class="p-space-sm space-y-space-md"><div class="text-on-surface-variant font-label-sm text-label-sm uppercase px-space-sm tracking-wider">Workspace</div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-label-md rounded-lg"><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="repository-pulse-activity-dashboard" href="#"><span class="font-label-md text-label-md">Repository Pulse &amp; Activity</span><span class="bg-surface-container-high text-secondary font-code-base text-label-sm px-space-xs py-0.5 rounded">live</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="working-tree-diff-inspector" href="#"><span class="font-label-md text-label-md">Working Tree &amp; Diff</span><span class="bg-surface-container-high text-status-warning font-code-base text-label-sm px-space-xs py-0.5 rounded">4 mod</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="interactive-commit-graph-log" href="#"><span class="font-label-md text-label-md">Commit Graph &amp; Log</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="interactive-rebase-cherry-pick-studio" href="#"><span class="font-label-md text-label-md">Interactive Rebase Studio</span><span class="bg-surface-container-high text-status-info font-code-base text-label-sm px-space-xs py-0.5 rounded">tools</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="branch-management-merge-hub" href="#"><span class="font-label-md text-label-md">Branches &amp; Merge Hub</span><span class="bg-surface-container-high text-on-surface-variant font-code-base text-label-sm px-space-xs py-0.5 rounded">5</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="pull-requests-code-review-studio" href="#"><span class="font-label-md text-label-md">Pull Requests &amp; Reviews</span><span class="bg-surface-container-high text-status-info font-code-base text-label-sm px-space-xs py-0.5 rounded">3 open</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="stash-workbench-patch-viewer" href="#"><span class="font-label-md text-label-md">Stashes &amp; Patches</span><span class="bg-surface-container-high text-on-surface-variant font-code-base text-label-sm px-space-xs py-0.5 rounded">2</span></a></nav><div class="pt-space-sm"><div class="text-on-surface-variant font-label-sm text-label-sm uppercase px-space-sm tracking-wider mb-space-xs">Local Branches</div><div class="flex flex-col gap-space-xs pl-space-sm font-code-base text-code-base"><div class="flex items-center gap-space-xs text-secondary py-1"><span class="material-symbols-outlined text-[14px]">check</span><span>main</span></div><div class="flex items-center gap-space-xs text-on-surface-variant hover:text-on-surface py-1"><span class="material-symbols-outlined text-[14px]">commit</span><span>feat/cli-tui</span></div><div class="flex items-center gap-space-xs text-on-surface-variant hover:text-on-surface py-1"><span class="material-symbols-outlined text-[14px]">commit</span><span>fix/socket</span></div></div></div><div class="pt-space-sm"><div class="text-on-surface-variant font-label-sm text-label-sm uppercase px-space-sm tracking-wider mb-space-xs">Remote (origin)</div><div class="flex flex-col gap-space-xs pl-space-sm font-code-base text-code-base text-on-surface-variant"><div class="flex items-center gap-space-xs hover:text-on-surface py-1"><span class="material-symbols-outlined text-[14px]">cloud_done</span><span>origin/main</span></div><div class="flex items-center gap-space-xs hover:text-on-surface py-1"><span class="material-symbols-outlined text-[14px]">cloud_done</span><span>origin/feat/cli-tui</span></div></div></div></div><div class="p-space-sm"><div class="bg-surface-sunk p-space-sm rounded-lg flex flex-col gap-1"><div class="flex items-center justify-between font-label-sm text-label-sm"><span class="text-on-surface-variant">Status</span><span class="text-secondary flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-secondary inline-block"></span>Clean Index</span></div><div class="font-code-base text-label-sm text-status-warning">4 unstaged changes</div><div class="text-on-surface-variant font-label-sm text-label-sm">Synced 2m ago</div></div></div></aside><div class="pl-64"><main class="relative pt-16 pb-7 w-full min-h-screen bg-surface-canvas px-margin-desktop"><div class="flex flex-col w-full gap-space-lg pb-10">
+<!-- Top Command & Metric Context Header -->
+<div class="flex flex-col xl:flex-row xl:items-center justify-between gap-space-md bg-surface-panel p-space-md rounded-lg">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-2">
+<span class="font-code-base text-label-sm text-text-muted tracking-wider uppercase">repo:nexa-core</span>
+<span class="text-text-muted text-[11px]">/</span>
+<span class="font-code-base text-label-sm text-primary tracking-wider uppercase font-medium">repository pulse &amp; insights</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-sm text-headline-sm text-text-primary">Repository Activity Pulse</span>
+<div class="flex items-center gap-1.5 px-space-xs py-0.5 rounded-full bg-secondary/10 text-secondary">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse inline-block"></span>
+<span class="font-code-base text-label-sm">Healthy &amp; Synced</span>
+</div>
+</div>
+</div>
+<!-- Time Range Selector & Actions -->
+<div class="flex items-center gap-space-sm flex-wrap">
+<div class="flex items-center bg-surface-sunk p-0.5 rounded-lg text-label-md font-label-md">
+<button class="px-space-sm py-1.5 rounded bg-surface-container-high text-text-primary shadow-sm transition-all" type="button">Last 30 Days</button>
+<button class="px-space-sm py-1.5 rounded text-text-muted hover:text-text-primary transition-colors" type="button">Last 90 Days</button>
+<button class="px-space-sm py-1.5 rounded text-text-muted hover:text-text-primary transition-colors" type="button">Year to Date</button>
+<button class="px-space-sm py-1.5 rounded text-text-muted hover:text-text-primary transition-colors flex items-center gap-1" type="button">
+<span>Custom</span>
+<span class="material-symbols-outlined text-[14px]">tune</span>
+</button>
+</div>
+<div class="h-6 w-px bg-surface-container-highest hidden sm:block"></div>
+<div class="flex items-center gap-1">
+<button class="bg-surface-sunk hover:bg-surface-container-high text-text-secondary hover:text-text-primary px-space-sm py-1.5 rounded text-label-md font-label-md flex items-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">file_download</span>
+<span>Export RAW</span>
+</button>
+<button class="bg-primary-container text-on-primary-container px-space-sm py-1.5 rounded font-label-md text-label-md flex items-center gap-1 transition-transform active:scale-95" type="button">
+<span class="material-symbols-outlined text-[16px]">insights</span>
+<span>Generate Report</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Quick Metric KPI Cards (4-Column Bento Row) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-space-md">
+<!-- Card 1: Total Commits -->
+<div class="bg-surface-panel p-space-md rounded-lg flex flex-col justify-between gap-space-sm relative overflow-hidden group">
+<div class="flex items-center justify-between">
+<span class="text-text-muted font-label-sm text-label-sm uppercase tracking-wider">Total Commits</span>
+<span class="material-symbols-outlined text-text-muted text-[18px] group-hover:text-primary transition-colors">commit</span>
+</div>
+<div class="flex items-baseline justify-between mt-1">
+<div>
+<div class="font-headline-md text-headline-md text-text-primary tracking-tight">348</div>
+<div class="flex items-center gap-1 text-secondary font-code-base text-label-sm mt-0.5">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+<span>+14.2%</span>
+<span class="text-text-muted ml-1 font-body-md text-label-sm">vs prev period</span>
+</div>
+</div>
+<!-- Sparkline -->
+<div class="w-20 h-10 shrink-0">
+<svg class="w-full h-full text-secondary" preserveAspectRatio="none" viewBox="0 0 100 40">
+<path d="M 0 35 Q 15 30, 25 32 T 50 18 T 75 22 T 100 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+<path d="M 0 35 Q 15 30, 25 32 T 50 18 T 75 22 T 100 6 L 100 40 L 0 40 Z" fill="currentColor" opacity="0.12"></path>
+</svg>
+</div>
+</div>
+<div class="w-full bg-surface-sunk h-1 rounded-full overflow-hidden mt-1">
+<div class="bg-secondary h-full rounded-full w-[78%]"></div>
+</div>
+</div>
+<!-- Card 2: Contributors -->
+<div class="bg-surface-panel p-space-md rounded-lg flex flex-col justify-between gap-space-sm relative overflow-hidden group">
+<div class="flex items-center justify-between">
+<span class="text-text-muted font-label-sm text-label-sm uppercase tracking-wider">Active Contributors</span>
+<span class="material-symbols-outlined text-text-muted text-[18px] group-hover:text-series-branch-1 transition-colors">group</span>
+</div>
+<div class="flex items-baseline justify-between mt-1">
+<div>
+<div class="font-headline-md text-headline-md text-text-primary tracking-tight">12 <span class="font-label-md text-label-md text-text-muted font-normal">core team</span></div>
+<div class="flex items-center gap-1 text-series-branch-1 font-code-base text-label-sm mt-0.5">
+<span class="material-symbols-outlined text-[14px]">verified_user</span>
+<span>100% Verified GPG</span>
+</div>
+</div>
+<!-- Contributor Stack -->
+<div class="flex -space-x-2 overflow-hidden shrink-0">
+<img class="inline-block h-7 w-7 rounded-full bg-surface-raised object-cover ring-2 ring-surface-panel" data-alt="Close up portrait photograph of a young female systems engineer with glasses bathed in soft neon cyan desk monitor backlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBBGuAOO1RN-ouskXIaaKBQFw0_ZzMdo5NgaeKLh0WUbDpiXGxoQLchPiaq60eK4zyPgQwWoV_ZWwnrkbkzzBGILjC5-ei9g4TcNtnPaDoSxPZIy2EWeJYWuoYlC8i1d6YkH4zUrxyaAsB4h_i7VDHaX8UsRZVt4w0IVgf6-FkQex4Va_3WIR71DEMyiusOsjrjazKWwGcn-WFH5EHUCviRJdzeIdAWzALRpbnHkvI">
+<img class="inline-block h-7 w-7 rounded-full bg-surface-raised object-cover ring-2 ring-surface-panel" data-alt="Close up portrait photograph of male software developer in dark knit hoodie working in ambient atmospheric dim studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxFSdqkuxNXr-467r-uLCqBPqm7nH96Q4fBFj4dTzqr5CwtAEtz8QzLiRF788Te72RMVXNOLH2gU0CyCtxLS5GS9OGqERM56ev1JLhU1XVFNDSvm7GNGJt7CaHPaox8U1dDMsGXb6exNitOjY365Ko-v4aDaUawszA78Ufg7iYO9wXHfakqer5Q6bdNdA6qtyvZg0vPRs1INC0a4AH7UAWhYFQfrl8PZOOeRZC_qV0">
+<img class="inline-block h-7 w-7 rounded-full bg-surface-raised object-cover ring-2 ring-surface-panel" data-alt="Portrait of senior rust software architect in minimal modern terminal workspace environment neutral tone" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDF6kRn5UgkugxqalFzR1X9Wf2Od7HKWRWDXWkhwsXQ4rW_A_DN-qZmOe8isxCk53L_ZvVkVaSTer9njkOzteLwvIBg01ui0m1KMKFdEGx_I6GUOe6W4orPlqMlEAKzvq7A5uTFQyBXSVibi4rciorCg4Hxg3zaC6JLwFGpQ23I5HYxRPs5VS1Xd2HbOmJM_EDxG6-dT9rXQjgnBaW3MIJA45CWe0ycz8NTkn3MqtOB">
+<div class="inline-flex h-7 w-7 rounded-full bg-surface-container-high items-center justify-center text-text-secondary font-code-base text-[10px] ring-2 ring-surface-panel">+9</div>
+</div>
+</div>
+<div class="text-text-muted font-code-base text-label-sm truncate">
+        Top: <span class="text-text-primary">@x017</span> (142), <span class="text-text-primary">@chiakoRh</span> (89)
+      </div>
+</div>
+<!-- Card 3: Code Churn -->
+<div class="bg-surface-panel p-space-md rounded-lg flex flex-col justify-between gap-space-sm relative overflow-hidden group">
+<div class="flex items-center justify-between">
+<span class="text-text-muted font-label-sm text-label-sm uppercase tracking-wider">Code Churn Delta</span>
+<span class="material-symbols-outlined text-text-muted text-[18px] group-hover:text-status-warning transition-colors">swap_vert</span>
+</div>
+<div class="flex items-baseline justify-between mt-1">
+<div>
+<div class="font-headline-md text-headline-md text-text-primary tracking-tight font-code-metric">+8,170 <span class="font-label-md text-label-md text-text-muted">net</span></div>
+<div class="flex items-center gap-2 font-code-base text-label-sm mt-0.5">
+<span class="text-secondary">+14,290</span>
+<span class="text-text-muted">/</span>
+<span class="text-error">-6,120</span>
+</div>
+</div>
+<div class="flex flex-col items-end gap-1">
+<span class="font-code-base text-label-sm px-1.5 py-0.5 rounded bg-surface-sunk text-status-warning">2.3x ratio</span>
+</div>
+</div>
+<div class="w-full bg-surface-sunk h-1 rounded-full overflow-hidden flex">
+<div class="bg-secondary h-full" style="width: 70%;"></div>
+<div class="bg-error h-full" style="width: 30%;"></div>
+</div>
+</div>
+<!-- Card 4: PR Velocity & Merge Time -->
+<div class="bg-surface-panel p-space-md rounded-lg flex flex-col justify-between gap-space-sm relative overflow-hidden group">
+<div class="flex items-center justify-between">
+<span class="text-text-muted font-label-sm text-label-sm uppercase tracking-wider">PR Merge Velocity</span>
+<span class="material-symbols-outlined text-text-muted text-[18px] group-hover:text-primary-container transition-colors">merge</span>
+</div>
+<div class="flex items-baseline justify-between mt-1">
+<div>
+<div class="font-headline-md text-headline-md text-text-primary tracking-tight">4.2 <span class="font-title-md text-title-md text-text-muted">hrs avg</span></div>
+<div class="flex items-center gap-1 text-secondary font-code-base text-label-sm mt-0.5">
+<span class="material-symbols-outlined text-[14px]">speed</span>
+<span>98.2% merge rate</span>
+</div>
+</div>
+<div class="w-10 h-10 shrink-0 relative flex items-center justify-center">
+<svg class="w-full h-full -rotate-90 text-surface-sunk" viewBox="0 0 36 36">
+<path class="stroke-current" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="4"></path>
+<path class="text-primary-container stroke-current" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-dasharray="88, 100" stroke-linecap="round" stroke-width="4"></path>
+</svg>
+<span class="absolute font-code-base text-[10px] text-text-primary">88%</span>
+</div>
+</div>
+<div class="text-text-muted font-label-sm text-label-sm flex items-center justify-between">
+<span>CI Pipeline: <span class="text-secondary font-code-base">1m 42s</span></span>
+<span class="text-text-secondary font-code-base">0 blocker</span>
+</div>
+</div>
+</div>
+<!-- Contribution Heatmap & Hourly Punchcard Matrix (Main Analytics Row) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md">
+<!-- Main Contribution Heatmap (8 Cols on LG) -->
+<div class="lg:col-span-8 bg-surface-panel p-space-md rounded-lg flex flex-col justify-between gap-space-md"><div class="flex items-center justify-between pb-space-xs border-b border-surface-container-highest">
+  <div class="flex items-center gap-space-sm">
+    <span class="material-symbols-outlined text-secondary text-[18px]">grid_on</span>
+    <div class="flex flex-col">
+      <div class="flex items-center gap-2">
+        <h3 class="font-title-md text-title-md text-text-primary tracking-tight">Commit Frequency Matrix</h3>
+        <span class="font-code-base text-[10px] px-1.5 py-0.5 rounded bg-surface-sunk text-secondary border border-surface-container-highest uppercase tracking-wider">NEXA::HEATMAP</span>
+      </div>
+      <span class="font-code-base text-label-sm text-text-muted">348 contributions recorded in the current active window</span>
+    </div>
+  </div>
+  <div class="flex items-center gap-space-sm font-code-base text-label-sm text-text-muted">
+    <span>Less</span>
+    <div class="flex items-center gap-1">
+      <span class="w-3 h-3 rounded-[1px] bg-surface-sunk border border-surface-container-highest inline-block" title="Level 0: 0 commits"></span>
+      <span class="w-3 h-3 rounded-[1px] bg-[#0d4a34] inline-block" title="Level 1: 1-3 commits"></span>
+      <span class="w-3 h-3 rounded-[1px] bg-[#168a5c] inline-block" title="Level 2: 4-7 commits"></span>
+      <span class="w-3 h-3 rounded-[1px] bg-[#34c78a] inline-block" title="Level 3: 8-12 commits"></span>
+      <span class="w-3 h-3 rounded-[1px] bg-[#5ddda5] inline-block" title="Level 4: 13+ commits"></span>
+    </div>
+    <span>More</span>
+  </div>
+</div>
+<div class="overflow-x-auto pb-space-xs">
+  <div class="min-w-[620px] flex flex-col gap-1.5 font-code-base text-[11px]">
+    <div class="flex text-text-muted pl-8 justify-between pr-2 text-[10px] uppercase tracking-wider">
+      <span>Jan</span>
+      <span>Feb</span>
+      <span>Mar</span>
+      <span>Apr</span>
+      <span class="text-secondary">May (Current)</span>
+    </div>
+    <div class="flex gap-2">
+      <div class="flex flex-col justify-between text-text-muted py-0.5 text-[10px] w-6 shrink-0 leading-none">
+        <span>Mon</span>
+        <span>Wed</span>
+        <span>Fri</span>
+      </div>
+      <div class="grid grid-flow-col grid-rows-7 gap-1 flex-1">
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#0d4a34]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#168a5c]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#0d4a34]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#168a5c]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#34c78a]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#5ddda5]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#168a5c]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#0d4a34]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#0d4a34]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#168a5c]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#34c78a]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#0d4a34]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#0d4a34]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#168a5c]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#168a5c]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#34c78a]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#0d4a34]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#168a5c]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#5ddda5]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#34c78a]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#168a5c]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#0d4a34]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#0d4a34]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#168a5c]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#168a5c]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#34c78a]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#5ddda5]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#0d4a34]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#0d4a34]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#0d4a34]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#168a5c]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#0d4a34]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#168a5c]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#34c78a]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#5ddda5]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#168a5c]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#0d4a34]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#0d4a34]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#168a5c]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#168a5c]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#34c78a]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#168a5c]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#34c78a]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#5ddda5]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#5ddda5]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#34c78a]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#168a5c]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#0d4a34]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#168a5c]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#168a5c]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#34c78a]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#0d4a34]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#0d4a34]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#168a5c]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#34c78a]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#168a5c]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#0d4a34]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#168a5c]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#34c78a]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#5ddda5]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#34c78a]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#168a5c]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#0d4a34]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#168a5c]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#34c78a]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#168a5c]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#0d4a34]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#0d4a34]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#168a5c]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#34c78a]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#5ddda5]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#0d4a34]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#168a5c]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#34c78a]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#5ddda5] ring-1 ring-primary-container relative">
+          <span class="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-primary-container"></span>
+        </div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#5ddda5]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#34c78a]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-[#0d4a34]"></div>
+        <div class="w-3.5 h-3.5 rounded-[1px] bg-surface-sunk"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="bg-surface-sunk px-space-sm py-2 rounded border border-surface-container-highest flex items-center justify-between font-code-base text-label-sm">
+  <div class="flex items-center gap-space-xs text-text-secondary">
+    <span class="w-2 h-2 rounded-full bg-secondary inline-block"></span>
+    <span>Peak: May 14, 2024 — <strong class="text-text-primary">16 commits</strong> pushed across 4 feature branches</span>
+  </div>
+  <span class="text-text-muted">Longest streak: <strong class="text-secondary">22 days</strong></span>
+</div></div>
+<!-- Punchcard / Hourly Commit Density (4 Cols on LG) -->
+<div class="lg:col-span-4 bg-surface-panel p-space-md rounded-lg flex flex-col justify-between gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-series-branch-5 text-[18px]">schedule</span>
+<h3 class="font-title-md text-title-md text-text-primary tracking-tight">Diurnal Activity</h3>
+</div>
+<span class="font-code-base text-label-sm text-text-muted bg-surface-sunk px-1.5 py-0.5 rounded">UTC Zone</span>
+</div>
+<p class="font-label-sm text-label-sm text-text-muted">Peak engineering velocity concentrated between <strong class="text-text-primary font-code-base">10:00 - 18:00 UTC</strong>.</p>
+<!-- SVG Hourly distribution bar punchcard -->
+<div class="h-28 w-full flex items-end gap-1 pt-2">
+<!-- 00h to 22h blocks -->
+<div class="flex-1 flex flex-col items-center gap-1 group">
+<div class="w-full bg-surface-container-high group-hover:bg-primary transition-colors rounded-t" style="height: 12%;"></div>
+<span class="font-code-base text-[9px] text-text-muted">00</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1 group">
+<div class="w-full bg-surface-container-high group-hover:bg-primary transition-colors rounded-t" style="height: 8%;"></div>
+<span class="font-code-base text-[9px] text-text-muted">02</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1 group">
+<div class="w-full bg-surface-container-high group-hover:bg-primary transition-colors rounded-t" style="height: 5%;"></div>
+<span class="font-code-base text-[9px] text-text-muted">04</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1 group">
+<div class="w-full bg-surface-container-high group-hover:bg-primary transition-colors rounded-t" style="height: 18%;"></div>
+<span class="font-code-base text-[9px] text-text-muted">06</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1 group">
+<div class="w-full bg-surface-container-high group-hover:bg-primary transition-colors rounded-t" style="height: 42%;"></div>
+<span class="font-code-base text-[9px] text-text-muted">08</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1 group">
+<div class="w-full bg-secondary group-hover:brightness-110 transition-all rounded-t" style="height: 88%;"></div>
+<span class="font-code-base text-[9px] text-secondary font-bold">10</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1 group">
+<div class="w-full bg-secondary group-hover:brightness-110 transition-all rounded-t" style="height: 96%;"></div>
+<span class="font-code-base text-[9px] text-secondary font-bold">12</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1 group">
+<div class="w-full bg-secondary group-hover:brightness-110 transition-all rounded-t" style="height: 100%;"></div>
+<span class="font-code-base text-[9px] text-secondary font-bold">14</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1 group">
+<div class="w-full bg-secondary group-hover:brightness-110 transition-all rounded-t" style="height: 85%;"></div>
+<span class="font-code-base text-[9px] text-secondary font-bold">16</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1 group">
+<div class="w-full bg-surface-container-high group-hover:bg-primary transition-colors rounded-t" style="height: 52%;"></div>
+<span class="font-code-base text-[9px] text-text-muted">18</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1 group">
+<div class="w-full bg-surface-container-high group-hover:bg-primary transition-colors rounded-t" style="height: 30%;"></div>
+<span class="font-code-base text-[9px] text-text-muted">20</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1 group">
+<div class="w-full bg-surface-container-high group-hover:bg-primary transition-colors rounded-t" style="height: 16%;"></div>
+<span class="font-code-base text-[9px] text-text-muted">22</span>
+</div>
+</div>
+<div class="pt-space-xs flex items-center justify-between text-label-sm font-label-sm border-t border-surface-container-highest">
+<span class="text-text-muted">Night owl ratio:</span>
+<span class="text-text-secondary font-code-base">14.8% commits off-hours</span>
+</div>
+</div>
+</div>
+<!-- Bottom Split Section: Audit Action Feed + Top Contributors & Code Distribution -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md">
+<!-- Left: Chronological Repo Actions & Audit Feed (7 Cols) -->
+<div class="lg:col-span-7 bg-surface-panel p-space-md rounded-lg flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">history</span>
+<h3 class="font-title-md text-title-md text-text-primary tracking-tight">Recent Repository Event Log</h3>
+</div>
+<div class="flex items-center gap-1">
+<button class="bg-surface-sunk text-text-muted hover:text-text-primary px-space-xs py-1 rounded font-code-base text-[11px]" type="button">All Events</button>
+<button class="text-text-muted hover:text-text-primary px-space-xs py-1 rounded font-code-base text-[11px]" type="button">Merges</button>
+<button class="text-text-muted hover:text-text-primary px-space-xs py-1 rounded font-code-base text-[11px]" type="button">Tags</button>
+</div>
+</div>
+<!-- Action items chronological list -->
+<div class="flex flex-col gap-2">
+<!-- Item 1: Force push -->
+<div class="flex items-center justify-between p-2 rounded bg-surface-sunk hover:bg-surface-container-high transition-colors gap-space-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="material-symbols-outlined text-status-warning bg-status-warning/10 p-1.5 rounded-full text-[16px] shrink-0">publish</span>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="text-text-primary font-medium text-body-md truncate">Force-pushed branch</span>
+<span class="font-code-base text-label-sm text-status-warning bg-surface-container-high px-1 py-0.5 rounded">feat/cli-tui</span>
+<span class="text-text-muted text-label-sm">with lease</span>
+</div>
+<div class="flex items-center gap-2 font-code-base text-label-sm text-text-muted">
+<span>by @chiakoRh</span>
+<span>•</span>
+<span class="text-primary">f920da4..e4f91b2</span>
+</div>
+</div>
+</div>
+<span class="font-code-base text-label-sm text-text-muted shrink-0">12m ago</span>
+</div>
+<!-- Item 2: Release Tag -->
+<div class="flex items-center justify-between p-2 rounded bg-surface-sunk hover:bg-surface-container-high transition-colors gap-space-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="material-symbols-outlined text-series-branch-1 bg-series-branch-1/10 p-1.5 rounded-full text-[16px] shrink-0">sell</span>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="text-text-primary font-medium text-body-md">Published release tag</span>
+<span class="font-code-base text-label-sm text-series-branch-1 bg-surface-container-high px-1.5 py-0.5 rounded font-bold">v2.4.0</span>
+<span class="bg-secondary/15 text-secondary text-[10px] font-code-base px-1 rounded">verified sign</span>
+</div>
+<div class="flex items-center gap-2 font-code-base text-label-sm text-text-muted">
+<span>by @developer</span>
+<span>•</span>
+<span class="text-primary">9c1b72a</span>
+<span>•</span>
+<span>Release Core 2.4.0 Engine</span>
+</div>
+</div>
+</div>
+<span class="font-code-base text-label-sm text-text-muted shrink-0">45m ago</span>
+</div>
+<!-- Item 3: Interactive Rebase -->
+<div class="flex items-center justify-between p-2 rounded bg-surface-sunk hover:bg-surface-container-high transition-colors gap-space-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="material-symbols-outlined text-series-branch-4 bg-series-branch-4/10 p-1.5 rounded-full text-[16px] shrink-0">alt_route</span>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="text-text-primary font-medium text-body-md">Interactive rebase completed</span>
+<span class="text-text-muted text-label-sm">onto</span>
+<span class="font-code-base text-label-sm text-secondary bg-surface-container-high px-1 py-0.5 rounded">main</span>
+</div>
+<div class="flex items-center gap-2 font-code-base text-label-sm text-text-muted">
+<span>by @x017</span>
+<span>•</span>
+<span>3 commits squashed, 0 conflicts</span>
+</div>
+</div>
+</div>
+<span class="font-code-base text-label-sm text-text-muted shrink-0">2h ago</span>
+</div>
+<!-- Item 4: Stash Dropped -->
+<div class="flex items-center justify-between p-2 rounded bg-surface-sunk hover:bg-surface-container-high transition-colors gap-space-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="material-symbols-outlined text-text-muted bg-surface-container-high p-1.5 rounded-full text-[16px] shrink-0">delete_sweep</span>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="text-text-primary font-medium text-body-md">Stash dropped</span>
+<span class="font-code-base text-label-sm text-text-muted bg-surface-container px-1 py-0.5 rounded">stash@{1}</span>
+<span class="text-text-secondary text-label-sm">WIP: socket buffer retry</span>
+</div>
+<div class="flex items-center gap-2 font-code-base text-label-sm text-text-muted">
+<span>by @alex-dev</span>
+<span>•</span>
+<span>index cleared</span>
+</div>
+</div>
+</div>
+<span class="font-code-base text-label-sm text-text-muted shrink-0">5h ago</span>
+</div>
+<!-- Item 5: Branch Merged -->
+<div class="flex items-center justify-between p-2 rounded bg-surface-sunk hover:bg-surface-container-high transition-colors gap-space-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="material-symbols-outlined text-secondary bg-secondary/10 p-1.5 rounded-full text-[16px] shrink-0">call_merge</span>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="text-text-primary font-medium text-body-md">Merged branch</span>
+<span class="font-code-base text-label-sm text-text-secondary bg-surface-container-high px-1 py-0.5 rounded">fix/socket-reconnect</span>
+<span class="text-text-muted text-label-sm">via PR #142</span>
+</div>
+<div class="flex items-center gap-2 font-code-base text-label-sm text-text-muted">
+<span>by @x017</span>
+<span>•</span>
+<span class="text-secondary">+124 / -82 lines</span>
+</div>
+</div>
+</div>
+<span class="font-code-base text-label-sm text-text-muted shrink-0">Yesterday</span>
+</div>
+</div>
+</div>
+<!-- Right: Top Contributors & Codebase Distribution (5 Cols) -->
+<div class="lg:col-span-5 flex flex-col gap-space-md">
+<!-- Top Contributors Leaderboard -->
+<div class="bg-surface-panel p-space-md rounded-lg flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-series-branch-3 text-[18px]">leaderboard</span>
+<h3 class="font-title-md text-title-md text-text-primary tracking-tight">Active Contributors</h3>
+</div>
+<span class="font-label-sm text-label-sm text-text-muted">Ranked by commits</span>
+</div>
+<div class="flex flex-col gap-space-xs mt-1">
+<!-- Contributor 1 -->
+<div class="flex items-center justify-between p-1.5 rounded bg-surface-sunk">
+<div class="flex items-center gap-2 min-w-0">
+<span class="font-code-base text-[11px] text-text-muted w-3">1</span>
+<img class="h-6 w-6 rounded-full object-cover shrink-0" data-alt="Portrait avatar of male software developer wearing glasses" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCl6HfPTge0KHzlGX_-AEbntnL65YCn1WDL4vJB1NqxvzlorDJQDY4J2FMJarMdpnp3PEV_HRHQbdTROULzpZPHGjuRcZEZ69XqZ1_3-EgdAmuYff1A6sJHREuHMrzYgBvHMSROLM2bo9qS9RP-Q9ycRPyQcOo0yWLW3rhbmnEmHrZbMXomw26UdZXce1_Cf1GrxCxnTK4cfHpAu9Cq5drM6Mc574-7GZNBBoG9fUaV">
+<div class="flex flex-col min-w-0">
+<span class="text-text-primary font-medium text-body-md truncate">@x017</span>
+<span class="font-code-base text-[10px] text-secondary">+8,420 / -2,100</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm shrink-0">
+<div class="w-16 bg-surface-container h-1.5 rounded-full overflow-hidden hidden sm:block">
+<div class="bg-secondary h-full rounded-full" style="width: 48%;"></div>
+</div>
+<span class="font-code-base text-label-sm text-text-primary font-medium">142 cmt</span>
+</div>
+</div>
+<!-- Contributor 2 -->
+<div class="flex items-center justify-between p-1.5 rounded bg-surface-sunk">
+<div class="flex items-center gap-2 min-w-0">
+<span class="font-code-base text-[11px] text-text-muted w-3">2</span>
+<img class="h-6 w-6 rounded-full object-cover shrink-0" data-alt="Female developer programmer portrait bathed in soft atmospheric cyan monitor glow" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjk1kQlcg_67yfLOpeFwZ8R_hn6WnmO0apafjWZ4vtmgEcJeTGeWwgMYtxwx7IuNXUG3SHFQ2WktoWYMmq_RF_Xcps69JjZ776834uP2LgLmZxdEIsL9LX7NwgWrVOw2w4cPweOTnxAdi7MPnuWbWo0AZL8HPeBHrl1z_vbKIWxY6dntBe_Ii-5-jOHb5mps0tDR01JWoW4ROTKrpQI_gw8IQmnesnU54VGw6hrrlj">
+<div class="flex flex-col min-w-0">
+<span class="text-text-primary font-medium text-body-md truncate">@chiakoRh</span>
+<span class="font-code-base text-[10px] text-secondary">+4,110 / -1,980</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm shrink-0">
+<div class="w-16 bg-surface-container h-1.5 rounded-full overflow-hidden hidden sm:block">
+<div class="bg-series-branch-1 h-full rounded-full" style="width: 32%;"></div>
+</div>
+<span class="font-code-base text-label-sm text-text-primary font-medium">89 cmt</span>
+</div>
+</div>
+<!-- Contributor 3 -->
+<div class="flex items-center justify-between p-1.5 rounded bg-surface-sunk">
+<div class="flex items-center gap-2 min-w-0">
+<span class="font-code-base text-[11px] text-text-muted w-3">3</span>
+<div class="h-6 w-6 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-code-base text-[11px] font-bold">DV</div>
+<div class="flex flex-col min-w-0">
+<span class="text-text-primary font-medium text-body-md truncate">@developer</span>
+<span class="font-code-base text-[10px] text-secondary">+1,200 / -840</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm shrink-0">
+<div class="w-16 bg-surface-container h-1.5 rounded-full overflow-hidden hidden sm:block">
+<div class="bg-series-branch-4 h-full rounded-full" style="width: 18%;"></div>
+</div>
+<span class="font-code-base text-label-sm text-text-primary font-medium">64 cmt</span>
+</div>
+</div>
+<!-- Contributor 4 -->
+<div class="flex items-center justify-between p-1.5 rounded bg-surface-sunk">
+<div class="flex items-center gap-2 min-w-0">
+<span class="font-code-base text-[11px] text-text-muted w-3">4</span>
+<img class="h-6 w-6 rounded-full object-cover shrink-0" data-alt="Portrait avatar photograph of tech founder software engineer smiling softly in clean minimalist tech office" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1KVAOpKsD2v57zIuOmnuV4__vdEuc6tymKOu-HuinDhr1VgsqSB0MUM7XNqUVzM6ivNEbR7WnQEFOFMvdjJvnYQE2e3dJH8j5azEtCTMZ6xQKMS1u2ClfVRIFTzl_ay_rv7A8OFFHKKsKivGhxO6zyOTG8T-JnpV-R6ywBSG5EiD2g1p4rScn14EnD2lyv3oTza8TfsmB7O3feKuK9RgljkXfH5Oot9OZJwLmwYXr">
+<div class="flex flex-col min-w-0">
+<span class="text-text-primary font-medium text-body-md truncate">@alex-dev</span>
+<span class="font-code-base text-[10px] text-secondary">+560 / -1,200</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm shrink-0">
+<div class="w-16 bg-surface-container h-1.5 rounded-full overflow-hidden hidden sm:block">
+<div class="bg-series-branch-2 h-full rounded-full" style="width: 12%;"></div>
+</div>
+<span class="font-code-base text-label-sm text-text-primary font-medium">53 cmt</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Language & Architecture Distribution Card -->
+<div class="bg-surface-panel p-space-md rounded-lg flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-series-branch-2 text-[18px]">data_object</span>
+<h3 class="font-title-md text-title-md text-text-primary tracking-tight">Codebase Composition</h3>
+</div>
+<span class="font-code-base text-label-sm text-text-muted">48,219 LOC</span>
+</div>
+<!-- Stacked Horizontal Bar -->
+<div class="w-full h-2 rounded-full overflow-hidden flex bg-surface-sunk mt-1">
+<div class="bg-series-branch-2 h-full" style="width: 68.4%;" title="Rust 68.4%"></div>
+<div class="bg-series-branch-1 h-full" style="width: 24.1%;" title="TypeScript 24.1%"></div>
+<div class="bg-secondary h-full" style="width: 4.2%;" title="Shell / Bash 4.2%"></div>
+<div class="bg-series-branch-5 h-full" style="width: 3.3%;" title="TOML &amp; JSON 3.3%"></div>
+</div>
+<!-- Legend breakdown -->
+<div class="grid grid-cols-2 gap-y-2 gap-x-space-md pt-1 font-code-base text-label-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-series-branch-2 inline-block"></span>
+<span class="text-text-primary">Rust</span>
+</div>
+<span class="text-text-muted">68.4%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-series-branch-1 inline-block"></span>
+<span class="text-text-primary">TypeScript</span>
+</div>
+<span class="text-text-muted">24.1%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary inline-block"></span>
+<span class="text-text-primary">Shell / Bash</span>
+</div>
+<span class="text-text-muted">4.2%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-series-branch-5 inline-block"></span>
+<span class="text-text-primary">TOML / Config</span>
+</div>
+<span class="text-text-muted">3.3%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></main></div><footer class="fixed bottom-0 left-0 right-0 h-7 bg-surface-panel text-on-surface-variant z-50 flex items-center justify-between px-margin-desktop font-code-base text-label-sm select-none"><div class="flex items-center gap-space-md"><span>git 2.45.1</span><div class="flex items-center gap-space-xs text-secondary"><span class="w-2 h-2 rounded-full bg-secondary inline-block"></span><span>SSH Verified</span></div><div class="flex items-center gap-space-xs text-on-surface"><span class="material-symbols-outlined text-[14px] text-primary">fork_right</span><span>main</span></div><span class="text-on-surface-variant">e4f91b2 (HEAD -&gt; main)</span></div><div class="flex items-center gap-space-md"><span class="hover:text-on-surface cursor-pointer">LF</span><span class="hover:text-on-surface cursor-pointer">UTF-8</span><span class="text-secondary flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">cloud_sync</span>synced</span></div></footer>
+
+</body></html>
