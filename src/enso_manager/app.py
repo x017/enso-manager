@@ -1,15 +1,19 @@
 """Enso Git Repo Manager — application router.
 
-Reproduces the seven `ui-design/` screens as a single nexa-ui desktop shell: a
-top bar, a workspace sidebar for navigation, the active view rendered in the
-centre slot, and a footer status bar.
+A real git manager: the shell (top bar, workspace sidebar, status bar) wraps the
+active view, and every view operates on a live repository through the git/gh
+backend. The dashboard is the repo hub — add, select, and manage repos there;
+the selected repo drives all other screens.
 """
 
 from __future__ import annotations
 
+import os
+
 import nexa as ui
 
-from . import theme
+from . import repos
+from .theme import apply_theme
 from .views import (
     branches,
     commit_log,
@@ -31,13 +35,27 @@ VIEWS = {
 }
 
 
+def _seed_state() -> dict:
+    """Initialise persistent app state, registering the CWD repo by default."""
+    cwd = os.getcwd()
+    state: dict = {"view": "dashboard", "repo": "", "repos": []}
+    entry = repos.seed_default(cwd)
+    if entry:
+        state["repo"] = entry["path"]
+    state["repos"] = repos.list_repos()
+    return state
+
+
 def draw(ctx: ui.UI) -> None:
-    # Seed the persistent view state on the first frame.
+    # Seed / refresh persistent state on the first frame.
     if not hasattr(draw, "_state"):
-        draw._state = {"view": "dashboard"}
+        draw._state = _seed_state()
     state = draw._state
 
-    theme.apply_theme(ctx)
+    # Refresh the registered-repo list each frame (cheap; reads a small file).
+    state["repos"] = repos.list_repos()
+
+    apply_theme(ctx)
 
     from . import shell
 
@@ -52,13 +70,15 @@ def draw(ctx: ui.UI) -> None:
             with ctx.box(width=ui.FILL, height=32, bg=ui.Color.SURFACE,
                          border_color=ui.Color.BORDER, radius=12,
                          align=ui.Align.CENTER, pad_x=16):
-                ctx.text(f"enso-manager · {state['view']}", font=ui.FontRole.MONO, size=12, color=ui.Color.TEXT_MUTED)
+                _repo_label = os.path.basename(state.get("repo", "").rstrip("/")) or "no repo"
+                ctx.text(f"enso-manager · {_repo_label} · {state['view']}",
+                         font=ui.FontRole.MONO, size=12, color=ui.Color.TEXT_MUTED)
 
             view_fn = VIEWS.get(state["view"], dashboard.draw)
             view_fn(ctx, state)
 
     # Footer status bar.
-    shell.draw_statusbar(ctx)
+    shell.draw_statusbar(ctx, state)
 
 
 def main() -> None:

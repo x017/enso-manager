@@ -1,17 +1,16 @@
-"""Interactive Rebase & Cherry-Pick Studio.
+"""Interactive Rebase Studio — real rebase plan and execution.
 
-A rebase queue with per-commit operations, a three-way merge sandbox backed by
-nexa's ``diff_view``, a manual resolution editor and a projected history
-topology.
+Computes the actual commit queue on the current branch since it diverges from a
+chosen target, lets the user rebase onto that target, and provides Continue /
+Abort for in-progress rebases plus a diff of the current working tree.
 """
 
 from __future__ import annotations
 
 import nexa as ui
 
+from .. import git_backend
 from ..icons import ic
-
-from .. import data
 from ..theme import series, tone_color
 
 _OP_TONE = {"pick": ui.Tone.SUCCESS, "edit": ui.Tone.WARNING, "squash": ui.Tone.ACCENT,
@@ -19,172 +18,174 @@ _OP_TONE = {"pick": ui.Tone.SUCCESS, "edit": ui.Tone.WARNING, "squash": ui.Tone.
 
 
 def draw(ctx: ui.UI, state: dict) -> None:
+    repo = state.get("repo", "")
+    if not repo:
+        _no_repo(ctx)
+        return
+    branches = git_backend.branches(repo)
+    current = branches["current"]
+    targets = [b["name"] for b in branches["local"] if b["name"] != current]
     with ctx.column(width=ui.FILL, gap=12, pad_x=24, pad_bottom=28):
-        _header(ctx)
-        _conflict_banner(ctx)
+        _header(ctx, current, state)
         with ctx.row(width=ui.FILL, gap=12):
-            _left_column(ctx, state)
-            _right_column(ctx, state)
+            _left(ctx, state, repo, current, targets)
+            _right(ctx, state, repo, current)
 
 
-def _header(ctx: ui.UI) -> None:
-    with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER, wrap=True, gap=12):
-        with ctx.column(gap=4):
-            with ctx.row(align=ui.Align.CENTER, gap=6):
-                ctx.text("REPO: NEXA-CORE / REBASE WORKBENCH / feat/cli-tui onto main (base: e4f91b2)",
-                         font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
-            with ctx.row(align=ui.Align.CENTER, gap=8):
-                ctx.heading("Interactive Rebase Studio", level=2, size=20)
-                ui.badge("Rebase in Progress: Step 2 of 5", tone=ui.Tone.WARNING)
-        with ctx.row(align=ui.Align.CENTER, gap=6, wrap=True):
-            ui.button("Preview Resulting History", icon=ui.Icon.GIT_BRANCH, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
-            ui.button("Skip Commit", icon=ui.Icon.SKIP_FORWARD, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
-            ui.button("Abort Rebase", icon=ui.Icon.X, variant=ui.ButtonVariant.DANGER, size=ui.ControlSize.SM)
-            ui.button("Continue Rebase", icon=ui.Icon.PLAY, variant=ui.ButtonVariant.PRIMARY, size=ui.ControlSize.SM, shortcut="⌘↵")
+def _no_repo(ctx: ui.UI) -> None:
+    with ctx.card(width=ui.FILL, pad=24, align=ui.Align.CENTER):
+        ctx.text("Select a repository from the dashboard to use the rebase studio.",
+                 font=ui.FontRole.BODY, size=13, color=ui.Color.TEXT_MUTED)
 
 
-def _conflict_banner(ctx: ui.UI) -> None:
-    with ctx.box(bg=ui.Color.SURFACE, border_color=ui.Color.WARNING, radius=8,
-                 pad=12, gap=6):
-        with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER, gap=8, wrap=True):
-            with ctx.row(align=ui.Align.CENTER, gap=8, min_width=0):
-                with ctx.box(bg=ui.Color.WARNING.with_alpha(0.15), radius=8,
-                             width=ui.PX(32), height=32, align=ui.Align.CENTER):
-                    ctx.icon(ic("circle_alert"), 16, ui.Color.WARNING)
-                with ctx.column(gap=2, min_width=0):
-                    with ctx.row(align=ui.Align.CENTER, gap=6, wrap=True):
-                        ctx.text("Merge Conflict Detected", font=ui.FontRole.MEDIUM, size=14, color=ui.Color.FOREGROUND)
-                        ui.badge("src/terminal/renderer.rs:42", tone=ui.Tone.WARNING, size=ui.ControlSize.SM)
-                    ctx.text("Commit 8a2c419 diverges from target state. Resolve hunks below or checkout fast variants.",
-                             font=ui.FontRole.BODY, size=12, color=ui.Color.TEXT_SECONDARY)
-            with ctx.row(align=ui.Align.CENTER, gap=6):
-                ui.button("--ours", icon=ui.Icon.ARROW_DOWN, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
-                ui.button("--theirs", icon=ui.Icon.ARROW_UP, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
-                ui.button("Open CLI Merge Tool", icon=ui.Icon.TERMINAL, variant=ui.ButtonVariant.PRIMARY, size=ui.ControlSize.SM)
+def _header(ctx: ui.UI, current: str, state: dict) -> None:
+    in_progress = git_backend._git(state.get("repo", ""), "rev-parse", "-q", "--verify", "REBASE_HEAD") != ""
+    with ctx.card(width=ui.FILL, pad=14, gap=8):
+        with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER, wrap=True, gap=12):
+            with ctx.column(gap=4):
+                ctx.text(f"rebase · {current}", font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
+                with ctx.row(align=ui.Align.CENTER, gap=8):
+                    ctx.heading("Interactive Rebase Studio", level=2, size=20)
+                    if in_progress:
+                        ui.badge("Rebase in progress", tone=ui.Tone.WARNING)
+                    else:
+                        ui.badge("ready", tone=ui.Tone.SUCCESS)
+            with ctx.row(align=ui.Align.CENTER, gap=6, wrap=True):
+                ui.button("Preview Resulting History", icon=ui.Icon.GIT_BRANCH, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
+                if in_progress:
+                    if ui.button("Continue Rebase", icon=ui.Icon.PLAY, variant=ui.ButtonVariant.PRIMARY, size=ui.ControlSize.SM):
+                        git_backend.rebase_continue(state.get("repo", ""))
+                        git_backend.clear_cache()
+                    ui.button("Abort Rebase", icon=ui.Icon.X, variant=ui.ButtonVariant.DANGER, size=ui.ControlSize.SM)
 
 
-def _left_column(ctx: ui.UI, state: dict) -> None:
+def _left(ctx: ui.UI, state: dict, repo: str, current: str, targets: list) -> None:
     with ctx.column(width=ui.GROW(1), min_width=340, gap=12):
         with ctx.card(width=ui.FILL, pad=10, gap=8):
-            state["rebase_tab"] = ui.tabs("rebase_tabs", ["Rebase Plan (5)", "Cherry-Pick Picker"],
+            state["rebase_tab"] = ui.tabs("rebase_tabs", ["Rebase Plan", "Cherry-Pick Picker"],
                                           state.get("rebase_tab", 0))
             if state.get("rebase_tab", 0) == 0:
-                _queue(ctx, state)
+                _queue(ctx, state, repo, current, targets)
             else:
-                _cherry_picker(ctx)
+                _cherry_picker(ctx, state, repo, current, targets)
 
 
-def _queue(ctx: ui.UI, state: dict) -> None:
-    with ctx.box(bg=ui.Color.SURFACE, border_color=ui.Color.BORDER, radius=8, pad=8):
+def _queue(ctx: ui.UI, state: dict, repo: str, current: str, targets: list) -> None:
+    target = targets[state.get("rebase_target", 0)] if targets else ""
+    plan = git_backend.log_range(repo, f"{target}..{current}", 50) if target else []
+    with ctx.box(bg=ui.Color.SURFACE, border_color=ui.Color.BORDER, radius=8, pad=8, gap=6):
         with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
             ctx.text("Queue Sequence", font=ui.FontRole.MEDIUM, size=13, color=ui.Color.FOREGROUND)
-            ctx.text("1 Applied · 1 In-Flight · 3 Pending", font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
+            ctx.text(f"{len(plan)} commit(s) to replay", font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
+        if not targets:
+            ctx.text("No other local branch to rebase onto.",
+                     font=ui.FontRole.BODY, size=12, color=ui.Color.TEXT_MUTED)
+            return
+        state["rebase_target"] = ui.select("rebase_target", targets, state.get("rebase_target", 0))
+        if not plan:
+            ctx.text("Current branch is already up to date with the target — nothing to rebase.",
+                     font=ui.FontRole.BODY, size=12, color=ui.Color.TEXT_MUTED)
         with ctx.column(gap=6):
-            for step in data.REBASE_PLAN:
-                tone = _OP_TONE[step["op"]]
-                bg = ui.Color.SURFACE_MUTED if step["status"] != "current" else ui.Color.SURFACE_RAISED
-                with ctx.box(bg=bg, border_color=ui.Color.BORDER_SUBTLE, radius=8,
-                             pad=10, gap=6):
-                    with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER, gap=8):
-                        with ctx.row(align=ui.Align.CENTER, gap=8, min_width=0):
-                            ctx.icon(ic("grip_vertical"), 14, ui.Color.TEXT_MUTED)
-                            with ctx.box(bg=tone_color(tone).with_alpha(0.15), radius=9999.0,
-                                         width=ui.PX(20), height=20, align=ui.Align.CENTER):
-                                ctx.text(str(step["n"]), font=ui.FontRole.MONO, size=11, color=tone_color(tone))
-                            with ctx.column(gap=2, min_width=0):
-                                with ctx.row(align=ui.Align.CENTER, gap=6, wrap=True):
-                                    ctx.text(step["hash"], font=ui.FontRole.MONO, size=12, color=ui.Color.FOREGROUND)
-                                    ui.badge(step["op"], tone=tone, size=ui.ControlSize.SM)
-                                ctx.text(step["message"], font=ui.FontRole.BODY, size=12, color=ui.Color.TEXT_SECONDARY)
-                                ctx.text(f"{step['author']} · {step['time']} · {step['files']}",
-                                         font=ui.FontRole.MONO, size=10, color=ui.Color.TEXT_MUTED)
-                        if step["status"] == "applied":
-                            ui.badge("Replayed", tone=ui.Tone.SUCCESS, size=ui.ControlSize.SM)
-                        elif step["status"] == "current":
-                            ui.badge("Current Step", tone=ui.Tone.WARNING, size=ui.ControlSize.SM)
-                        elif step["op"] == "squash":
-                            ui.badge("meld into 8a2c", tone=ui.Tone.ACCENT, size=ui.ControlSize.SM)
-                        elif step["op"] == "reword":
-                            ui.badge("edit", tone=ui.Tone.INFO, size=ui.ControlSize.SM)
-                        elif step["op"] == "drop":
-                            ui.badge("delete", tone=ui.Tone.DANGER, size=ui.ControlSize.SM)
-        with ctx.box(bg=ui.Color.hex("#0e0e0e"), radius=6, pad=8):
-            with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
-                ctx.text("Select row + press shortcut:", font=ui.FontRole.BODY, size=11, color=ui.Color.TEXT_MUTED)
-                with ctx.row(align=ui.Align.CENTER, gap=6):
-                    for k in ("p pick", "r reword", "e edit", "s squash", "d drop"):
-                        ui.kbd(k)
-
-
-def _cherry_picker(ctx: ui.UI) -> None:
-    with ctx.box(bg=ui.Color.SURFACE, border_color=ui.Color.BORDER, radius=8, pad=12, gap=8):
+            for i, c in enumerate(plan):
+                _step_row(ctx, i, c)
         with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
-            ctx.text("Cherry-Pick Source Explorer", font=ui.FontRole.MEDIUM, size=13, color=ui.Color.FOREGROUND)
-            ctx.text("Remote Tracking", font=ui.FontRole.BODY, size=11, color=ui.Color.TEXT_MUTED)
-        with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER, wrap=True, gap=6):
-            for src in ("origin/feat/renderer-next (3)", "origin/hotfix/socket-reconnect (1)", "upstream/patch/cross-term (4)"):
-                with ctx.box(bg=ui.Color.SURFACE_MUTED, radius=6, pad_x=10, pad_y=6):
-                    ctx.text(src, font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_SECONDARY)
-        ui.button("Stage SHA", icon=ui.Icon.PLUS, variant=ui.ButtonVariant.PRIMARY, size=ui.ControlSize.SM)
-        ctx.text("Select commits from external branches to graft directly into the active rebase stream.",
+            ctx.text("Rebase replays these onto the target, keeping history linear.",
+                     font=ui.FontRole.BODY, size=11, color=ui.Color.TEXT_MUTED)
+            if ui.button("Rebase Now", icon=ui.Icon.PLAY, variant=ui.ButtonVariant.PRIMARY, size=ui.ControlSize.SM):
+                ok, out = git_backend.rebase(repo, target)
+                git_backend.clear_cache()
+                state["rebase_result"] = out if not ok else "rebase complete"
+
+
+def _step_row(ctx: ui.UI, n: int, c: dict) -> None:
+    tone = _OP_TONE["pick"]
+    with ctx.box(bg=ui.Color.SURFACE_MUTED, border_color=ui.Color.BORDER_SUBTLE, radius=8, pad=10, gap=6):
+        with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER, gap=8):
+            with ctx.row(align=ui.Align.CENTER, gap=8, min_width=0):
+                ctx.icon(ic("grip_vertical"), 14, ui.Color.TEXT_MUTED)
+                with ctx.box(bg=tone_color(tone).with_alpha(0.15), radius=9999.0, width=20, height=20, align=ui.Align.CENTER):
+                    ctx.text(str(n + 1), font=ui.FontRole.MONO, size=11, color=tone_color(tone))
+                with ctx.column(gap=2, min_width=0):
+                    with ctx.row(align=ui.Align.CENTER, gap=6, wrap=True):
+                        ctx.text(c["short"], font=ui.FontRole.MONO, size=12, color=ui.Color.FOREGROUND)
+                        ui.badge("pick", tone=tone, size=ui.ControlSize.SM)
+                    ctx.text(c["message"], font=ui.FontRole.BODY, size=12, color=ui.Color.TEXT_SECONDARY)
+                    ctx.text(f"@{c['author']} · {c['date']}", font=ui.FontRole.MONO, size=10, color=ui.Color.TEXT_MUTED)
+            ui.badge("pending", tone=ui.Tone.NEUTRAL, size=ui.ControlSize.SM)
+
+
+def _cherry_picker(ctx: ui.UI, state: dict, repo: str, current: str, targets: list) -> None:
+    with ctx.box(bg=ui.Color.SURFACE, border_color=ui.Color.BORDER, radius=8, pad=12, gap=8):
+        ctx.text("Cherry-Pick Source Explorer", font=ui.FontRole.MEDIUM, size=13, color=ui.Color.FOREGROUND)
+        ctx.text("Select a commit from another branch to graft onto the current rebase stream.",
                  font=ui.FontRole.BODY, size=12, color=ui.Color.TEXT_MUTED)
+        if targets:
+            state["cherry_target"] = ui.select("cherry_target", targets, state.get("cherry_target", 0))
+            cherry = git_backend.log_range(repo, f"{current}..{targets[state.get('cherry_target', 0)]}", 20)
+            with ctx.column(gap=4):
+                for c in cherry:
+                    with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
+                        with ctx.row(align=ui.Align.CENTER, gap=8):
+                            ctx.text(c["short"], font=ui.FontRole.MONO, size=12, color=ui.Color.FOREGROUND)
+                            ctx.text(c["message"], font=ui.FontRole.BODY, size=12, color=ui.Color.TEXT_SECONDARY)
+                        ui.button("Cherry-Pick", icon=ui.Icon.PLUS, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
 
 
-def _right_column(ctx: ui.UI, state: dict) -> None:
+def _right(ctx: ui.UI, state: dict, repo: str, current: str) -> None:
     with ctx.column(width=ui.GROW(2), min_width=420, gap=12):
-        _merge_sandbox(ctx, state)
-        _projected_topology(ctx)
+        _merge_sandbox(ctx, state, repo, current)
+        _projected_topology(ctx, state, repo, current)
 
 
-def _merge_sandbox(ctx: ui.UI, state: dict) -> None:
+def _merge_sandbox(ctx: ui.UI, state: dict, repo: str, current: str) -> None:
     with ctx.card(width=ui.FILL, pad=12, gap=8):
         with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER, wrap=True, gap=8):
             with ctx.row(align=ui.Align.CENTER, gap=6):
                 ctx.icon(ic("git_branch"), 16, ui.Color.ACCENT)
-                ctx.text("Three-Way Merge Sandbox · src/terminal/renderer.rs", font=ui.FontRole.MEDIUM, size=14, color=ui.Color.FOREGROUND)
-            ui.badge("Resolved: 1/1 markers cleared", tone=ui.Tone.SUCCESS)
-        with ctx.row(align=ui.Align.CENTER, gap=6, wrap=True):
-            ui.button("Accept Incoming (Theirs)", icon=ui.Icon.ARROW_DOWN, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
-            ui.button("Accept Current (Ours)", icon=ui.Icon.ARROW_UP, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
-            ui.button("Accept Both", icon=ui.Icon.GIT_BRANCH, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
-            ui.button("Reset Buffer", icon=ui.Icon.ROTATE_CCW, variant=ui.ButtonVariant.GHOST, size=ui.ControlSize.SM)
-        ctx.text("Incoming: 8a2c419   ·   Current: main (HEAD)", font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
-        ctx.diff_view("rebase_diff", data.RENDERER_OLD, data.RENDERER_NEW,
-                      mode=ui.DiffMode.SPLIT, language="rust", old_title="HEAD (Ours)", new_title="8a2c419 (Theirs)",
-                      width=ui.FILL, height=220)
-        # manual resolution editor
-        with ctx.box(bg=ui.Color.SURFACE, border_color=ui.Color.BORDER, radius=6, pad=8, gap=6):
-            with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
-                ctx.text("Manual resolution editor buffer — type or paste code directly.",
-                         font=ui.FontRole.BODY, size=11, color=ui.Color.TEXT_MUTED)
-                with ctx.row(align=ui.Align.CENTER, gap=6):
-                    ctx.text("Ln 42, Col 18", font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
-                    ui.button("Format Rust (rustfmt)", icon=ui.Icon.PENCIL, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
-            state.setdefault("merge_text", data.RENDERER_NEW)
-            _editor_res = ctx.code_editor("merge_editor", state["merge_text"],
-                                          lang="rust", width=ui.FILL, height=120, tab_size=4)
-            state["merge_text"] = _editor_res.text
+                ctx.text("Rebase Sandbox", font=ui.FontRole.MEDIUM, size=14, color=ui.Color.FOREGROUND)
+            ui.badge("working tree", tone=ui.Tone.NEUTRAL)
+        st = git_backend.status(repo)
+        changed = st["staged"] + st["unstaged"]
+        ctx.text(f"{len(changed)} change(s) in the working tree during rebase.",
+                 font=ui.FontRole.BODY, size=12, color=ui.Color.TEXT_MUTED)
+        if state.get("rebase_result"):
+            ctx.text(state["rebase_result"][:80], font=ui.FontRole.MONO, size=11, color=ui.Color.WARNING)
+        # show working-tree diff of the first changed file
+        if changed:
+            path = changed[0]["path"]
+            try:
+                old, new = git_backend.diff_file(repo, path)
+            except Exception:
+                old, new = "", ""
+            state["rebase_mode"] = ui.segmented("rebase_mode", ["Unified", "Split"], state.get("rebase_mode", 0), size=ui.ControlSize.SM)
+            mode = ui.DiffMode.INLINE if state.get("rebase_mode", 0) == 0 else ui.DiffMode.SPLIT
+            ctx.diff_view("rebase_diff", old, new, mode=mode, language=_lang(path),
+                          old_title="HEAD", new_title=path, width=ui.FILL, height=240)
 
 
-def _projected_topology(ctx: ui.UI) -> None:
+def _projected_topology(ctx: ui.UI, state: dict, repo: str, current: str) -> None:
     with ctx.card(width=ui.FILL, pad=12, gap=8):
         with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
             with ctx.row(align=ui.Align.CENTER, gap=6):
-                ctx.icon(ic("schema"), 16, ui.Color.ACCENT)
-                ctx.text("Projected History Topology · Linear Replay Sequence", font=ui.FontRole.MEDIUM, size=14, color=ui.Color.FOREGROUND)
+                ctx.icon(ic("git_branch"), 16, ui.Color.ACCENT)
+                ctx.text("Projected Topology", font=ui.FontRole.MEDIUM, size=14, color=ui.Color.FOREGROUND)
+        plan = git_backend.log_range(repo, f"{state.get('rebase_target', 'x')}..{current}", 10) if state.get("rebase_target") else []
         with ctx.box(bg=ui.Color.hex("#0e0e0e"), radius=8, pad=12):
             with ctx.row(align=ui.Align.CENTER, gap=6, wrap=True):
-                nodes = [("e4f91b2", "HEAD", ui.Color.ACCENT), ("b910ca3", "pick", ui.Color.SUCCESS),
-                         ("8a2c419*", "edit", ui.Color.WARNING), ("3f109de", "squash", series(0)),
-                         ("99cd310", "reword", ui.Color.INFO)]
-                for i, (sha, op, col) in enumerate(nodes):
+                nodes = [("target", ui.Color.SUCCESS)]
+                for i, c in enumerate(plan[:6]):
+                    nodes.append((c["short"], series(i % 6)))
+                for i, (sha, col) in enumerate(nodes):
                     if i:
                         ctx.icon(ic("arrow_right"), 16, ui.Color.TEXT_MUTED)
                     with ctx.box(bg=col.with_alpha(0.15), radius=8, pad_x=10, pad_y=6):
-                        with ctx.column(gap=1, align=ui.Align.CENTER):
-                            ctx.text(sha, font=ui.FontRole.MONO, size=12, color=col)
-                            ctx.text(op, font=ui.FontRole.MONO, size=10, color=ui.Color.TEXT_MUTED)
-        with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
-            ctx.text("Resolution will advance HEAD from 8a2c419* directly to 3f109de squashed changeset.",
+                        ctx.text(sha, font=ui.FontRole.MONO, size=12, color=col)
+        if plan:
+            ctx.text(f"Rebase will replay {len(plan)} commit(s) linearly onto the target.",
                      font=ui.FontRole.BODY, size=11, color=ui.Color.TEXT_MUTED)
-            ctx.text("4 commits will be rewritten", font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
+
+
+def _lang(path: str) -> str:
+    ext = path.rsplit(".", 1)[-1].lower() if "." in path else ""
+    return {"py": "python", "rs": "rust", "ts": "typescript", "js": "javascript",
+            "toml": "toml", "md": "markdown", "json": "json", "sh": "bash"}.get(ext, "text")

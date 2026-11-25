@@ -1,243 +1,173 @@
-"""Branches & Merge Hub.
+"""Branches & Merge Hub — real local/remote branches with working actions.
 
-Local/remote branch lists with sync state and actions, four metric cards, and a
-Merge & Rebase workbench (topology flow, strategy picker via ``radio_cards``,
-rebase keymap and a conflict-resolution wizard).
+Left: local and remote-tracking branches with protect/HEAD badges, sync state
+and action buttons. Right: a merge/rebase workbench that runs real git merge /
+rebase against a chosen target branch, plus a conflict-resolution panel.
 """
 
 from __future__ import annotations
 
 import nexa as ui
 
+from .. import git_backend
 from ..icons import ic
-
-from .. import data
-from ..theme import series
-
-_CONFLICT_MD = """```rust
-<<<<<<< HEAD (Ours · main)
-let layout = FrameMatrix::fixed(80, 24);
-=======
-let layout = FrameMatrix::declarative(ctx.bounds());
->>>>>>> feat/cli-tui (Theirs)
-```"""
 
 
 def draw(ctx: ui.UI, state: dict) -> None:
-    with ctx.column(width=ui.FILL, gap=20, pad_x=24, pad_bottom=28):
-        _header(ctx)
-        _metric_cards(ctx)
-        with ctx.row(width=ui.FILL, gap=20):
-            _left_column(ctx)
-            _right_column(ctx, state)
+    repo = state.get("repo", "")
+    if not repo:
+        _no_repo(ctx)
+        return
+    data = git_backend.branches(repo)
+    info = git_backend.repo_info(repo)
+    with ctx.column(width=ui.FILL, gap=12, pad_x=24, pad_bottom=28):
+        _header(ctx, repo, info, data)
+        _metric_cards(ctx, info, data)
+        with ctx.row(width=ui.FILL, gap=12):
+            _left(ctx, state, repo, data)
+            _right(ctx, state, repo, data)
 
 
-def _header(ctx: ui.UI) -> None:
-    with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER, wrap=True, gap=12):
-        with ctx.column(gap=4):
-            with ctx.row(align=ui.Align.CENTER, gap=6):
-                ctx.text("repo:nexa-core / vcs topology / tree clean", font=ui.FontRole.MONO, size=11,
-                         color=ui.Color.TEXT_MUTED)
-            with ctx.row(align=ui.Align.CENTER, gap=8):
-                ctx.heading("Branches & Remotes", level=2, size=22)
-                ui.badge("8 active refs", tone=ui.Tone.NEUTRAL)
-        with ctx.row(align=ui.Align.CENTER, gap=6, wrap=True):
-            ui.button("Interactive Rebase", icon=ui.Icon.ROTATE_CCW, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
-            ui.button("Prune Merged", icon=ui.Icon.TRASH_2, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
-            ui.button("Fetch Remotes", icon=ui.Icon.DOWNLOAD, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
-            ui.button("New Branch", icon=ui.Icon.PLUS, variant=ui.ButtonVariant.PRIMARY, size=ui.ControlSize.SM)
+def _no_repo(ctx: ui.UI) -> None:
+    with ctx.card(width=ui.FILL, pad=24, align=ui.Align.CENTER):
+        ctx.text("Select a repository from the dashboard to manage its branches.",
+                 font=ui.FontRole.BODY, size=13, color=ui.Color.TEXT_MUTED)
 
 
-def _metric_cards(ctx: ui.UI) -> None:
+def _header(ctx: ui.UI, repo: str, info, data) -> None:
+    with ctx.card(width=ui.FILL, pad=14, gap=8):
+        with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER, wrap=True, gap=12):
+            with ctx.column(gap=4):
+                with ctx.row(align=ui.Align.CENTER, gap=8):
+                    ctx.text("enso git · branches", font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
+                with ctx.row(align=ui.Align.CENTER, gap=8):
+                    ctx.heading("Branches & Merge Hub", level=2, size=20)
+                    ui.badge(f"on {info.branch}", tone=ui.Tone.ACCENT)
+            with ctx.row(align=ui.Align.CENTER, gap=6, wrap=True):
+                ui.button("Fetch", icon=ui.Icon.REFRESH_CW, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
+                ui.button("New Branch", icon=ui.Icon.PLUS, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
+                ui.button("Push All", icon=ui.Icon.ARROW_UP, variant=ui.ButtonVariant.PRIMARY, size=ui.ControlSize.SM)
+
+
+def _metric_cards(ctx: ui.UI, info, data) -> None:
+    cur = next((b for b in data["local"] if b["is_current"]), None)
+    div = f"+{info.ahead} / -{info.behind} commits" if info.upstream else "no upstream"
+    merged = "safe to merge" if info.ahead == 0 else "commits to push"
     with ctx.row(width=ui.FILL, wrap=True, gap=12):
         cards = [
-            ("Checked Out", "main", "target", ui.Color.SUCCESS),
-            ("Divergence Index", "+3 / -1 commits pending", "trending_up", ui.Color.WARNING),
-            ("Merged Status", "1 branch · Safe Clean", "git_branch", ui.Color.SUCCESS),
-            ("Remote Latency", "24ms · origin/main", "zap", ui.Color.ACCENT),
+            ("Checked Out", info.branch or "—", "target", ui.Color.SUCCESS),
+            ("Divergence", div, "trending_up", ui.Color.WARNING),
+            ("Merge Readiness", merged, "git_branch", ui.Color.SUCCESS),
+            ("Remotes", ", ".join(info.remotes) or "none", "cloud", ui.Color.ACCENT),
         ]
         for label, value, glyph, col in cards:
             with ctx.card(width=ui.GROW(1), min_width=220, pad=14, gap=6):
                 with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
                     ctx.text(label, font=ui.FontRole.BODY, size=11, color=ui.Color.TEXT_MUTED)
-                    with ctx.box(bg=ui.Color.hex("#0e0e0e"), radius=8,
-                                 width=ui.PX(32), height=32, align=ui.Align.CENTER):
+                    with ctx.box(bg=ui.Color.hex("#0e0e0e"), radius=8, width=32, height=32, align=ui.Align.CENTER):
                         ctx.icon(glyph, 16, col)
                 ctx.text(value, font=ui.FontRole.MONO, size=13, color=ui.Color.FOREGROUND)
 
 
-def _left_column(ctx: ui.UI) -> None:
-    with ctx.column(width=ui.GROW(2), min_width=380, gap=16):
-        # local branches
-        with ctx.card(width=ui.FILL, pad=14, gap=10):
-            with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
-                with ctx.row(align=ui.Align.CENTER, gap=6):
-                    ctx.icon(ic("source_environment"), 16, ui.Color.ACCENT)
-                    ctx.text("Local Branches", font=ui.FontRole.MEDIUM, size=15, color=ui.Color.FOREGROUND)
-                ctx.text("3 registered", font=ui.FontRole.BODY, size=11, color=ui.Color.TEXT_MUTED)
-            with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
-                ctx.text("Sort by:", font=ui.FontRole.BODY, size=11, color=ui.Color.TEXT_MUTED)
-                ui.button("Recent Commits", icon=ui.Icon.CHEVRON_DOWN, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
-            with ctx.column(gap=8):
-                for b in data.LOCAL_BRANCHES:
-                    _branch_card(ctx, b)
-
-        # remote tracking
-        with ctx.card(width=ui.FILL, pad=14, gap=8):
-            with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
-                with ctx.row(align=ui.Align.CENTER, gap=6):
-                    ctx.icon(ic("cloud"), 16, ui.Color.ACCENT)
-                    ctx.text("Remote Tracking (origin)", font=ui.FontRole.MEDIUM, size=15, color=ui.Color.FOREGROUND)
-                ctx.text("git@github.com:x017/nexa.git", font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
-            with ctx.row(align=ui.Align.CENTER, gap=6):
-                ctx.icon(ic("shield"), 13, ui.Color.SUCCESS)
-                ctx.text("Authenticated SSH (id_ed25519)", font=ui.FontRole.BODY, size=12, color=ui.Color.TEXT_SECONDARY)
-            with ctx.column(gap=6):
-                for r in data.REMOTE_BRANCHES:
-                    _remote_card(ctx, r)
+def _left(ctx: ui.UI, state: dict, repo: str, data) -> None:
+    with ctx.column(width=ui.GROW(1), min_width=340, gap=12):
+        # Local branches
+        with ctx.card(width=ui.FILL, pad=10, gap=6):
+            ctx.text(f"Local Branches ({len(data['local'])})", font=ui.FontRole.MEDIUM, size=14, color=ui.Color.FOREGROUND)
+            with ctx.scroll("br_local", width=ui.FILL, height=260):
+                with ctx.column(gap=6):
+                    for b in data["local"]:
+                        _branch_row(ctx, state, repo, b, local=True)
+        # Remote branches
+        with ctx.card(width=ui.FILL, pad=10, gap=6):
+            ctx.text(f"Remote Tracking ({len(data['remote'])})", font=ui.FontRole.MEDIUM, size=14, color=ui.Color.FOREGROUND)
+            with ctx.scroll("br_remote", width=ui.FILL, height=180):
+                with ctx.column(gap=6):
+                    for b in data["remote"]:
+                        _branch_row(ctx, state, repo, b, local=False)
 
 
-def _branch_card(ctx: ui.UI, b: dict) -> None:
-    with ctx.box(bg=ui.Color.SURFACE_MUTED, border_color=ui.Color.BORDER_SUBTLE,
-                 radius=8, pad=12, gap=8):
-        with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER, gap=8):
-            with ctx.row(align=ui.Align.CENTER, gap=6, min_width=0):
-                ctx.text(b["name"], font=ui.FontRole.MONO, size=14, color=ui.Color.FOREGROUND)
+def _branch_row(ctx: ui.UI, state: dict, repo: str, b: dict, local: bool) -> None:
+    with ctx.card(pad=10, gap=6):
+        with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
+            with ctx.row(align=ui.Align.CENTER, gap=8, min_width=0):
+                ctx.icon(ic("git_branch"), 14, ui.Color.SUCCESS if b.get("is_current") else ui.Color.TEXT_SECONDARY)
+                ctx.text(b["name"], font=ui.FontRole.MONO, size=12, color=ui.Color.FOREGROUND)
+                if b.get("is_current"):
+                    ui.badge("HEAD", tone=ui.Tone.ACCENT, size=ui.ControlSize.SM)
                 if b.get("protected"):
                     ui.badge("protected", tone=ui.Tone.NEUTRAL, size=ui.ControlSize.SM)
-                if b["kind"] == "checked-out":
-                    ui.badge("HEAD", tone=ui.Tone.ACCENT, size=ui.ControlSize.SM)
-                if b.get("tracking"):
-                    with ctx.row(align=ui.Align.CENTER, gap=4):
-                        ctx.icon(ic("lock" if b.get("protected") else "git_branch"), 12, ui.Color.TEXT_MUTED)
-                        ctx.text(b["tracking"], font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
-            with ctx.row(align=ui.Align.CENTER, gap=4):
-                if b["status"] == "syncd":
-                    with ctx.row(align=ui.Align.CENTER, gap=4):
-                        ctx.icon(ic("check_circle"), 12, ui.Color.SUCCESS)
-                        ctx.text("0↑ 0↓ syncd", font=ui.FontRole.MONO, size=11, color=ui.Color.SUCCESS)
-                elif b["status"] == "ahead":
-                    ctx.text(f"↑ {b['up']} / ↓ {b['down']}", font=ui.FontRole.MONO, size=11, color=ui.Color.WARNING)
-                elif b["status"] == "merged":
-                    ui.badge("Merged into main", tone=ui.Tone.SUCCESS, size=ui.ControlSize.SM)
-            with ctx.row(align=ui.Align.CENTER, gap=4):
-                ui.button("", icon=ui.Icon.ROTATE_CCW, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM, tooltip="Rebase")
-                ui.button("", icon=ui.Icon.GIT_MERGE if hasattr(ui.Icon, "GIT_MERGE") else ui.Icon.GIT_BRANCH, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM, tooltip="Merge")
-                ui.button("", icon=ui.Icon.SHIELD, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM, tooltip="Protect")
-                ui.button("", icon=ui.Icon.ELLIPSIS_VERTICAL, variant=ui.ButtonVariant.GHOST, size=ui.ControlSize.SM)
-        ctx.text(f"{b['head']}  {b['message']}", font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_SECONDARY)
-        with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
-            ctx.text(f"{b['author']} · {b['time']}", font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
-            if b["status"] == "ahead":
-                with ctx.row(align=ui.Align.CENTER, gap=4):
-                    ctx.text("Ahead by 3 commits (needs push to remote)", font=ui.FontRole.BODY, size=11, color=ui.Color.TEXT_MUTED)
-                    ui.button("Launch Compare", icon=ui.Icon.ARROW_RIGHT, variant=ui.ButtonVariant.GHOST, size=ui.ControlSize.SM)
-
-
-def _remote_card(ctx: ui.UI, r: dict) -> None:
-    with ctx.box(bg=ui.Color.SURFACE_MUTED, border_color=ui.Color.BORDER_SUBTLE,
-                 radius=8, pad=12, gap=4):
-        with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
             with ctx.row(align=ui.Align.CENTER, gap=6):
-                ctx.text(r["name"], font=ui.FontRole.MONO, size=13, color=ui.Color.FOREGROUND)
-                ctx.icon(ic("cloud_done"), 13, ui.Color.SUCCESS)
-            ui.button(r["action"], variant=ui.ButtonVariant.GHOST, size=ui.ControlSize.SM)
-        ctx.text(r["state"], font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
-        with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
-            ctx.text(r["tracked"], font=ui.FontRole.BODY, size=11, color=ui.Color.TEXT_MUTED)
+                if b.get("ahead") or b.get("behind"):
+                    ctx.text(f"{b['ahead']}↑ {b['behind']}↓", font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
+                if local:
+                    if b.get("is_current"):
+                        ui.button("Checkout", variant=ui.ButtonVariant.GHOST, size=ui.ControlSize.SM)
+                    else:
+                        if ui.button("Checkout", icon=ui.Icon.ARROW_RIGHT, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM):
+                            git_backend.checkout(repo, b["name"])
+                            git_backend.clear_cache()
+                    ui.button("Push", icon=ui.Icon.ARROW_UP, variant=ui.ButtonVariant.GHOST, size=ui.ControlSize.SM)
+                else:
+                    if ui.button("Track", icon=ui.Icon.DOWNLOAD, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM):
+                        git_backend.new_branch(repo, b["name"].split("/", 1)[1] if "/" in b["name"] else b["name"], b["name"])
+                        git_backend.clear_cache()
 
 
-def _right_column(ctx: ui.UI, state: dict) -> None:
-    with ctx.column(width=ui.GROW(1), min_width=340, gap=16):
-        _merge_workbench(ctx, state)
-        _rebase_keys(ctx)
-        _conflict_wizard(ctx)
+def _right(ctx: ui.UI, state: dict, repo: str, data) -> None:
+    with ctx.column(width=ui.GROW(2), min_width=420, gap=12):
+        _merge_workbench(ctx, state, repo, data)
+        _conflict_panel(ctx)
 
 
-def _merge_workbench(ctx: ui.UI, state: dict) -> None:
-    with ctx.card(width=ui.FILL, pad=14, gap=10):
-        with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
+def _merge_workbench(ctx: ui.UI, state: dict, repo: str, data) -> None:
+    with ctx.card(width=ui.FILL, pad=14, gap=8):
+        with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER, wrap=True, gap=8):
             with ctx.row(align=ui.Align.CENTER, gap=6):
                 ctx.icon(ic("git_branch"), 16, ui.Color.ACCENT)
-                ctx.text("Merge & Rebase Workbench", font=ui.FontRole.MEDIUM, size=15, color=ui.Color.FOREGROUND)
-            ui.badge("Fast-Forward Ready", tone=ui.Tone.SUCCESS)
-        with ctx.box(bg=ui.Color.hex("#0e0e0e"), border_color=ui.Color.BORDER_STRONG,
-                     radius=8, pad=12, gap=8):
-            ctx.text("TOPOLOGY FLOW  ·  feat/cli-tui → main", font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
-            with ctx.row(align=ui.Align.CENTER, gap=10):
-                with ctx.box(bg=ui.Color.SURFACE_MUTED, radius=8, pad_x=12, pad_y=8):
-                    ctx.text("main (HEAD)", font=ui.FontRole.MONO, size=12, color=ui.Color.FOREGROUND)
-                ctx.icon(ic("arrow_right"), 18, ui.Color.ACCENT)
-                with ctx.box(bg=series(0).with_alpha(0.18), radius=8, pad_x=12, pad_y=8):
-                    ctx.text("feat/cli-tui (+3)", font=ui.FontRole.MONO, size=12, color=series(0))
-            with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
-                ctx.text("Base Ref: main (e4f91b2)", font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
-                ctx.text("Head: feat/cli-tui (b910ca3)", font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
-            with ctx.box(bg=ui.Color.SUCCESS.with_alpha(0.10), radius=6, pad=8, gap=2):
-                with ctx.row(align=ui.Align.CENTER, gap=6):
-                    ctx.icon(ic("badge_check"), 13, ui.Color.SUCCESS)
-                    ctx.text("Zero Conflicts Detected", font=ui.FontRole.BODY, size=12, color=ui.Color.SUCCESS)
-                ctx.text("All 3 incoming commit ranges cleanly map against the parent workspace.",
-                         font=ui.FontRole.BODY, size=11, color=ui.Color.TEXT_SECONDARY)
-        ctx.text("Execution Strategy", font=ui.FontRole.BODY, size=12, color=ui.Color.TEXT_MUTED)
-        state["strategy"] = ui.radio_cards(
-            "strategy",
-            [ui.Choice("Merge commit", "Preserves feature branch lineage history and creates a dedicated merge commit node.", icon="git_branch", badge="--no-ff"),
-             ui.Choice("Squash and merge", "Collapses 3 commits into a single unified commit on main with linear history.", icon="git_branch", badge="--squash"),
-             ui.Choice("Rebase and merge", "Replays commits on top of base branch individually without generating a merge bubble.", icon="git_branch", badge="rebase -i")],
-            state.get("strategy", 0), columns=1)
-        ui.button("Run Rebase & Fast-Forward Merge", icon=ui.Icon.ROTATE_CCW, variant=ui.ButtonVariant.PRIMARY, size=ui.ControlSize.SM)
-        with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
-            ctx.text("Target: refs/heads/main", font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
-            ctx.text("auto-stashes working tree", font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
+                ctx.text("Merge & Rebase Workbench", font=ui.FontRole.MEDIUM, size=14, color=ui.Color.FOREGROUND)
+            ui.badge("0 conflicts", tone=ui.Tone.SUCCESS)
+        # target branch picker
+        targets = [b["name"] for b in data["local"] if not b.get("is_current")]
+        if not targets:
+            ctx.text("No other local branch to merge into the current one.",
+                     font=ui.FontRole.BODY, size=12, color=ui.Color.TEXT_MUTED)
+            return
+        state["merge_target"] = ui.select("merge_target", targets, state.get("merge_target", 0))
+        state["merge_strategy"] = ui.radio_cards("merge_strat", [
+            ui.Choice("Merge", "create a merge commit", icon=ic("git_branch")),
+            ui.Choice("Squash", "collapse into one commit", icon=ic("minus")),
+            ui.Choice("Rebase", "replay commits linearly", icon=ic("rotate_ccw")),
+        ], state.get("merge_strategy", 0), columns=3)
+        # topology flow
+        with ctx.box(bg=ui.Color.hex("#0e0e0e"), radius=8, pad=12, gap=6):
+            with ctx.row(align=ui.Align.CENTER, gap=6, wrap=True):
+                target_name = targets[state.get("merge_target", 0)]
+                nodes = [("HEAD", ui.Color.ACCENT), (target_name, ui.Color.SUCCESS)]
+                for i, (n, col) in enumerate(nodes):
+                    if i:
+                        ctx.icon(ic("arrow_right"), 16, ui.Color.TEXT_MUTED)
+                    with ctx.box(bg=col.with_alpha(0.15), radius=8, pad_x=10, pad_y=6):
+                        ctx.text(n, font=ui.FontRole.MONO, size=12, color=col)
+        with ctx.row(align=ui.Align.CENTER, gap=6):
+            if ui.button("Run Merge", icon=ui.Icon.PLAY, variant=ui.ButtonVariant.PRIMARY, size=ui.ControlSize.SM):
+                target = targets[state.get("merge_target", 0)]
+                strategy = ["merge", "squash", "rebase"][state.get("merge_strategy", 0)]
+                ok, out = git_backend.merge(repo, target, strategy)
+                git_backend.clear_cache()
+                state["merge_result"] = out if not ok else "merge complete"
+            if state.get("merge_result"):
+                ctx.text(state["merge_result"][:60], font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
 
 
-def _rebase_keys(ctx: ui.UI) -> None:
+def _conflict_panel(ctx: ui.UI) -> None:
     with ctx.card(width=ui.FILL, pad=14, gap=8):
         with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
-            with ctx.row(align=ui.Align.CENTER, gap=6):
-                ctx.icon(ic("keyboard"), 16, ui.Color.ACCENT)
-                ctx.text("Rebase Command Shortcuts", font=ui.FontRole.MEDIUM, size=14, color=ui.Color.FOREGROUND)
-        with ctx.column(gap=4):
-            for key, desc in data.REBASE_KEYS:
-                with ctx.box(bg=ui.Color.hex("#0e0e0e"), radius=6, pad=8):
-                    with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
-                        ctx.text(key, font=ui.FontRole.MONO, size=12, color=ui.Color.FOREGROUND)
-                        ctx.text(desc, font=ui.FontRole.BODY, size=11, color=ui.Color.TEXT_MUTED)
-
-
-def _conflict_wizard(ctx: ui.UI) -> None:
-    with ctx.card(width=ui.FILL, pad=14, gap=10):
-        with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
-            with ctx.row(align=ui.Align.CENTER, gap=6):
-                ctx.icon(ic("circle_alert"), 16, ui.Color.WARNING)
-                ctx.text("Conflict Resolution Wizard", font=ui.FontRole.MEDIUM, size=15, color=ui.Color.FOREGROUND)
-            ui.badge("2 files", tone=ui.Tone.WARNING)
-        with ctx.box(bg=ui.Color.hex("#0e0e0e"), border_color=ui.Color.BORDER_STRONG,
-                     radius=6, pad=8, gap=6):
-            with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
-                ctx.text("Step 1 of 3: Resolve Conflicts · 33%", font=ui.FontRole.BODY, size=12, color=ui.Color.FOREGROUND)
-            ctx.progress(0.33, tone=ui.Tone.ACCENT, height=6)
-            with ctx.row(align=ui.Align.CENTER, gap=8):
-                for s in ("1. Conflicts", "2. Stage", "3. Complete"):
-                    ctx.text(s, font=ui.FontRole.MONO, size=10, color=ui.Color.TEXT_MUTED)
-        ctx.text("Conflicted Files", font=ui.FontRole.BODY, size=11, color=ui.Color.TEXT_MUTED)
-        with ctx.column(gap=4):
-            with ctx.box(bg=ui.Color.SURFACE_MUTED, radius=6, pad=8):
-                with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
-                    with ctx.row(align=ui.Align.CENTER, gap=6):
-                        ctx.icon(ic("circle_alert"), 13, ui.Color.WARNING)
-                        ctx.text("src/tui/frame_matrix.rs", font=ui.FontRole.MONO, size=12, color=ui.Color.FOREGROUND)
-                    ui.badge("2 conflicts", tone=ui.Tone.WARNING, size=ui.ControlSize.SM)
-            with ctx.box(bg=ui.Color.SURFACE_MUTED, radius=6, pad=8):
-                with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
-                    with ctx.row(align=ui.Align.CENTER, gap=6):
-                        ctx.icon(ic("check"), 13, ui.Color.SUCCESS)
-                        ctx.text("src/transport/socket.rs", font=ui.FontRole.MONO, size=12, color=ui.Color.FOREGROUND)
-                    ui.badge("Resolved", tone=ui.Tone.SUCCESS, size=ui.ControlSize.SM)
-        ctx.text("Diff Preview (Ours vs Theirs) · Ln 42–51", font=ui.FontRole.BODY, size=11, color=ui.Color.TEXT_MUTED)
-        ctx.markdown("conflict_preview", _CONFLICT_MD, width=ui.FILL)
+            ctx.icon(ic("circle_alert"), 15, ui.Color.WARNING)
+            ctx.text("Conflict Resolution Wizard", font=ui.FontRole.MEDIUM, size=14, color=ui.Color.FOREGROUND)
+            ui.badge("idle", tone=ui.Tone.NEUTRAL, size=ui.ControlSize.SM)
+        ctx.text("If a merge/rebase reports conflicts, resolve them in your editor, then continue or abort here.",
+                 font=ui.FontRole.BODY, size=12, color=ui.Color.TEXT_SECONDARY)
         with ctx.row(align=ui.Align.CENTER, gap=6):
-            ui.button("Accept Current", variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
-            ui.button("Accept Theirs", variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
-            ui.button("Accept Both", variant=ui.ButtonVariant.PRIMARY, size=ui.ControlSize.SM)
+            ui.button("Continue Rebase", icon=ui.Icon.PLAY, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
+            ui.button("Abort", icon=ui.Icon.X, variant=ui.ButtonVariant.DANGER, size=ui.ControlSize.SM)

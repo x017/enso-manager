@@ -1,125 +1,148 @@
-"""Working Tree & Diff Inspector.
+"""Working Tree & Diff Inspector — real git status, diffs and commits.
 
-Left: staged / unstaged / untracked file list with status badges and per-file
-stage actions, plus a commit generator.  Right: a nexa ``diff_view`` with a
-Split/Unified segmented toggle.
+Left: staged / unstaged / untracked files from the live working tree, with
+per-file stage/unstage actions. Right: a commit generator and a live diff of the
+selected file (HEAD vs working tree) backed by nexa's diff_view.
 """
 
 from __future__ import annotations
 
 import nexa as ui
 
+from .. import git_backend
 from ..icons import ic
 
-from .. import data
-
-_STATUS_TONE = {"M": ui.Tone.WARNING, "A": ui.Tone.SUCCESS, "D": ui.Tone.DANGER, "?": ui.Tone.NEUTRAL}
-
-
-def _file_row(ctx: ui.UI, f: dict, action: str, action_icon: str) -> None:
-    with ctx.box(bg=ui.Color.hex("#0e0e0e"), border_color=ui.Color.BORDER_SUBTLE,
-                 radius=6, pad_x=8, pad_y=6, gap=6):
-        with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER, gap=8):
-            with ctx.row(align=ui.Align.CENTER, gap=8, min_width=0):
-                ui.badge(f["status"], tone=_STATUS_TONE.get(f["status"], ui.Tone.NEUTRAL), size=ui.ControlSize.SM)
-                with ctx.column(gap=1, min_width=0):
-                    ctx.text(f["path"], font=ui.FontRole.MONO, size=12, color=ui.Color.FOREGROUND)
-                    if f.get("detail"):
-                        ctx.text(f["detail"], font=ui.FontRole.BODY, size=10, color=ui.Color.TEXT_MUTED)
-            with ctx.row(align=ui.Align.CENTER, gap=8):
-                if f["add"]:
-                    ctx.text(f"+{f['add']}", font=ui.FontRole.MONO, size=11, color=ui.Color.SUCCESS)
-                if f["del"]:
-                    ctx.text(f"-{f['del']}", font=ui.FontRole.MONO, size=11, color=ui.Color.DANGER)
-                ui.button(action, icon=action_icon, variant=ui.ButtonVariant.GHOST, size=ui.ControlSize.SM)
-
-
-def _section(ctx: ui.UI, title: str, count: int, files, action: str, action_icon: str, default_open: bool) -> None:
-    with ctx.column(gap=4, pad_x=4):
-        with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
-            with ctx.row(align=ui.Align.CENTER, gap=6):
-                ui.badge(str(count), tone=ui.Tone.NEUTRAL, size=ui.ControlSize.SM)
-                ctx.text(title, font=ui.FontRole.BODY, size=12, color=ui.Color.FOREGROUND)
-            ui.button(action, icon=action_icon, variant=ui.ButtonVariant.GHOST, size=ui.ControlSize.SM)
-        with ctx.column(gap=2):
-            for f in files:
-                _file_row(ctx, f, action, action_icon)
+_STATUS_BADGE = {
+    "M": ("modified", ui.Tone.WARNING),
+    "A": ("added", ui.Tone.SUCCESS),
+    "D": ("deleted", ui.Tone.DANGER),
+    "R": ("renamed", ui.Tone.ACCENT),
+    "C": ("copied", ui.Tone.ACCENT),
+}
 
 
 def draw(ctx: ui.UI, state: dict) -> None:
+    repo = state.get("repo", "")
+    if not repo:
+        _no_repo(ctx)
+        return
+    st = git_backend.status(repo)
     with ctx.column(width=ui.FILL, gap=12, pad_x=24, pad_bottom=28):
-        # toolbar
-        with ctx.card(width=ui.FILL, pad=12, gap=8):
-            with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER, wrap=True, gap=12):
-                with ctx.row(align=ui.Align.CENTER, gap=10):
-                    ctx.icon(ic("file_text"), 16, ui.Color.WARNING)
-                    ctx.heading("Working Tree & Changes", level=3, size=16)
-                    with ctx.row(align=ui.Align.CENTER, gap=6):
-                        _dot(ctx, ui.Color.WARNING)
-                        ctx.text("4 modified files in tree", font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
-                    ctx.text("+172 / -98", font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_SECONDARY)
-                with ctx.row(align=ui.Align.CENTER, gap=6):
-                    ui.button("Rescan", icon=ui.Icon.REFRESH_CW, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
-                    ui.button("Compare with Branch", icon=ui.Icon.GIT_BRANCH, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
-                    ui.button("Stage Everything", icon=ui.Icon.CHECK, variant=ui.ButtonVariant.PRIMARY, size=ui.ControlSize.SM)
-
+        _toolbar(ctx, st)
         with ctx.row(width=ui.FILL, gap=12):
-            # left: file list + commit generator
-            with ctx.column(width=ui.GROW(1), min_width=300, gap=12):
-                with ctx.card(width=ui.FILL, pad=10, gap=8):
-                    with ctx.scroll("wt_files", width=ui.FILL, height=360):
-                        _section(ctx, "Staged Changes", 1, data.STAGED, "Unstage", "remove", True)
-                        _section(ctx, "Unstaged Changes", 3, data.UNSTAGED, "Stage", "plus", True)
-                        _section(ctx, "Untracked Files", 1, data.UNTRACKED, "Track", "plus", True)
-                _commit_generator(ctx, state)
-
-            # right: diff view
-            with ctx.card(width=ui.GROW(2), min_width=420, pad=10, gap=8):
-                _diff_panel(ctx, state)
+            _left(ctx, state, st)
+            _right(ctx, state, repo, st)
 
 
-def _dot(ctx: ui.UI, color) -> None:
-    with ctx.box(width=ui.PX(6), height=6, radius=9999.0, bg=color):
-        pass
+def _no_repo(ctx: ui.UI) -> None:
+    with ctx.card(width=ui.FILL, pad=24, align=ui.Align.CENTER):
+        ctx.text("Select a repository from the dashboard to inspect its working tree.",
+                 font=ui.FontRole.BODY, size=13, color=ui.Color.TEXT_MUTED)
 
 
-def _commit_generator(ctx: ui.UI, state: dict) -> None:
+def _toolbar(ctx: ui.UI, st: dict) -> None:
+    staged = len(st["staged"])
+    unstaged = len(st["unstaged"])
+    untracked = len(st["untracked"])
     with ctx.card(width=ui.FILL, pad=12, gap=8):
-        with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
+        with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER, wrap=True, gap=12):
+            with ctx.row(align=ui.Align.CENTER, gap=8, wrap=True):
+                ctx.icon(ic("file_text"), 16, ui.Color.ACCENT)
+                ctx.text("Working Tree", font=ui.FontRole.MEDIUM, size=15, color=ui.Color.FOREGROUND)
+                ui.badge(f"{staged} staged", tone=ui.Tone.SUCCESS, size=ui.ControlSize.SM)
+                ui.badge(f"{unstaged} unstaged", tone=ui.Tone.WARNING, size=ui.ControlSize.SM)
+                ui.badge(f"{untracked} untracked", tone=ui.Tone.NEUTRAL, size=ui.ControlSize.SM)
             with ctx.row(align=ui.Align.CENTER, gap=6):
-                ctx.icon(ic("edit_note"), 16, ui.Color.TEXT_SECONDARY)
-                ctx.text("Commit Generator", font=ui.FontRole.MEDIUM, size=14, color=ui.Color.FOREGROUND)
-            with ctx.row(align=ui.Align.CENTER, gap=4):
-                ctx.icon(ic("badge_check"), 13, ui.Color.SUCCESS)
-                ctx.text("GPG Signed", font=ui.FontRole.MONO, size=11, color=ui.Color.SUCCESS)
-        msg = state.get("commit_msg", "feat: update TUI render pipeline for interactive diff")
-        msg = ui.textarea("commit_msg", msg, width=ui.FILL, max_bytes=512)
-        state["commit_msg"] = msg
-        ctx.meter("Message length", len(msg), 72, "chars")
-        with ctx.column(gap=6):
-            state["amend"] = ui.checkbox("Amend previous commit", state.get("amend", False))
-            with ctx.row(align=ui.Align.CENTER, gap=8):
-                ui.button("Co-authors", icon=ui.Icon.USER_PLUS, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
-                ui.button("Commit to main (1 staged file)", icon=ui.Icon.CHECK, variant=ui.ButtonVariant.PRIMARY, size=ui.ControlSize.SM)
+                ui.button("Rescan", icon=ui.Icon.REFRESH_CW, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
+                ui.button("Stage All", icon=ui.Icon.CHECK, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
+                ui.button("Commit", icon=ui.Icon.CHECK, variant=ui.ButtonVariant.PRIMARY, size=ui.ControlSize.SM)
 
 
-def _diff_panel(ctx: ui.UI, state: dict) -> None:
-    with ctx.box(bg=ui.Color.SURFACE_MUTED, radius=6, pad=8, gap=6):
-        with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER, gap=8):
-            with ctx.row(align=ui.Align.CENTER, gap=6):
-                ctx.icon(ic("file"), 15, ui.Color.TEXT_SECONDARY)
-                ctx.text("src/core/tui/engine.ts", font=ui.FontRole.MONO, size=12, color=ui.Color.FOREGROUND)
-                ctx.text("Working Tree", font=ui.FontRole.BODY, size=11, color=ui.Color.TEXT_MUTED)
-            with ctx.row(align=ui.Align.CENTER, gap=6):
-                state["wt_mode"] = ui.segmented("wt_mode", ["Split", "Unified"], state.get("wt_mode", 0), size=ui.ControlSize.SM)
-                ui.icon_button(ui.Icon.TYPE, variant=ui.ButtonVariant.GHOST, size=ui.ControlSize.SM, tooltip="Toggle word wrap")
-        with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER, gap=6):
-            ctx.text("index e98a1c..2090ba  +42 additions  -12 deletions", font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
-            ctx.text("Encoding: UTF-8  Tab: 2 spaces", font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
-        mode = ui.DiffMode.SPLIT if state.get("wt_mode", 0) == 0 else ui.DiffMode.INLINE
-        ctx.diff_view("wt_diff", data.ENGINE_OLD, data.ENGINE_NEW,
-                      mode=mode, language="typescript", old_title="HEAD", new_title="Working Tree",
-                      width=ui.FILL, height=360)
+def _left(ctx: ui.UI, state: dict, st: dict) -> None:
+    repo = state.get("repo", "")
+    with ctx.card(width=ui.GROW(1), min_width=340, pad=10, gap=8):
+        with ctx.scroll("wt_list", width=ui.FILL, height=460):
+            with ctx.column(gap=10):
+                for title, key, tone in [("Staged", "staged", ui.Tone.SUCCESS),
+                                         ("Unstaged", "unstaged", ui.Tone.WARNING),
+                                         ("Untracked", "untracked", ui.Tone.NEUTRAL)]:
+                    entries = st.get(key, [])
+                    ctx.text(f"{title} ({len(entries)})", font=ui.FontRole.BODY, size=12, color=ui.Color.TEXT_MUTED)
+                    if not entries:
+                        ctx.text("— none —", font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
+                    for entry in entries:
+                        _file_row(ctx, state, repo, entry, key, tone)
+
+
+def _file_row(ctx: ui.UI, state: dict, repo: str, entry: dict, group: str, tone) -> None:
+    sel = state.get("wt_file") == entry["path"]
+    code = entry["status"].strip() or "?"
+    label, btone = _STATUS_BADGE.get(code, (code.lower(), ui.Tone.NEUTRAL))
+    with ctx.card(selected=sel, pad=8, gap=6):
         with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
-            ctx.text("Hunk @@ -124,14 +124,28 @@", font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
-            ui.button("Stage Hunk", icon=ui.Icon.PLUS, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM)
+            with ctx.row(align=ui.Align.CENTER, gap=8, min_width=0):
+                ctx.icon(ic("file"), 14, ui.Color.TEXT_SECONDARY)
+                if ui.button(entry["path"], icon=None, variant=ui.ButtonVariant.GHOST, size=ui.ControlSize.SM):
+                    state["wt_file"] = entry["path"]
+                ui.badge(label, tone=btone, size=ui.ControlSize.SM)
+            with ctx.row(align=ui.Align.CENTER, gap=6):
+                if entry["add"] or entry["del"]:
+                    ctx.text(f"+{entry['add']}", font=ui.FontRole.MONO, size=11, color=ui.Color.SUCCESS)
+                    ctx.text(f"-{entry['del']}", font=ui.FontRole.MONO, size=11, color=ui.Color.DANGER)
+        if group == "staged":
+            if ui.button("Unstage", icon=ui.Icon.MINUS, variant=ui.ButtonVariant.GHOST, size=ui.ControlSize.SM):
+                git_backend.unstage(repo, [entry["path"]])
+                git_backend.clear_cache()
+        else:
+            if ui.button("Stage", icon=ui.Icon.PLUS, variant=ui.ButtonVariant.SECONDARY, size=ui.ControlSize.SM):
+                git_backend.stage(repo, [entry["path"]])
+                git_backend.clear_cache()
+
+
+def _right(ctx: ui.UI, state: dict, repo: str, st: dict) -> None:
+    with ctx.column(width=ui.GROW(2), min_width=440, gap=12):
+        # Commit generator
+        with ctx.card(width=ui.FILL, pad=14, gap=8):
+            with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER):
+                ctx.text("Commit Changes", font=ui.FontRole.MEDIUM, size=14, color=ui.Color.FOREGROUND)
+                state["wt_amend"] = ui.checkbox("amend", state.get("wt_amend", False))
+            state["wt_msg"] = ctx.textarea("wt_msg", state.get("wt_msg", ""), width=ui.FILL, height=72,
+                                           placeholder="Describe the changes you are committing…")
+            staged = st["staged"]
+            total = sum(e["add"] + e["del"] for e in staged)
+            if staged:
+                ctx.meter(f"wt_meter{len(staged)}", total, 100, "%")
+                ctx.text(f"{len(staged)} file(s) staged · +{sum(e['add'] for e in staged)}/-{sum(e['del'] for e in staged)}",
+                         font=ui.FontRole.MONO, size=11, color=ui.Color.TEXT_MUTED)
+                if ui.button("Commit", icon=ui.Icon.CHECK, variant=ui.ButtonVariant.PRIMARY, size=ui.ControlSize.SM):
+                    msg = (state.get("wt_msg", "") or "").strip()
+                    if msg:
+                        ok, err = git_backend.commit(repo, msg, amend=state.get("wt_amend", False))
+                        state["wt_msg"] = ""
+                        git_backend.clear_cache()
+            else:
+                ctx.text("Nothing staged — stage files from the left, then commit.",
+                         font=ui.FontRole.BODY, size=12, color=ui.Color.TEXT_MUTED)
+        # Diff
+        selected = state.get("wt_file")
+        if selected:
+            old, new = git_backend.diff_file(repo, selected)
+            with ctx.card(width=ui.FILL, pad=10, gap=8):
+                with ctx.row(justify=ui.Justify.BETWEEN, align=ui.Align.CENTER, wrap=True, gap=8):
+                    with ctx.row(align=ui.Align.CENTER, gap=6):
+                        ctx.icon(ic("file"), 15, ui.Color.TEXT_SECONDARY)
+                        ctx.text(selected, font=ui.FontRole.MONO, size=12, color=ui.Color.FOREGROUND)
+                    state["wt_mode"] = ui.segmented("wt_mode", ["Unified", "Split"], state.get("wt_mode", 0), size=ui.ControlSize.SM)
+                mode = ui.DiffMode.INLINE if state.get("wt_mode", 0) == 0 else ui.DiffMode.SPLIT
+                ctx.diff_view("wt_diff", old, new, mode=mode, language=_lang(selected),
+                              old_title="HEAD", new_title="working tree", width=ui.FILL, height=380)
+        else:
+            with ctx.card(width=ui.FILL, pad=24, align=ui.Align.CENTER):
+                ctx.text("Select a file to view its diff against HEAD.",
+                         font=ui.FontRole.BODY, size=12, color=ui.Color.TEXT_MUTED)
+
+
+def _lang(path: str) -> str:
+    ext = path.rsplit(".", 1)[-1].lower() if "." in path else ""
+    return {"py": "python", "rs": "rust", "ts": "typescript", "js": "javascript",
+            "toml": "toml", "md": "markdown", "json": "json", "sh": "bash"}.get(ext, "text")
